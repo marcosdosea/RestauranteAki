@@ -91572,7 +91572,7 @@
 											"top": 277,
 											"width": 79.44091796875,
 											"height": 13,
-											"text": "«Libraby»"
+											"text": "«Library»"
 										},
 										{
 											"_type": "LabelView",
@@ -93778,7 +93778,9 @@
 							}
 						}
 					],
-					"stereotype": "Libraby"
+					"stereotype": {
+						"$ref": "AAAAAAGYN78qrqzFMdg="
+					}
 				},
 				{
 					"_type": "UMLComponent",
