@@ -3,13 +3,31 @@ using Core.Service;
 
 namespace Service
 {
-    public class PersonagemService : IPersonagem
+    public class PersonagemService : IPersonagemService
     {
-        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string IdentificadorCor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime DataCriacao { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime DataAtualizacao { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICollection<Pagamento> Pagamentos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICollection<Pedido> Pedidos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Create(Personagem personagem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Personagem personagem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Personagem? Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Personagem> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

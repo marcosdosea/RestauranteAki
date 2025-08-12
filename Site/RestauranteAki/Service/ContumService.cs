@@ -3,16 +3,31 @@ using Core.Service;
 
 namespace Service
 {
-    public class ContumService : IContum
+    public class ContumService : IContumService
     {
-        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime DataHoraEncerramento { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public float Valor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string FormaPagamento { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Status { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int IdMesa { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Mesa IdMesaNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICollection<Pagamento> Pagamentos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICollection<Pedido> Pedidos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Create(Contum contum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Contum contum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Contum? Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Contum> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
