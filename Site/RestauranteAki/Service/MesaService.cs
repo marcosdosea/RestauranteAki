@@ -3,11 +3,31 @@ using Core.Service;
 
 namespace Service
 {
-    public class MesaService : IMesa
+    public class MesaService : IMesaService
     {
-        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public byte[]? Imagem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICollection<Contum> Conta { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ICollection<Pedido> Pedidos { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Create(Mesa mesa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(Mesa mesa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Mesa? Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Mesa> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

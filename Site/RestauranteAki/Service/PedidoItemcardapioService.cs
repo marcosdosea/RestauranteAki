@@ -3,12 +3,31 @@ using Core.Service;
 
 namespace Service
 {
-    public class PedidoItemcardapioService : IPedidoItemcardapio
+    public class PedidoItemcardapioService : IPedidoItemcardapioService
     {
-        public int IdPedido { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int IdItemCardapio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int? Quantidade { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Itemcardapio IdItemCardapioNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Pedido IdPedidoNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int create(PedidoItemcardapio pedidoItemcardapio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void edit(PedidoItemcardapio pedidoItemcardapio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PedidoItemcardapio? get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<PedidoItemcardapio> getAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
