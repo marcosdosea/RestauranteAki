@@ -1,33 +1,9 @@
-﻿using Core;
-using Core.Service;
+﻿using Core.Service;
 
 namespace Service
 {
-    public class GarcomService : IGarcomService
+    public class GarcomService : IGarcom
     {
-        public int Create(Garcom garcom)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(Garcom garcom)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Garcom? Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Garcom> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

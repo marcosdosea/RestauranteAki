@@ -3,31 +3,15 @@ using Core.Service;
 
 namespace Service
 {
-    public class CardapioService : ICardapioService
+    public class CardapioService : ICardapio
     {
-        public int Create(Cardapio cardapio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(Cardapio cardapio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cardapio? Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Cardapio> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Nome { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime DataInicio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime DataFim { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public sbyte Ativo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int IdRestaurante { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Restaurante IdRestauranteNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICollection<Itemcardapio> IdItemCardapios { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

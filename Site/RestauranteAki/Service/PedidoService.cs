@@ -3,31 +3,18 @@ using Core.Service;
 
 namespace Service
 {
-    public class PedidoService : IPedidoService
+    public class PedidoService : IPedido
     {
-        public int Create(Pedido pedido)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Edit(Pedido pedido)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Pedido? Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Pedido> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? Status { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int IdConta { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int IdMesa { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int IdPersonagem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int IdPessoa { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Contum IdContaNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Mesa IdMesaNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Personagem IdPersonagemNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Pessoa IdPessoaNavigation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICollection<PedidoItemcardapio> PedidoItemcardapios { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
