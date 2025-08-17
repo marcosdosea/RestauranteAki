@@ -1,7 +1,26 @@
+using Core;
+using Core.Service;
+using Microsoft.EntityFrameworkCore;
+using Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Registra AutoMapper e procura automaticamente os profiles
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Seus serviços
+builder.Services.AddTransient<IPessoaService, PessoaService>();
+builder.Services.AddHttpContextAccessor();
+
+var connectionString = builder.Configuration.GetConnectionString("RestauranteAkiConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("A string de conexão 'RestauranteAkiConnection' não foi encontrada ou está vazia.");
+}
+builder.Services.AddDbContext<RestauranteAkiContext>(options => options.UseMySQL(connectionString));
 
 var app = builder.Build();
 
@@ -9,7 +28,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
