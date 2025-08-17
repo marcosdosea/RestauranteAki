@@ -22,7 +22,7 @@ namespace Service
         /// <returns>Id do garçom inserido.</returns>
         public int Create(Garcom garcom)
         {
-            context.Garcons.Add(garcom);
+            context.Garcoms.Add(garcom);
             context.SaveChanges();
             return garcom.Id;
         }
@@ -33,8 +33,8 @@ namespace Service
         /// <param name="id">Id do garçom a ser removido.</param>
         public void Delete(int id)
         {
-            var garcom = context.Garcons.Find(id);
-            context.Garcons.Remove(garcom);
+            var garcom = context.Garcoms.Find(id);
+            context.Garcoms.Remove(garcom);
             context.SaveChanges();
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace Service
         /// <param name="garcom">Garçom a ser editado.</param>
         public void Edit(Garcom garcom)
         {
-            context.Garcons.Update(garcom);
+            context.Garcoms.Update(garcom);
             context.SaveChanges();
         }
         /// <summary>
@@ -53,7 +53,7 @@ namespace Service
         /// <returns>Garçom encontrado ou null.</returns>
         public Garcom? Get(int id)
         {
-            return context.Garcons.Find(id);
+            return context.Garcoms.Find(id);
         }
         /// <summary>
         /// Obtém todos os garçons do banco de dados.
@@ -61,7 +61,7 @@ namespace Service
         /// <returns>Lista de garçons.</returns>
         public IEnumerable<Garcom> GetAll()
         {
-            return context.Garcons.ToList();
+            return context.Garcoms.ToList();
         }
     }
 }
