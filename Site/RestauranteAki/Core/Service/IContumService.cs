@@ -1,6 +1,6 @@
 ﻿namespace Core.Service
 {
-    public interface IContaService
+    public interface IContumService
     {
         int Create(Contum conta);
         void Edit(Contum conta);

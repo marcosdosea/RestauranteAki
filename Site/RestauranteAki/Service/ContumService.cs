@@ -3,7 +3,7 @@ using Core.Service;
 
 namespace Service
 {
-    public class ContumService : IContaService
+    public class ContumService : IContumService
     {
         public int Create(Contum contum)
         {
