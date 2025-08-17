@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Service
+﻿namespace Core.Service
 {
     public interface IMesaService
     {
@@ -13,6 +7,5 @@ namespace Core.Service
         void Delete(int id);
         Mesa? Get(int id);
         IEnumerable<Mesa> GetAll();
-
     }
 }
