@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Core.Service
+﻿namespace Core.Service
 {
     public interface ICardapioService
     {
@@ -10,6 +7,5 @@ namespace Core.Service
         void Delete(int id);
         Cardapio? Get(int id);
         IEnumerable<Cardapio> GetAll();
-       
     }
 }

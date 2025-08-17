@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Service
+﻿namespace Core.Service
 {
     public interface IPedidoService
     {
-       int create(Pedido pedido);
-       void edit(Pedido pedido);
-       void delete(int id);
-       Pedido? get(int id);
-       IEnumerable<Pedido> getAll();
+        int Create(Pedido pedido);
+        void Edit(Pedido pedido);
+        void Delete(int id);
+        Pedido? Get(int id);
+        IEnumerable<Pedido> GetAll();
     }
 }

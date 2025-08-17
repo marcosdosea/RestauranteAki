@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Service
+﻿namespace Core.Service
 {
     public interface IPedidoItemcardapioService
     {
-        int create(PedidoItemcardapio pedidoItemcardapio);
-        void edit(PedidoItemcardapio pedidoItemcardapio);
-        void delete(int id);
-        PedidoItemcardapio? get(int id);
-        IEnumerable<PedidoItemcardapio> getAll();
+        int Create(PedidoItemcardapio pedidoItemcardapio);
+        void Edit(PedidoItemcardapio pedidoItemcardapio);
+        void Delete(int id);
+        PedidoItemcardapio? Get(int id);
+        IEnumerable<PedidoItemcardapio> GetAll();
     }
 }

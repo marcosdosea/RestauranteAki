@@ -5,27 +5,27 @@ namespace Service
 {
     public class PedidoItemcardapioService : IPedidoItemcardapioService
     {
-        public int create(PedidoItemcardapio pedidoItemcardapio)
+        public int Create(PedidoItemcardapio pedidoItemcardapio)
         {
             throw new NotImplementedException();
         }
 
-        public void delete(int id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void edit(PedidoItemcardapio pedidoItemcardapio)
+        public void Edit(PedidoItemcardapio pedidoItemcardapio)
         {
             throw new NotImplementedException();
         }
 
-        public PedidoItemcardapio? get(int id)
+        public PedidoItemcardapio? Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PedidoItemcardapio> getAll()
+        public IEnumerable<PedidoItemcardapio> GetAll()
         {
             throw new NotImplementedException();
         }
