@@ -1,5 +1,4 @@
-﻿using Core;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RestauranteAkiWeb.Models
 {
@@ -29,8 +28,22 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int IdRestaurante { get; set; }
 
-        public Restaurante? IdRestauranteNavigation { get; set; }
+        // Nome do restaurante pode ser útil na tela
+        [Display(Name = "Nome do Restaurante")]
+        public string? NomeRestaurante { get; set; }
 
-        public ICollection<Itemcardapio>? IdItemCardapios { get; set; }
+        
+        
+    }
+
+    public class ItemCardapioViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Nome do Item")]
+        public string? Nome { get; set; }
+
+        [Display(Name = "Preço")]
+        public decimal Preco { get; set; }
     }
 }

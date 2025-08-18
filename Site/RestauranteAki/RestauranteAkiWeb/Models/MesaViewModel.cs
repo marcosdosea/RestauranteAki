@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core;
 
 namespace RestauranteAkiWeb.Models
 {
@@ -9,12 +8,12 @@ namespace RestauranteAkiWeb.Models
         public int Id { get; set; }
 
         [Display(Name = "Imagem")]
-        public byte[]? Imagem { get; set; }
+        public string? ImagemUrl { get; set; }
 
-        [Display(Name = "Contas")]
-        public ICollection<Contum> Conta { get; set; } = new List<Contum>();
+        [Display(Name = "Quantidade de Contas")]
+        public int QuantidadeContas { get; set; }
 
-        [Display(Name = "Pedidos")]
-        public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        [Display(Name = "Quantidade de Pedidos")]
+        public int QuantidadePedidos { get; set; }
     }
 }

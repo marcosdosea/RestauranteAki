@@ -1,5 +1,4 @@
-﻿using Core;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RestauranteAkiWeb.Models
 {
@@ -29,11 +28,42 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int IdMesa { get; set; }
 
-        public Mesa? IdMesaNavigation { get; set; }
+        // Exibir dados básicos da mesa (sem navegar pela entidade)
+        [Display(Name = "Número da Mesa")]
+        public string? NumeroMesa { get; set; }
 
-        public ICollection<Pagamento> Pagamentos { get; set; } = new List<Pagamento>();
+        // Exibir pagamentos relacionados
+        public ICollection<PagamentoViewModel>? Pagamentos { get; set; }
 
-        public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        // Exibir pedidos relacionados
+        public ICollection<PedidoViewModel>? Pedidos { get; set; }
+    }
+
+    public class PagamentoViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Forma de Pagamento")]
+        public string? FormaPagamento { get; set; }
+
+        [Display(Name = "Valor")]
+        public float Valor { get; set; }
+
+        [Display(Name = "Data")]
+        public DateTime DataPagamento { get; set; }
+    }
+
+    public class PedidoViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Descrição do Pedido")]
+        public string? Descricao { get; set; }
+
+        [Display(Name = "Valor Total")]
+        public float ValorTotal { get; set; }
+
+        [Display(Name = "Status")]
+        public string Status { get; set; } = string.Empty;
     }
 }
-

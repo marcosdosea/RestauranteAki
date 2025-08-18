@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core;
 
 namespace RestauranteAkiWeb.Models
 {
     public class PessoaViewModel
     {
         [Display(Name = "Código")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int Id { get; set; }
 
         [Display(Name = "Nome Completo")]
@@ -52,7 +50,7 @@ namespace RestauranteAkiWeb.Models
         public string? Complemento { get; set; }
 
         [Display(Name = "Foto")]
-        public byte[]? Foto { get; set; }
+        public string? FotoUrl { get; set; }
 
         [Display(Name = "Restaurante")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
@@ -66,8 +64,7 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string TipoPessoa { get; set; } = string.Empty;
 
-        public Restaurante? IdRestauranteNavigation { get; set; }
-
-        public ICollection<Pedido>? Pedidos { get; set; } 
+        [Display(Name = "Quantidade de Pedidos")]
+        public int QuantidadePedidos { get; set; }
     }
 }

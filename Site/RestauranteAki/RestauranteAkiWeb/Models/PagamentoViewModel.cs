@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core;
 
 namespace RestauranteAkiWeb.Models
 {
     public class PagamentoViewModel
     {
         [Display(Name = "Código")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int Id { get; set; }
 
         /// <summary>
@@ -16,7 +14,7 @@ namespace RestauranteAkiWeb.Models
         /// </summary>
         [Display(Name = "Tipo de Pagamento")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? TipoPagamento { get; set; } 
+        public string TipoPagamento { get; set; }
 
         [Display(Name = "Data e Hora")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
@@ -24,7 +22,8 @@ namespace RestauranteAkiWeb.Models
 
         [Display(Name = "Valor do Pagamento")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public float ValorPagamento { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal ValorPagamento { get; set; }
 
         [Display(Name = "Conta")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
@@ -34,8 +33,10 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int IdPersonagem { get; set; }
 
-        public Contum? IdContaNavigation { get; set; }
+        [Display(Name = "Nome do Personagem")]
+        public string? NomePersonagem { get; set; }
 
-        public Personagem? IdPersonagemNavigation { get; set; }
+        [Display(Name = "Número da Conta")]
+        public string? NumeroConta { get; set; }
     }
 }
