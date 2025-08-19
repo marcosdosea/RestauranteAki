@@ -1,9 +1,6 @@
 ﻿using Core;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
-using System; 
-using System.Collections.Generic; 
-using System.Linq; 
 namespace Service
 {
     public class RestauranteService : IRestauranteService
@@ -39,28 +36,22 @@ namespace Service
         {
             var restaurante = context.Restaurantes.Find(id);
 
-            if (restaurante == null)
+            if (restaurante != null)
             {
-                throw new ArgumentException("Restaurante não encontrado para o ID informado.");
+                context.Remove(restaurante);
+                context.SaveChanges();
             }
-            context.Restaurantes.Remove(restaurante);
-            context.SaveChanges();
+            
         }
 
         /// <summary>
         /// Atualiza os dados de um Restaurante existente.
         /// </summary>
         /// <param name="restaurante">Entidade Restaurante com os dados atualizados</param>
-        /// <exception cref="ArgumentException">Lançada quando o restaurante com o Id fornecido não é encontrado na base de dados.</exception>
         public void Edit(Restaurante restaurante)
         {
-            var restauranteExistente = context.Restaurantes.AsNoTracking().FirstOrDefault(r => r.Id == restaurante.Id);
-            if (restauranteExistente == null)
-            {
-                throw new ArgumentException("Não é possível editar, pois o restaurante não foi encontrado.");
-            }
-            context.Update(restaurante);
-            context.SaveChanges();
+                context.Update(restaurante);
+                context.SaveChanges();
         }
 
         /// <summary>
@@ -79,8 +70,8 @@ namespace Service
         /// <returns>Uma coleção (IEnumerable) de todas as entidades Restaurante.</returns>
         public IEnumerable<Restaurante> GetAll()
         {
-           
-            return context.Restaurantes.AsNoTracking();
+
+            return context.Restaurantes.AsNoTracking().ToList();
         }
     }
 }
