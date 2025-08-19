@@ -28,17 +28,16 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int IdMesa { get; set; }
 
-        // Exibir dados básicos da mesa (sem navegar pela entidade)
         [Display(Name = "Número da Mesa")]
         public string? NumeroMesa { get; set; }
 
-        // Exibir pagamentos relacionados
         public ICollection<PagamentoViewModel>? Pagamentos { get; set; }
-
-        // Exibir pedidos relacionados
         public ICollection<PedidoViewModel>? Pedidos { get; set; }
     }
+}
 
+namespace RestauranteAkiWeb.Models
+{
     public class PagamentoViewModel
     {
         public int Id { get; set; }
@@ -52,7 +51,10 @@ namespace RestauranteAkiWeb.Models
         [Display(Name = "Data")]
         public DateTime DataPagamento { get; set; }
     }
+}
 
+namespace RestauranteAkiWeb.Models
+{
     public class PedidoViewModel
     {
         public int Id { get; set; }

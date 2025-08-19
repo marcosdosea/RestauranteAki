@@ -36,14 +36,5 @@ namespace RestauranteAkiWeb.Models
         
     }
 
-    public class ItemCardapioViewModel
-    {
-        public int Id { get; set; }
-
-        [Display(Name = "Nome do Item")]
-        public string? Nome { get; set; }
-
-        [Display(Name = "Preço")]
-        public decimal Preco { get; set; }
-    }
+    
 }
