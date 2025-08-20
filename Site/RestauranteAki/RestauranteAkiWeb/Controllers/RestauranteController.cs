@@ -47,20 +47,11 @@ namespace RestauranteAkiWeb.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(restauranteViewModel);
-            }
-            try
-            {
                 var restaurante = mapper.Map<Restaurante>(restauranteViewModel);
                 restauranteService.Create(restaurante);
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-               
-                ModelState.AddModelError(string.Empty, "Não foi possível cadastrar o restaurante. Por favor, verifique os dados e tente novamente.");
-                return View(restauranteViewModel);
-            }
+            return RedirectToAction(nameof(Index));
+          
         }
 
         // GET: RestauranteController/Edit/5
@@ -76,28 +67,12 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, RestauranteViewModel restauranteViewModel)
         {
-            if (id != restauranteViewModel.Id)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(restauranteViewModel);
-            }
-
-            try
+            if (ModelState.IsValid)
             {
                 var restaurante = mapper.Map<Restaurante>(restauranteViewModel);
                 restauranteService.Edit(restaurante);
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                
-                ModelState.AddModelError(string.Empty, "Não foi possível salvar as alterações. Por favor, tente novamente.");
-                return View(restauranteViewModel);
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RestauranteController/Delete/5
@@ -113,21 +88,8 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, RestauranteViewModel restauranteViewModel)
         {
-            if (id != restauranteViewModel.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                restauranteService.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Este restaurante não pode ser excluído. Verifique se ele não possui mesas ou cardápios associados e tente novamente.");
-                return View(restauranteViewModel);
-            }
+            restauranteService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
