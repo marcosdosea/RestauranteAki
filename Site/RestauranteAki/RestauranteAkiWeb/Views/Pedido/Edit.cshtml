@@ -1,0 +1,47 @@
+﻿@model RestauranteAkiWeb.Models.PedidoViewModel
+
+@{
+    ViewData["Title"] = "Novo Pedido";
+}
+
+<h2>Criar Pedido</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Status"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="">Selecione</option>
+            <option value="P">Pronto</option>
+            <option value="S">Solicitado</option>
+            <option value="E">Entregue</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdConta"></label>
+        <input asp-for="IdConta" class="form-control" />
+        <span asp-validation-for="IdConta" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdMesa"></label>
+        <input asp-for="IdMesa" class="form-control" />
+        <span asp-validation-for="IdMesa" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdPersonagem"></label>
+        <input asp-for="IdPersonagem" class="form-control" />
+        <span asp-validation-for="IdPersonagem" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdPessoa"></label>
+        <input asp-for="IdPessoa" class="form-control" />
+        <span asp-validation-for="IdPessoa" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>
