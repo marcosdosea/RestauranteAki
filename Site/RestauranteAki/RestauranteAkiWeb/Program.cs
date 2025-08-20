@@ -15,6 +15,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<IPessoaService, PessoaService>();
 builder.Services.AddTransient<IPedidoService, PedidoService>();
 builder.Services.AddTransient<IGarcomService, GarcomService>();
+builder.Services.AddTransient<IItemcardapioService, ItemcardapioService>();
+
 builder.Services.AddHttpContextAccessor();
 
 var connectionString = builder.Configuration.GetConnectionString("RestauranteAkiConnection");
