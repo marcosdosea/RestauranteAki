@@ -1,33 +1,49 @@
 ﻿using Core;
 using Core.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
     public class PedidoItemcardapioService : IPedidoItemcardapioService
     {
+        private readonly RestauranteAkiContext context;
+
+        public PedidoItemcardapioService(RestauranteAkiContext context)
+        {
+            this.context = context;
+        }
         public int Create(PedidoItemcardapio pedidoItemcardapio)
         {
-            throw new NotImplementedException();
+            context.Add(pedidoItemcardapio);
+            context.SaveChanges();
+            return pedidoItemcardapio.IdItemCardapio;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var pedidoitemcardapio = context.PedidoItemcardapios.Find(id);
+
+            if(pedidoitemcardapio != null) 
+            {
+                context.Remove(pedidoitemcardapio);
+                context.SaveChanges();
+            }
         }
 
         public void Edit(PedidoItemcardapio pedidoItemcardapio)
         {
-            throw new NotImplementedException();
+            context.Update(pedidoItemcardapio);
+            context.SaveChanges();
         }
 
         public PedidoItemcardapio? Get(int id)
         {
-            throw new NotImplementedException();
+            return context.PedidoItemcardapios.Find(id);
         }
 
         public IEnumerable<PedidoItemcardapio> GetAll()
         {
-            throw new NotImplementedException();
+            return context.PedidoItemcardapios.AsNoTracking().ToList();
         }
     }
 }
