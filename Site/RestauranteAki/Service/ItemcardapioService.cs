@@ -1,33 +1,51 @@
 ﻿using Core;
 using Core.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Service
 {
     public class ItemcardapioService : IItemcardapioService
     {
+        private readonly RestauranteAkiContext context;
+
+        public ItemcardapioService(RestauranteAkiContext context)
+        {
+            this.context = context;
+        }
+
         public int Create(Itemcardapio itemcardapio)
         {
-            throw new NotImplementedException();
+            context.Add(itemcardapio);
+            context.SaveChanges();
+            return itemcardapio.Id;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var itemCardapio = context.Itemcardapios.Find(id);
+            if (itemCardapio == null)
+            {
+                throw new ArgumentException("Usuário não encontrado");
+            }
+            context.Remove(itemCardapio);
+            context.SaveChanges();
         }
 
         public void Edit(Itemcardapio itemcardapio)
         {
-            throw new NotImplementedException();
+            context.Update(itemcardapio);
+            context.SaveChanges();
         }
 
         public Itemcardapio? Get(int id)
         {
-            throw new NotImplementedException();
+            return context.Itemcardapios.Find(id);
         }
 
         public IEnumerable<Itemcardapio> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Itemcardapios.AsNoTracking();
         }
     }
 }
