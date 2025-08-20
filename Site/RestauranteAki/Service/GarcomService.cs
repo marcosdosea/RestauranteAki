@@ -62,7 +62,7 @@ namespace Service
         /// <returns>Lista de garçons.</returns>
         public IEnumerable<Garcom> GetAll()
         {
-            return context.Garcoms.AsNoTracking().ToList();
+            return context.Garcoms.AsNoTracking();
         }
     }
 }
