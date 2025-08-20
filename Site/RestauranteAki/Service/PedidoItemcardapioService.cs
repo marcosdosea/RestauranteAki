@@ -16,7 +16,7 @@ namespace Service
         {
             context.Add(pedidoItemcardapio);
             context.SaveChanges();
-            return pedidoItemcardapio.IdItemCardapio;
+            return pedidoItemcardapio.IdPedido;
         }
 
         public void Delete(int id)
