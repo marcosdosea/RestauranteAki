@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -61,7 +62,7 @@ namespace Service
         /// <returns>Lista de garçons.</returns>
         public IEnumerable<Garcom> GetAll()
         {
-            return context.Garcoms.ToList();
+            return context.Garcoms.AsNoTracking().ToList();
         }
     }
 }
