@@ -71,7 +71,7 @@ namespace Service
         public IEnumerable<Restaurante> GetAll()
         {
 
-            return context.Restaurantes.AsNoTracking().ToList();
+            return context.Restaurantes.AsNoTracking();
         }
     }
 }
