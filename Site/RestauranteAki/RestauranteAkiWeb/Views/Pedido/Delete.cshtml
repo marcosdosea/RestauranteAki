@@ -1,0 +1,36 @@
+﻿@model RestauranteAkiWeb.Models.PedidoViewModel
+
+@{
+    ViewData["Title"] = "Excluir Pedido";
+}
+
+<h2>Excluir Pedido</h2>
+
+<h4>Tem certeza que deseja excluir este pedido?</h4>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Id)</dt>
+    <dd class="col-sm-10">@Model.Id</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Status)</dt>
+    <dd class="col-sm-10">@Model.Status</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdConta)</dt>
+    <dd class="col-sm-10">@Model.IdConta</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdMesa)</dt>
+    <dd class="col-sm-10">@Model.IdMesa</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPersonagem)</dt>
+    <dd class="col-sm-10">@Model.IdPersonagem</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPessoa)</dt>
+    <dd class="col-sm-10">@Model.IdPessoa</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

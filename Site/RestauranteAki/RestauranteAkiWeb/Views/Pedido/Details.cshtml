@@ -1,0 +1,35 @@
+﻿@model RestauranteAkiWeb.Models.PedidoViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Pedido";
+}
+
+<h2>Detalhes</h2>
+
+<h4>Pedido</h4>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Id)</dt>
+    <dd class="col-sm-10">@Model.Id</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Status)</dt>
+    <dd class="col-sm-10">@Model.Status</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdConta)</dt>
+    <dd class="col-sm-10">@Model.IdConta</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdMesa)</dt>
+    <dd class="col-sm-10">@Model.IdMesa</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPersonagem)</dt>
+    <dd class="col-sm-10">@Model.IdPersonagem</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPessoa)</dt>
+    <dd class="col-sm-10">@Model.IdPessoa</dd>
+</dl>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</p>
