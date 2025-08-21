@@ -27,11 +27,12 @@ namespace RestauranteAkiWeb.Controllers
             return View(listasCardapiosViewModel);
         }
 
-        // GET: CardapioController/Details/5
+        // Substitua o método Details pelo abaixo para corrigir o erro de mapeamento
+
         public ActionResult Details(int id)
         {
             var cardapio = cardapioService.Get(id);
-            var cardapioViewModel = mapper.Map<List<CardapioViewModel>>(cardapio);
+            var cardapioViewModel = mapper.Map<CardapioViewModel>(cardapio);
             return View(cardapioViewModel);
         }
 
