@@ -238,3 +238,25 @@ body.home-page .container-fluid {
         line-height: 1.7;
         margin-bottom: 1.5rem;
 }
+/* Botão Salvar com a cor do projeto */
+.btn-primary-custom {
+    background-color: var(--orange);
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 20px;
+    transition: 0.3s ease;
+    border: none;
+}
+
+    .btn-primary-custom:hover {
+        background-color: #ea580c; /* tom mais escuro do laranja */
+        color: white;
+    }
+
+/* Cabeçalho do card com a cor laranja */
+.card-header-custom {
+    background-color: var(--orange);
+    color: white;
+}
+

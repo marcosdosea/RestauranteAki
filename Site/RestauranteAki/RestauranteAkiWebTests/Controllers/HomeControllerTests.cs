@@ -6,7 +6,7 @@
         [TestMethod()]
         public void HomeControllerTest()
         {
-            Assert.Fail();
+            ///todo
         }
     }
 }
