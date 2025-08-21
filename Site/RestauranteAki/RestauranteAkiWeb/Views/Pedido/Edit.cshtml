@@ -10,9 +10,9 @@
     <div class="form-group">
         <label asp-for="Status"></label>
         <select asp-for="Status" class="form-control">
-            <option value="">Selecione</option>
-            <option value="P">Pronto</option>
+            <option value="">Selecione um status</option>
             <option value="S">Solicitado</option>
+            <option value="P">Pronto</option>
             <option value="E">Entregue</option>
         </select>
         <span asp-validation-for="Status" class="text-danger"></span>
@@ -45,3 +45,9 @@
     <button type="submit" class="btn btn-success">Salvar</button>
     <a asp-action="Index" class="btn btn-secondary">Voltar</a>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
