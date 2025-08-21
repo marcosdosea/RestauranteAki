@@ -49,7 +49,7 @@ namespace RestauranteAkiWeb.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("erro");
+                return View(pessoaViewModel);
             }
             try
             {
