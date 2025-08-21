@@ -1,33 +1,68 @@
 ﻿using Core;
 using Core.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
     public class CardapioService : ICardapioService
     {
+        private readonly RestauranteAkiContext context;
+
+        public CardapioService(RestauranteAkiContext context)
+        {
+            this.context = context;
+        }
+        /// <summary>
+        /// Insere um cardapio no banco de dados.
+        /// </summary>
+        /// <param name="cardapio">Cardapio a ser inserido.</param>
+        /// <returns>Id do Cardapio inserido.</returns>
         public int Create(Cardapio cardapio)
         {
-            throw new NotImplementedException();
+            context.Cardapios.Add(cardapio);
+            context.SaveChanges();
+            return cardapio.Id;
         }
 
+        /// <summary>
+        /// Remove um cardapio do banco de dados.
+        /// </summary>
+        /// <param name="id">Id do cardapio a ser removido.</param>
+       
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var cardapio = context.Cardapios.Find(id);
+            context.Cardapios.Remove(cardapio);
+            context.SaveChanges();
         }
 
+        /// <summary>
+        /// edita um Cardapio no banco de dados.
+        /// </summary>
+        /// <param name="cardapio">Cardapio a ser editado.</param>
         public void Edit(Cardapio cardapio)
         {
-            throw new NotImplementedException();
+            context.Cardapios.Update(cardapio);
+            context.SaveChanges();
         }
 
+        /// <summary>
+        /// busca um cardapio no banco de dados.
+        /// </summary>
+        /// <param name="id">Id do cardapio a ser buscado.</param>
+        /// <returns>Cardapio encontrado ou null.</returns>
         public Cardapio? Get(int id)
         {
-            throw new NotImplementedException();
+            return context.Cardapios.Find(id);
         }
 
+        /// <summary>
+        /// Obtém todos os Cardapio do banco de dados.
+        /// </summary>
+        /// <returns>Lista de Cardapios.</returns>
         public IEnumerable<Cardapio> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Cardapios.AsNoTracking();
         }
     }
 }

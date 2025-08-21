@@ -16,6 +16,7 @@ builder.Services.AddTransient<IPessoaService, PessoaService>();
 builder.Services.AddTransient<IPedidoService, PedidoService>();
 builder.Services.AddTransient<IGarcomService, GarcomService>();
 builder.Services.AddTransient<IItemcardapioService, ItemcardapioService>();
+builder.Services.AddTransient<ICardapioService, CardapioService>();
 builder.Services.AddTransient<IRestauranteService, RestauranteService>();
 
 builder.Services.AddHttpContextAccessor();
