@@ -31,7 +31,7 @@ namespace RestauranteAkiWeb.Controllers
         public ActionResult Details(int id)
         {
             var pessoa = pessoaService.Get(id);
-            var pessoaViewModel = mapper.Map<List<PessoaViewModel>>(pessoa);
+            var pessoaViewModel = mapper.Map<PessoaViewModel>(pessoa);
             return View(pessoaViewModel);
         }
 
@@ -49,10 +49,12 @@ namespace RestauranteAkiWeb.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return View("erro");
             }
             try
             {
+                pessoaViewModel.TipoPessoa = "G";
+                pessoaViewModel.IdRestaurante = 1;
                 var pessoa = mapper.Map<Pessoa>(pessoaViewModel);
                 pessoaService.Create(pessoa);
                 return RedirectToAction(nameof(Index));
