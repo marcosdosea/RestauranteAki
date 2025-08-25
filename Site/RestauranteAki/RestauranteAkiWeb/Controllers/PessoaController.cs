@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Core;
 using Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
-
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -16,15 +16,24 @@ namespace RestauranteAkiWeb.Controllers
         {
             this.mapper = mapper;
             this.pessoaService = pessoaService;
-
         }
 
-        // GET: PessoaController
-        public ActionResult Index()
+        // GET: PessoaController/IndexGestor
+        public ActionResult IndexGestor()
         {
-            var listaPessoas = pessoaService.GetAll();
-            var listaPessoasViewModel = mapper.Map<List<PessoaViewModel>>(listaPessoas);
-            return View(listaPessoasViewModel);
+            var listaGestores = pessoaService.GetAll()
+                .Where(p => p.TipoPessoa == "G");
+            var listaGestoresViewModel = mapper.Map<List<PessoaViewModel>>(listaGestores);
+            return View("IndexGestor", listaGestoresViewModel);
+        }
+
+        // GET: PessoaController/IndexGarcom
+        public ActionResult IndexGarcom()
+        {
+            var listaGarcons = pessoaService.GetAll()
+                .Where(p => p.TipoPessoa == "F");
+            var listaGarconsViewModel = mapper.Map<List<PessoaViewModel>>(listaGarcons);
+            return View("IndexGarcom", listaGarconsViewModel);
         }
 
         // GET: PessoaController/Details/5
@@ -36,8 +45,9 @@ namespace RestauranteAkiWeb.Controllers
         }
 
         // GET: PessoaController/Create
-        public ActionResult Create()
+        public ActionResult Create(string tipo)
         {
+            ViewBag.TipoPessoa = tipo; // "G" ou "F"
             return View();
         }
 
@@ -47,23 +57,22 @@ namespace RestauranteAkiWeb.Controllers
         public ActionResult Create(PessoaViewModel pessoaViewModel)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return View(pessoaViewModel);
-            }
-            try
+            if(User.IsInRole("Gestor"))     
             {
                 pessoaViewModel.TipoPessoa = "G";
-                pessoaViewModel.IdRestaurante = 1;
-                var pessoa = mapper.Map<Pessoa>(pessoaViewModel);
-                pessoaService.Create(pessoa);
-                return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                ModelState.AddModelError(String.Empty, "Ocorreu um erro inesperádo. Tente novamente.");
-                return View(pessoaViewModel);
+                pessoaViewModel.TipoPessoa = "F";
             }
+            var pessoa = mapper.Map<Pessoa>(pessoaViewModel);
+            pessoaService.Create(pessoa);
+
+            // Redireciona para a index correta
+            if (pessoaViewModel.TipoPessoa == "G")
+                return RedirectToAction(nameof(IndexGestor));
+            else
+                return RedirectToAction(nameof(IndexGarcom));
         }
 
         // GET: PessoaController/Edit/5
@@ -82,7 +91,7 @@ namespace RestauranteAkiWeb.Controllers
         {
             if (id != pessoaViewModel.Id)
             {
-                return BadRequest();
+                return NotFound();
             }
             try
             {
@@ -112,7 +121,7 @@ namespace RestauranteAkiWeb.Controllers
         {
             if (id != pessoaViewModel.Id)
             {
-                return BadRequest();
+                return NotFound();
             }
             try
             {
