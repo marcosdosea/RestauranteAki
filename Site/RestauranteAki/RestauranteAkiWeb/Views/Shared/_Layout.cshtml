@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RestauranteAkiWeb.styles.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
 </head>
 <body class="@(isHomePage ? "home-page" : "")">
 
@@ -38,8 +39,8 @@
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a asp-area="" asp-controller="Restaurante" asp-action="Index"><i class="fa-solid fa-utensils"></i> Restaurante</a></li>
-                <li><a asp-area="" asp-controller="Pessoa" asp-action="Index"><i class="fa-solid fa-user"></i> Pessoa</a></li>
-                <li><a asp-area="" asp-controller="Garcom" asp-action="Index"><i class="fa-solid fa-user-tie"></i> Garcom</a></li>
+                <li><a asp-area="" asp-controller="Pessoa" asp-action="IndexGarcom"><i class="fa-solid fa-user"></i>Garçom </a></li>
+                <li><a asp-area="" asp-controller="Pessoa" asp-action="IndexGestor"><i class="fa-solid fa-user-tie"></i> Gestor</a></li>
                 <li><a asp-area="" asp-controller="Itemcardapio" asp-action="Index"><i class="fa-solid fa-book-open"></i> Itemcardapio</a></li>
                 <li><a asp-area="" asp-controller="Cardapio" asp-action="Index"><i class="fa-solid fa-book"></i>Cardapio</a></li>
                 <li><a asp-area="" asp-controller="Pedido" asp-action="Index"><i class="fa-solid fa-bell-concierge"></i>Pedido</a></li>
