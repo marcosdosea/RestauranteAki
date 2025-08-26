@@ -10,7 +10,8 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold">Adicionar Gestor</h2>
                 <div>
-                    <button type="button" class="btn btn-outline-secondary me-2" onclick="window.history.back()">Voltar</button>
+                    <button type="button" class="btn btn-outline-secondary me-2"
+                        onclick="window.history.back()">Voltar</button>
                     <button type="submit" form="formGestor" class="btn btn-orange">Salvar</button>
                 </div>
             </div>
@@ -20,13 +21,17 @@
                     Gestor
                 </div>
                 <div class="card-body p-4">
-                    <form asp-action="Create" id="formGestor" enctype="multipart/form-data">
+                    <form asp-action="Create" id="formGestor" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="TipoPessoa" value="@ViewBag.TipoPessoa" />
+
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="row mb-3 align-items-center">
                             <div class="col-md-9">
-                                <label asp-for="NomeCompleto" class="form-label fw-semibold">Nome Completo*</label>
-                                <input asp-for="NomeCompleto" class="form-control" placeholder="Maria Joaquina da Silva Santos" />
+                                <label asp-for="NomeCompleto" class="form-label fw-semibold">Nome
+                                    Completo*</label>
+                                <input asp-for="NomeCompleto" class="form-control"
+                                    placeholder="Maria Joaquina da Silva Santos" />
                                 <span asp-validation-for="NomeCompleto" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 text-center">
@@ -44,14 +49,18 @@
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="Email" class="form-label fw-semibold">Email*</label>
-                                <input asp-for="Email" type="email" class="form-control" placeholder="historia@gmail.com" />
+                                <input asp-for="Email" type="email" class="form-control"
+                                    placeholder="historia@gmail.com" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label asp-for="IdRestaurante" class="form-label fw-semibold">ID do Restaurante (Apenas para Teste)*</label>
-                                <input asp-for="IdRestaurante" type="number" class="form-control" placeholder="Ex. 1" />
+                                <label asp-for="IdRestaurante"
+                                    class="form-label fw-semibold">ID do Restaurante (Apenas para
+                                    Teste)*</label>
+                                <input asp-for="IdRestaurante" type="number" class="form-control"
+                                    placeholder="Ex. 1" />
                                 <span asp-validation-for="IdRestaurante" class="text-danger"></span>
                             </div>
                         </div>
@@ -59,11 +68,13 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label asp-for="Telefone" class="form-label fw-semibold">Telefone*</label>
-                                <input asp-for="Telefone" class="form-control" placeholder="(+01) 23456-7890" />
+                                <input asp-for="Telefone" class="form-control"
+                                    placeholder="(+01) 23456-7890" />
                                 <span asp-validation-for="Telefone" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <label asp-for="DataNascimento" class="form-label fw-semibold">Data de Nascimento*</label>
+                                <label asp-for="DataNascimento" class="form-label fw-semibold">Data de
+                                    Nascimento*</label>
                                 <input asp-for="DataNascimento" type="date" class="form-control" />
                                 <span asp-validation-for="DataNascimento" class="text-danger"></span>
                             </div>
@@ -75,17 +86,20 @@
                                 <input asp-for="Cep" class="form-control" placeholder="Ex. 49160-00" />
                                 <span asp-validation-for="Cep" class="text-danger"></span>
                             </div>
-                        <div class="col-md-7">
+                            <div class="col-md-7">
                                 <label asp-for="Logradouro" class="form-label fw-semibold">Logradouro*</label>
-                                <input asp-for="Logradouro" class="form-control" placeholder="Ex. Rua Presidente Prudente" />
+                                <input asp-for="Logradouro" class="form-control"
+                                    placeholder="Ex. Rua Presidente Prudente" />
                                 <span asp-validation-for="Logradouro" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label asp-for="Complemento" class="form-label fw-semibold">Complemento (opcional)</label>
-                                <input asp-for="Complemento" class="form-control" placeholder="Ex. Casa de esquina" />
+                                <label asp-for="Complemento" class="form-label fw-semibold">Complemento
+                                    (opcional)</label>
+                                <input asp-for="Complemento" class="form-control"
+                                    placeholder="Ex. Casa de esquina" />
                                 <span asp-validation-for="Complemento" class="text-danger"></span>
                             </div>
                         </div>
