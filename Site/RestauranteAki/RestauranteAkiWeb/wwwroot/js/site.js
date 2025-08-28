@@ -1,24 +1,4 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-
-    // --- 1. Funcionalidade da Barra Lateral (Sidebar) com Hover ---
-    const sidebarTrigger = document.getElementById('sidebar-trigger');
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-
-    if (sidebarTrigger && sidebar && mainContent) {
-        sidebarTrigger.addEventListener('mouseenter', () => {
-            sidebar.classList.add('visible');
-            mainContent.classList.add('shifted');
-        });
-
-        sidebar.addEventListener('mouseleave', () => {
-            sidebar.classList.remove('visible');
-            mainContent.classList.remove('shifted');
-        });
-    }
-
-
-    // --- 2. Funcionalidade de Link Ativo na Barra Lateral ---
     function setActiveSidebarLink() {
         const currentPath = window.location.pathname;
         const homePath = "/";
