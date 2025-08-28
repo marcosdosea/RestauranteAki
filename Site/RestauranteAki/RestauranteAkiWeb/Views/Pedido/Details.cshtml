@@ -4,32 +4,59 @@
     ViewData["Title"] = "Detalhes do Pedido";
 }
 
-<h2>Detalhes</h2>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
+            <div><a asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
+    </div>
 
-<h4>Pedido</h4>
-<hr />
+    <section class="card-list-section">
+        <div class="card-list-header">Pedido</div>
+        <div class="card-list">
+            <div class="itemPedido-card">
+                <img class="itemPedido-img" src="/avatar-default.jpg" alt="Imagem do pedido" /> @* Imagem momentânea *@
+                <div class="itemPedido-info">
+                    <div class="itemPedido-detail">
+                        <strong>Id:</strong> @Model.Id
+                    </div>
+                    <div class="itemPedido-detail">
+                        <strong>Status:</strong> @Model.Status
+                    </div>
+                    <div class="itemPedido-detail">
+                        <strong>Conta:</strong> @Model.IdConta
+                    </div>
+                    <div class="itemPedido-detail">
+                        <strong>Mesa:</strong> @Model.IdMesa
+                    </div>
+                    <div class="itemPedido-detail">
+                        <strong>Personagem:</strong> @Model.IdPersonagem
+                    </div>
+                    <div class="itemPedido-detail">
+                        <strong>Pessoa:</strong> @Model.IdPessoa
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 
-<dl class="row">
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Id)</dt>
-    <dd class="col-sm-10">@Model.Id</dd>
+<style>
+    .itemPedido-img {
+        width: 240px;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Status)</dt>
-    <dd class="col-sm-10">@Model.Status</dd>
+    .itemPedido-info{
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 2rem;
+    }
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdConta)</dt>
-    <dd class="col-sm-10">@Model.IdConta</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdMesa)</dt>
-    <dd class="col-sm-10">@Model.IdMesa</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPersonagem)</dt>
-    <dd class="col-sm-10">@Model.IdPersonagem</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPessoa)</dt>
-    <dd class="col-sm-10">@Model.IdPessoa</dd>
-</dl>
-
-<p>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a> |
-    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
-</p>
+    .itemPedido-detail {
+        font-size: 2rem;
+    }
+</style>
