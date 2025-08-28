@@ -42,24 +42,22 @@ namespace RestauranteAkiWeb.Controllers
         // POST: ItemCardapioController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ItemcardapioViewModel itemcardapioViewModel)
+        public ActionResult Create(ItemcardapioViewModel itemcardapioViewModel, string[] DiasSemana)
         {
-            if (!ModelState.IsValid)
+            if (itemcardapioViewModel != null)
             {
-                return View(itemcardapioViewModel);
-            }
-
-            try
-            {
+                // Corrige o campo DiaSemana para receber os valores dos checkboxes
+                itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? Array.Empty<string>());
                 var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
                 itemcardapioService.Create(itemcardapio);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                ModelState.AddModelError(string.Empty, "Ocorreu um erro inesperado. Tente novamente.");
-                return View(itemcardapioViewModel);
+                return BadRequest();
             }
+
+
         }
 
         // GET: ItemCardapioController/Edit/5

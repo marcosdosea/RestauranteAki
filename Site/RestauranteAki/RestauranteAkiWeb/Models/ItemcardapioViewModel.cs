@@ -11,7 +11,7 @@ namespace RestauranteAkiWeb.Models
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? Nome { get; set; } 
+        public string? Nome { get; set; }
 
         [Display(Name = "Descrição")]
         public string? Descricao { get; set; }
@@ -26,7 +26,7 @@ namespace RestauranteAkiWeb.Models
 
         [Display(Name = "Dia da Semana")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? DiaSemana { get; set; } 
+        public string? DiaSemana { get; set; }
 
         [Display(Name = "Status")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
@@ -34,11 +34,14 @@ namespace RestauranteAkiWeb.Models
 
         [Display(Name = "Imagem")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public byte[]? Imagem { get; set; } 
+        public byte[]? Imagem { get; set; }
 
         [Display(Name = "Categoria")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int Categoria { get; set; }
+
+        [Display(Name = "Ingredientes")]
+        public string? Ingredientes { get; set; }
 
         public ICollection<PedidoItemcardapio> PedidoItemcardapios { get; set; } = new List<PedidoItemcardapio>();
 
