@@ -4,40 +4,43 @@
     ViewData["Title"] = "Pedidos";
 }
 
-<h2>Pedidos</h2>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Create" class="btn btn-primary">Adicionar Novo</a></div>
+            <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Novo Pedido</a>
-</p>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
-            <th>@Html.DisplayNameFor(model => model.Status)</th>
-            <th>@Html.DisplayNameFor(model => model.IdConta)</th>
-            <th>@Html.DisplayNameFor(model => model.IdMesa)</th>
-            <th>@Html.DisplayNameFor(model => model.IdPersonagem)</th>
-            <th>@Html.DisplayNameFor(model => model.IdPessoa)</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Status</td>
-                <td>@item.IdConta</td>
-                <td>@item.IdMesa</td>
-                <td>@item.IdPersonagem</td>
-                <td>@item.IdPessoa</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <section class="card-list-section">
+        <div class="card-list-header">Lista de Pedidos</div>
+        <div class="card-list">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="itemPedido-card">
+                        @* <img class="itemPedido-img"
+                             src="@(item.Imagem != null && item.Imagem.Length > 0
+                                                             ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
+                                                             : "/avatar-default.jpg")"
+                             alt="Foto de @item." /> *@
+                        <img class="itemPedido-img" src="/avatar-default.jpg" /> @* Imagem momentanea *@
+                        <div class="itemPedido-info">
+                            @* <span class="itemPedido-name">@item.NomeItem</span> *@
+                            <span class="itemPedido-name">@item.Id</span> @* Nome momentaneo *@
+                            <div class="itemPedido-status">@item.Status</div>
+                        </div>
+                        <div class="itemPedido-actions">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-data">Nenhum garçom cadastrado.</div>
+            }
+        </div>
+    </section>
+</div>
