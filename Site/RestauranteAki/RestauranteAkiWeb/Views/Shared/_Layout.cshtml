@@ -1,8 +1,6 @@
 ﻿@{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
-
     var action = ViewContext.RouteData.Values["action"]?.ToString();
-
     var isHomePage = controller == "Home" && action == "Index";
 }
 
@@ -13,63 +11,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RestauranteAkiWeb</title>
 
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Bootstrap & Custom CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/RestauranteAkiWeb.styles.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
 <body class="@(isHomePage ? "home-page" : "")">
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar d-flex flex-column ps-3 pt-3 pb-3">
+            <div class="logo mb-4">
+                <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center text-decoration-none">
+                    <span class="logo-icon">R</span>
+                    <span class="logo-text ms-2 fw-bold">estauranteAki</span>
+                </a>
+            </div>
+            <nav aria-label="Menu principal">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li><a asp-controller="Home" asp-action="Index" class="nav-link"><i class="fa-solid fa-house me-2"></i> Home</a></li>
+                    <li><a asp-controller="Restaurante" asp-action="Index" class="nav-link"><i class="fa-solid fa-utensils me-2"></i> Restaurante</a></li>
+                    <li><a asp-controller="Pessoa" asp-action="IndexGarcom" class="nav-link"><i class="fa-solid fa-user me-2"></i> Garçom</a></li>
+                    <li><a asp-controller="Pessoa" asp-action="IndexGestor" class="nav-link"><i class="fa-solid fa-user-tie me-2"></i> Gestor</a></li>
+                    <li><a asp-controller="Itemcardapio" asp-action="Index" class="nav-link"><i class="fa-solid fa-book-open me-2"></i> Itemcardapio</a></li>
+                    <li><a asp-controller="Cardapio" asp-action="Index" class="nav-link"><i class="fa-solid fa-book me-2"></i> Cardápio</a></li>
+                    <li><a asp-controller="Pedido" asp-action="Index" class="nav-link"><i class="fa-solid fa-bell-concierge me-2"></i> Pedido</a></li>
+                    <li><a asp-controller="Home" asp-action="Privacy" class="nav-link"><i class="fa-solid fa-shield-halved me-2"></i> Privacy</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <div id="sidebar-trigger">
-        <i class="fa-solid fa-bars"></i>
+        <!-- Main Content -->
+        <main class="main-content flex-grow-1">
+            @if (!isHomePage)
+            {
+                <header class="p-3 mb-3 d-flex justify-content-between align-items-center">
+                    <h1 class="h2 m-0">@ViewData["Title"]</h1>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex flex-column text-end">
+                            <span class="fw-bold text-dark">Marcos Dósea</span>
+                            <span class="text-muted small">Administrador</span>
+                        </div>
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width:56px; height:56px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </header>
+
+            }
+
+            <div class="container-fluid content-wrapper">
+                @RenderBody()
+            </div>
+        </main>
     </div>
 
-    <aside class="sidebar">
-        <div class="logo">
-            <a asp-controller="Home" asp-action="Index" style="text-decoration: none; display: flex; align-items: center;">
-                <span class="logo-icon">R</span><span class="logo-text">estauranteAki</span>
-            </a>
-        </div>
-        <nav>
-            <ul>
-                <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a asp-area="" asp-controller="Restaurante" asp-action="Index"><i class="fa-solid fa-utensils"></i> Restaurante</a></li>
-                <li><a asp-area="" asp-controller="Pessoa" asp-action="IndexGarcom"><i class="fa-solid fa-user"></i>Garçom </a></li>
-                <li><a asp-area="" asp-controller="Pessoa" asp-action="IndexGestor"><i class="fa-solid fa-user-tie"></i> Gestor</a></li>
-                <li><a asp-area="" asp-controller="Itemcardapio" asp-action="Index"><i class="fa-solid fa-book-open"></i> Itemcardapio</a></li>
-                <li><a asp-area="" asp-controller="Cardapio" asp-action="Index"><i class="fa-solid fa-book"></i>Cardapio</a></li>
-                <li><a asp-area="" asp-controller="Pedido" asp-action="Index"><i class="fa-solid fa-bell-concierge"></i>Pedido</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa-solid fa-shield-halved"></i> Privacy</a></li>
-            </ul>
-        </nav>
-    </aside>
-
-    <main class="main-content">
-        @if (!isHomePage)
-
-        {
-            <div class="main-header-wrapper">
-                <header class="main-header">
-                    <h1 id="main-title">@ViewData["Title"]</h1>
-                </header>
-            </div>
-        }
-
-        <div class="container-fluid px-4 h-100">
-            @RenderBody()
-        </div>
-
-    </main>
-
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

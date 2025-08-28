@@ -7,7 +7,7 @@
 }
 
 /* Sidebar */
-.sidebar {
+/*.sidebar {
     width: 260px;
     background: #ff6c00;
     color: #fff;
@@ -91,7 +91,7 @@
             background: #2d2d7f;
             border-radius: 0 4px 4px 0;
             transform: translateY(-50%);
-        }
+        }*/
 
 /* Ícones fictícios (substitua por SVGs ou fontes de ícone se desejar) */
 .icon-home::before {
@@ -115,31 +115,6 @@
 }
 
 /* Conteúdo principal */
-.main-content {
-    flex: 1;
-    padding: 20px 48px 0 48px; /* Reduz o padding superior */
-    background: #f5f6ff;
-}
-
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px; /* Reduz o espaço abaixo dos botões */
-}
-
-.main-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2d2d7f;
-    margin: 0;
-}
-
-.main-actions {
-    display: flex;
-    gap: 24px;
-}
-
 .btn {
     padding: 14px 32px;
     border-radius: 8px;
@@ -185,72 +160,6 @@
         color: #fff;
     }
 
-/* Cards de pessoas */
-.card-list-section {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px #0001;
-    padding: 0 0 32px 0;
-    margin-top: 16px;
-}
-
-.card-list-header {
-    background: #ff6c00;
-    color: #fff;
-    font-size: 1.3rem;
-    font-weight: 700;
-    border-radius: 16px 16px 0 0;
-    padding: 18px 32px;
-    margin-bottom: 0;
-}
-
-.card-list {
-    padding: 32px 32px 0 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.person-card {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border: 2px solid #ff6c00;
-    border-radius: 32px;
-    padding: 16px 32px;
-    gap: 32px;
-    box-shadow: 0 2px 8px #0001;
-    margin-bottom: 0;
-    justify-content: flex-start; /* Alinha conteúdo à esquerda */
-}
-
-.person-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ff6c00;
-    background: #fff;
-}
-
-.person-info {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    margin-left: 16px;
-}
-
-.person-name {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #222;
-}
-
-.person-actions {
-    display: flex;
-    gap: 24px;
-    margin-left: auto; /* Move os botões para a direita */
-}
 
 .no-data {
     color: #888;
@@ -303,9 +212,10 @@
     cursor: pointer;
     transition: background 0.2s;
 }
-.btn-ingredientes:hover {
-    background: #e65c00;
-}
+
+    .btn-ingredientes:hover {
+        background: #e65c00;
+    }
 
 /* Ações do formulário */
 .form-actions {

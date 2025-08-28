@@ -5,16 +5,15 @@
 }
 
 <div>
-    <div class="main-header">
-        <h1 class="main-title"></h1>
-        <div class="main-actions">
+    <div class="view-header">
+        <div class="view-actions">
             <a asp-action="Create" asp-route-tipo="F" class="btn btn-primary">Adicionar Novo</a>
             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>
         </div>
     </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Garçom</div>
+        <div class="card-list-header">Lista de Garçons</div>
         <div class="card-list">
             @if (Model.Any())
             {
