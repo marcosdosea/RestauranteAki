@@ -4,53 +4,42 @@
     ViewData["Title"] = "Gestor";
 }
 
-<div class="layout">
-
-
-    <!-- Conteúdo -->
-    <main class="main-content">
-        <div class="main-header">
-            <div class="view-actions">
-                <a asp-action="Create" asp-route-tipo="F" class="btn btn-primary">Adicionar Novo</a>
-                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>
-            </div>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Create" asp-route-tipo="G" class="btn btn-primary">Adicionar Novo</a></div>
+            <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
         </div>
+    </div>
 
-        <section class="card-list-section">
-            <div class="card-list-header">Garçom</div>
-            <div class="card-list">
-                @if (Model.Any())
+    <section class="card-list-section">
+        <div class="card-list-header">Lista de Gestores</div>
+        <div class="card-list">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
                 {
-                    @foreach (var item in Model)
-                    {
-                        <div class="person-card">
-                            <img class="person-avatar"
-                                 src="@(item.Foto != null && item.Foto.Length > 0
-                                                               ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
-                                                               : "/avatar-default.jpg")"
-                         alt="Foto de @item.NomeCompleto" />
-
-                            <div class="person-info">
-                                <span class="person-name">@item.NomeCompleto</span>
-                            </div>
-
-                            <div class="person-actions">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
-                            </div>
+                    <div class="person-card">
+                        <img class="person-avatar"
+                             src="@(item.Foto != null && item.Foto.Length > 0
+                                ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
+                                : "/avatar-default.jpg")"
+                             alt="Foto de @item.NomeCompleto" />
+                        <div class="person-info">
+                            <span class="person-name">@item.NomeCompleto</span>
                         </div>
-                                }
+                        <div class="person-actions">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Deletar</a>
+                        </div>
+                    </div>
                 }
-                else
-                {
-                    <p class="no-data">Nenhum garçom cadastrado.</p>
-                }
-            </div>
-        </section>
-    </main>
+            }
+            else
+            {
+                <div class="no-data">Nenhum gestor cadastrado.</div>
+            }
+        </div>
+    </section>
 </div>
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
-}

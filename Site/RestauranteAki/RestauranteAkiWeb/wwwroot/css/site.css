@@ -1,5 +1,6 @@
 :root {
     --bs-primary: #F97316;
+    --bs-primary-hover: #EA580C;
     --bs-body-bg: #F8F7FF;
     --bs-body-color: #333;
     --active-blue: #4338CA;
@@ -87,10 +88,11 @@ html, body {
 /* Main */
 .main-content {
     margin-left: 250px;
-    min-height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding: 20px;
+    min-width: 0;
 }
 
 .view-header {
@@ -119,18 +121,43 @@ body.home-page .container-fluid {
     align-items: center;
 }
 
-/* Botões customizados (opcional, reaproveitando bootstrap) */
+/* Botões */
+.btn {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+    min-width: 150px;
+    box-shadow: 1px 1px 0px #b5b5b5;
+}
+
 .btn-primary {
     background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    font-weight: 600;
-    border-radius: 8px;
-    padding: .5rem 1rem;
+    color: #fff;
+    border: 2px solid var(--bs-primary);
 }
 
 .btn-primary:hover {
-    background-color: #ea580c;
-    border-color: #ea580c;
+    background-color: var( --bs-primary-hover);
+    border-color: var(--bs-primary);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--bs-primary);
+    border: 2px solid var(--bs-primary);
+}
+
+.btn-secondary:hover {
+    background: #e8e8e8ff;
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
 }
 
 /* Card custom */
@@ -143,12 +170,11 @@ body.home-page .container-fluid {
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 24px #0001;
-    padding: 0 0 32px 0;
     margin-top: 16px;
 }
 
 .card-list-header {
-    background: #ff6c00;
+    background: var(--bs-primary);
     color: #fff;
     font-size: 1.3rem;
     font-weight: 700;
@@ -158,7 +184,7 @@ body.home-page .container-fluid {
 }
 
 .card-list {
-    padding: 32px 32px 0 32px;
+    padding: 48px 24px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -168,13 +194,13 @@ body.home-page .container-fluid {
     display: flex;
     align-items: center;
     background: #fff;
-    border: 2px solid #ff6c00;
+    border: 2px solid var(--bs-primary);
     border-radius: 32px;
     padding: 16px 32px;
     gap: 32px;
     box-shadow: 0 2px 8px #0001;
     margin-bottom: 0;
-    justify-content: flex-start; /* Alinha conteúdo à esquerda */
+    justify-content: flex-start;
 }
 
 .person-avatar {
@@ -182,7 +208,7 @@ body.home-page .container-fluid {
     height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #ff6c00;
+    border: 2px solid var(--bs-primary);
     background: #fff;
 }
 
@@ -201,6 +227,19 @@ body.home-page .container-fluid {
 
 .person-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     margin-left: auto;
+}
+
+.person-actions .btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+}
+
+.no-data {
+    color: #888;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 3rem;
 }
