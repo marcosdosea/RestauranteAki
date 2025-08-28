@@ -160,6 +160,14 @@ body.home-page .container-fluid {
     color: var(--bs-primary);
 }
 
+.btn-danger {
+    border: 2px solid #dc3545;
+}
+
+.btn-success {
+    border: 2px solid #198754;
+}
+
 /* Card custom */
 .card-header {
     background-color: var(--bs-primary);
