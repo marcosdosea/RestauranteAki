@@ -1,13 +1,10 @@
-﻿/* Regras adicionais para o formulário do Itemcardapio */
-
-/* Form Row */
+﻿/* Form Layout Rules */
 .form-row {
     display: flex;
     flex-wrap: wrap;
     gap: 32px;
 }
 
-/* Controles de layout */
 .flex-two {
     flex: 2;
     min-width: 320px;
@@ -22,17 +19,47 @@
     min-width: 220px;
 }
 
-/* Margem superior padrão */
+/* Margin and Spacing Rules */
+.main-content {
+    margin-top: 32px;
+}
+
+.card-list-section {
+    margin-top: 24px;
+}
+
 .margin-top {
     margin-top: 18px;
 }
 
-/* Container para switch */
 .switch-container {
     margin-top: 8px;
 }
 
-/* Botão Ingredientes customizado */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 48px;
+}
+
+/* Form Element Styling */
+.form-label {
+    font-weight: 600;
+    color: #2d2d7f;
+    padding-left: 24px;
+}
+
+.form-control-plaintext {
+    padding: 8px 0 8px 24px;
+    color: #222;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+/* Button Styling */
 .btn-ingredientes {
     background: #ff6c00;
     color: #fff;
@@ -47,16 +74,96 @@
         background: #e65c00;
     }
 
-/* Ações do formulário */
-.form-actions {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    margin-top: 48px;
-}
-
-/* Botões arredondados */
 .btn-rounded {
     border-radius: 20px;
     min-width: 140px;
 }
+
+/* Day Checkbox Styling */
+.dias-semana {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    padding-left: 24px;
+}
+
+.dia-checkbox input {
+    display: none;
+}
+
+.dia-checkbox span {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #ff6c00;
+    color: #fff;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 700;
+    cursor: default;
+    transition: background 0.2s;
+}
+
+.dia-checkbox input:checked + span {
+    background: #2d2d7f;
+    color: #fff;
+}
+
+/* Photo Upload Styling */
+.foto-upload {
+    margin-top: 8px;
+    padding-left: 24px;
+}
+
+.foto-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #bdbdbd;
+    border-radius: 12px;
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+    color: #888;
+    text-align: center;
+    font-size: 0.95rem;
+    background: #fafaff;
+    transition: border 0.2s;
+}
+
+    .foto-dropzone:hover {
+        border-color: #ff6c00;
+    }
+
+/* Toggle Switch Styling */
+.toggle-switch {
+    width: 40px;
+    height: 22px;
+    appearance: none;
+    background: #ff6c00;
+    outline: none;
+    border-radius: 20px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+    .toggle-switch:checked {
+        background: #2d2d7f;
+    }
+
+    .toggle-switch::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 4px;
+        width: 14px;
+        height: 14px;
+        background: #fff;
+        border-radius: 50%;
+        transition: left 0.2s;
+    }
+
+    .toggle-switch:checked::before {
+        left: 22px;
+    }

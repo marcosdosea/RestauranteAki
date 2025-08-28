@@ -5,15 +5,16 @@
 }
 
 <div>
-    <div class="view-header">
-        <div class="view-actions">
-            <a asp-action="Create" class="btn btn-primary">Adicionar Novo</a>
+    <div class="main-header">
+        <h1 class="main-title"></h1>
+        <div class="main-actions">
+            <a asp-action="Create" asp-route-tipo="F" class="btn btn-primary">Adicionar Novo</a>
             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>
         </div>
     </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Listas de Cardápios</div>
+        <div class="card-list-header">Cardapio</div>
         <div class="card-list">
             @if (Model.Any())
             {
@@ -22,24 +23,28 @@
                     <div class="person-card">
                         <img class="person-avatar"
                              src="@(item.Imagem != null && item.Imagem.Length > 0
-                                ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
-                                : "/avatar-default.jpg")"
-                             ="Foto de @item.Nome" />
-                        <div class="person-info">
-                            <span class="person-name">@item.Nome</span>
-                        </div>
-                        <div class="person-actions">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
-                        </div>
-                    </div>
-                }
+                                                             ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
+                                                             : "/avatar-default.jpg")"
+                     alt="Foto de @item.Nome" />
+                <div class="person-info">
+                    <span class="person-name">@item.Nome</span>
+                </div>
+                <div class="person-actions">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+                </div>
+            </div>
+                        }
             }
             else
             {
-                <div class="no-data">Nenhum cardápio cadastrado.</div>
+                <p class="no-data">Nenhum Cardapio cadastrado.</p>
             }
         </div>
     </section>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}

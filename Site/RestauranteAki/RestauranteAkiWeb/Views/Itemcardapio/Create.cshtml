@@ -6,7 +6,7 @@
 
 <div class="main-content">
     <div class="main-header">
-        <h1 class="view-title">Adicionar Cardápio</h1>
+        <h1 class="main-title">Adicionar Cardápio</h1>
     </div>
 
     <section class="card-list-section">
@@ -23,10 +23,10 @@
                         <label for="Categoria" class="form-label">Categoria *</label>
                         <select asp-for="Categoria" class="form-control" required>
                             <option value="">Selecione</option>
-                            <option value="Hamburger">Hamburger</option>
-                            <option value="Pizza">Pizza</option>
-                            <option value="Bebida">Bebida</option>
-                            <option value="Sobremesa">Sobremesa</option>
+                            <option value="1">Hamburger</option>
+                            <option value="2">Pizza</option>
+                            <option value="3">Bebida</option>
+                            <option value="4">Sobremesa</option>
                         </select>
                         <span asp-validation-for="Categoria" class="text-danger"></span>
                     </div>
@@ -38,9 +38,10 @@
                         </div>
                         <div class="form-group flex-one">
                             <label class="form-label">Disponível</label>
-                            <div class="switch-container">
-                                <input asp-for="Status" type="checkbox" class="toggle-switch" />
-                            </div>
+                            <label class="switch-toggle">
+                                <input asp-for="Status" type="checkbox" />
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
                     <div class="form-group margin-top">
@@ -48,11 +49,11 @@
                         <div class="dias-semana">
                             @{
                                 var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
-                                var nomes = new[] { "Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom" };
+                                var nomes = new[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" };
                                 for (int i = 0; i < dias.Length; i++)
                                 {
                                     <label class="dia-checkbox">
-                                        <input type="checkbox" name="DiasSemana" value="@dias[i]" />
+                                        <input type="checkbox" name="DiasSemana" value="@nomes[i]" />
                                         <span>@dias[i]</span>
                                     </label>
                                 }
@@ -60,7 +61,34 @@
                         </div>
                     </div>
                     <div class="form-group margin-top">
-                        <button type="button" class="btn btn-primary btn-ingredientes">Ingredientes</button>
+                        <label for="Porcao" class="form-label">Porção *</label>
+                        <input asp-for="Porcao" class="form-control" type="number" min="1" required />
+                        <span asp-validation-for="Porcao" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group margin-top">
+                        <button type="button" class="btn btn-primary btn-ingredientes" data-bs-toggle="modal" data-bs-target="#ingredientesModal">
+                            Ingredientes
+                        </button>
+                    </div>
+
+                    <!-- Modal Bootstrap -->
+                    <div class="modal fade" id="ingredientesModal" tabindex="-1" aria-labelledby="ingredientesModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ingredientesModalLabel">Ingredientes</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <textarea asp-for="Descricao" class="form-control" rows="5"></textarea>
+                                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="flex-one-min">
@@ -87,12 +115,25 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/profile.css" />
     <style>
-        .form-label { font-weight: 600; color: #2d2d7f; }
-        .dias-semana { display: flex; gap: 8px; margin-top: 8px; }
-        .dia-checkbox input { display: none; }
+        .form-label {
+            font-weight: 600;
+            color: #2d2d7f;
+        }
+
+        .dias-semana {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .dia-checkbox input {
+            display: none;
+        }
+
         .dia-checkbox span {
             display: inline-block;
-            width: 32px; height: 32px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             background: #ff6c00;
             color: #fff;
@@ -102,11 +143,16 @@
             cursor: pointer;
             transition: background 0.2s;
         }
+
         .dia-checkbox input:checked + span {
             background: #2d2d7f;
             color: #fff;
         }
-        .foto-upload { margin-top: 8px; }
+
+        .foto-upload {
+            margin-top: 8px;
+        }
+
         .foto-dropzone {
             display: flex;
             align-items: center;
@@ -122,9 +168,57 @@
             background: #fafaff;
             transition: border 0.2s;
         }
-        .foto-dropzone:hover {
-            border-color: #ff6c00;
+
+            .foto-dropzone:hover {
+                border-color: #ff6c00;
+            }
+
+        .switch-toggle {
+            position: relative;
+            display: inline-block;
+            width: 56px;
+            height: 28px;
+            vertical-align: middle;
         }
+
+        .switch-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ff6c00;
+            border-radius: 28px;
+            transition: background 0.2s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        .switch-toggle input:checked + .slider {
+            background: #2d2d7f;
+        }
+
+        .switch-toggle input:checked + .slider:before {
+            transform: translateX(28px);
+        }
+
         .toggle-switch {
             width: 40px;
             height: 22px;
@@ -135,22 +229,25 @@
             position: relative;
             transition: background 0.2s;
         }
-        .toggle-switch:checked {
-            background: #2d2d7f;
-        }
-        .toggle-switch::before {
-            content: '';
-            position: absolute;
-            left: 4px;
-            top: 4px;
-            width: 14px;
-            height: 14px;
-            background: #fff;
-            border-radius: 50%;
-            transition: left 0.2s;
-        }
-        .toggle-switch:checked::before {
-            left: 22px;
-        }
+
+            .toggle-switch:checked {
+                background: #2d2d7f;
+            }
+
+            .toggle-switch::before {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 4px;
+                width: 14px;
+                height: 14px;
+                background: #fff;
+                border-radius: 50%;
+                transition: left 0.2s;
+            }
+
+            .toggle-switch:checked::before {
+                left: 22px;
+            }
     </style>
 }
