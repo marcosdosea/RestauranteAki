@@ -266,3 +266,280 @@ body.home-page .container-fluid {
     font-size: 1.5rem;
     padding: 3rem;
 }
+
+
+
+/* C - PAGINA DO RESTAURANTE */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.list-wrapper {
+    width: 95%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.header-bar {
+    background-color: #F97316;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .header-bar h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+
+.list-container {
+    background-color: #ffffff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 10px 0;
+}
+
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+}
+
+    .list-item:last-child {
+        border-bottom: none;
+    }
+
+
+.item-avatar {
+    width: 45px;
+    height: 45px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+    .item-avatar .bi {
+        font-size: 1.5rem;
+        color: #64748b;
+    }
+
+
+.item-details {
+    flex-grow: 1;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+
+.item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-custom-primary {
+    background-color: #F97316;
+    color: white !important;
+    border: none;
+    padding: 10px 18px; 
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-custom-primary:hover {
+        background-color: #EA580C;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-custom-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+.btn-custom-secondary {
+    background-color: white;
+    color: #F97316 !important;
+    border: 1px solid #F97316;
+    padding: 6px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-custom-secondary:hover {
+        background-color: #F97316;
+        color: white !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-custom-secondary:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+
+.details-list dt {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.details-list dd {
+    margin-bottom: 1rem;
+}
+
+
+.delete-warning {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border: 1px solid #f5c6cb;
+    border-radius: .25rem;
+    background-color: #f8d7da;
+    color: #721c24;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+
+.btn-custom-danger {
+    background-color: #DC3545;
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-custom-danger:hover {
+        background-color: #C82333;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-custom-danger:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+.btn-custom-tertiary {
+    background-color: white;
+    color: #F97316 !important;
+    border: 1px solid #F97316;
+    padding: 9px 19px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-custom-tertiary:hover {
+        background-color: #F97316;
+        color: white !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+
+
+/* ===========================================
+--- ESTILOS RESPONSIVOS ---
+==============================================
+*/
+
+@media (max-width: 768px) {
+
+    .list-wrapper {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .header-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 20px 15px;
+        border-radius: 0;
+    }
+
+        .header-bar h2 {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+    .list-container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .list-item {
+        padding: 20px 15px;
+        gap: 15px;
+    }
+
+    .item-details {
+        flex-basis: 100%;
+        order: -1;
+        text-align: left;
+    }
+
+
+    .item-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn-custom-secondary {
+        justify-content: center;
+        padding: 10px;
+    }
+}
+/* END RESTAURANTE */
+
