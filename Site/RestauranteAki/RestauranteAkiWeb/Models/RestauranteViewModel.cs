@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Core;
+﻿using Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace RestauranteAkiWeb.Models
 {
@@ -11,7 +11,7 @@ namespace RestauranteAkiWeb.Models
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? Nome { get; set; } 
+        public string? Nome { get; set; }
 
         [Display(Name = "Nome Fantasia")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
@@ -29,23 +29,23 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string? Bairro { get; set; }
 
-        [Display(Name = "Lagradouro")]
+        [Display(Name = "Logradouro")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string Logradouro { get; set; } = null!;
 
         [Display(Name = "Estado")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? Estado { get; set; } 
+        public string? Estado { get; set; }
 
         [Display(Name = "Cidade")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? Cidade { get; set; } 
+        public string? Cidade { get; set; }
 
         [Display(Name = "Complemento")]
         public string? Complemento { get; set; }
 
-        public ICollection<Cardapio>? Cardapios { get; set; } 
+        public ICollection<Cardapio>? Cardapios { get; set; }
 
-        public ICollection<Pessoa>? Pessoas { get; set; } 
+        public ICollection<Pessoa>? Pessoas { get; set; }
     }
 }
