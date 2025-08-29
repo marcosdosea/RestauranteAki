@@ -1,0 +1,93 @@
+﻿@model RestauranteAkiWeb.Models.RestauranteViewModel
+
+@{
+    ViewData["Title"] = "Painel - Detalhes do Restaurante";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/list-style.css" />
+}
+
+<div class="list-wrapper">
+    <div class="header-bar form-header">
+        <h2>Detalhes: @Model.NomeFantasia</h2>
+
+        <div class="header-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-custom-primary">
+                <i class="bi bi-pencil-square"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn-custom-tertiary">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </div>
+
+    <div class="list-container" style="padding: 30px;">
+
+        <dl class="row details-list">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.NomeFantasia)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.NomeFantasia)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Cnpj)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Cnpj)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Cep)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Cep)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Logradouro)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Logradouro)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Bairro)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Bairro)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Cidade)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Cidade)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Estado)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Estado)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Complemento)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Complemento)
+            </dd>
+        </dl>
+
+    </div>
+</div>
