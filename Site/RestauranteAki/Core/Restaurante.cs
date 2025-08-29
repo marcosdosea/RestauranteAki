@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Core;
+﻿namespace Core;
 
 public partial class Restaurante
 {
@@ -30,4 +27,6 @@ public partial class Restaurante
     public virtual ICollection<Cardapio> Cardapios { get; set; } = new List<Cardapio>();
 
     public virtual ICollection<Pessoa> Pessoas { get; set; } = new List<Pessoa>();
+
+
 }

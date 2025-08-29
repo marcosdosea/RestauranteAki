@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Core;
 
@@ -376,6 +374,8 @@ public partial class RestauranteAkiContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
