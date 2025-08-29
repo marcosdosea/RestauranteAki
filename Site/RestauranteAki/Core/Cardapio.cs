@@ -9,11 +9,11 @@ public partial class Cardapio
 
     public string Nome { get; set; } = null!;
 
+    public sbyte Ativo { get; set; }
+
     public DateTime DataInicio { get; set; }
 
     public DateTime DataFim { get; set; }
-
-    public sbyte Ativo { get; set; }
 
     public int IdRestaurante { get; set; }
 

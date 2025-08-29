@@ -13,7 +13,11 @@ public partial class Restaurante
 
     public string Cnpj { get; set; } = null!;
 
-    public string Endereco { get; set; } = null!;
+    public string? Cep { get; set; }
+
+    public string Logradouro { get; set; } = null!;
+
+    public int Numero { get; set; }
 
     public string Bairro { get; set; } = null!;
 

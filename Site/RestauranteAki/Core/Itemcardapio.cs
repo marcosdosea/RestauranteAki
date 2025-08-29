@@ -9,8 +9,6 @@ public partial class Itemcardapio
 
     public string Nome { get; set; } = null!;
 
-    public string? Descricao { get; set; }
-
     public float PrecoUnitario { get; set; }
 
     public int Porcao { get; set; }
@@ -19,9 +17,11 @@ public partial class Itemcardapio
 
     public bool Status { get; set; }
 
-    public byte[] Imagem { get; set; } = null!;
+    public string? Descricao { get; set; }
 
     public int Categoria { get; set; }
+
+    public byte[] Imagem { get; set; } = null!;
 
     public virtual ICollection<PedidoItemcardapio> PedidoItemcardapios { get; set; } = new List<PedidoItemcardapio>();
 
