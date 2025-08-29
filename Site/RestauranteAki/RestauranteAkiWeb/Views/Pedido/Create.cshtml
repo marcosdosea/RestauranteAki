@@ -4,47 +4,92 @@
     ViewData["Title"] = "Novo Pedido";
 }
 
-<h2>Criar Pedido</h2>
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Status"></label>
-        <select asp-for="Status" class="form-control">
-            <option value="">Selecione um status</option>
-            <option selected value="S">Solicitado</option>
-            <option value="P">Pronto</option>
-            <option value="E">Entregue</option>
-        </select>
-        <span asp-validation-for="Status" class="text-danger"></span>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="IdConta"></label>
-        <input asp-for="IdConta" class="form-control" />
-        <span asp-validation-for="IdConta" class="text-danger"></span>
-    </div>
+    <section class="card-list-section">
+        <div class="card-list-header">Pedido</div>
+        <div class="card-list">
+            <div class="itemPedido-card">
+                <form asp-action="Create" method="post">
+                    <div class="form-group">
+                        <label asp-for="Status"></label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="">Selecione um status</option>
+                            <option value="S">Solicitado</option>
+                            <option value="P">Pronto</option>
+                            <option value="E">Entregue</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
 
-    <div class="form-group">
-        <label asp-for="IdMesa"></label>
-        <input asp-for="IdMesa" class="form-control" />
-        <span asp-validation-for="IdMesa" class="text-danger"></span>
-    </div>
+                    <div class="form-group">
+                        <label asp-for="IdConta"></label>
+                        <input asp-for="IdConta" class="form-control" />
+                        <span asp-validation-for="IdConta" class="text-danger"></span>
+                    </div>
 
-    <div class="form-group">
-        <label asp-for="IdPersonagem"></label>
-        <input asp-for="IdPersonagem" class="form-control" />
-        <span asp-validation-for="IdPersonagem" class="text-danger"></span>
-    </div>
+                    <div class="form-group">
+                        <label asp-for="IdMesa"></label>
+                        <input asp-for="IdMesa" class="form-control" />
+                        <span asp-validation-for="IdMesa" class="text-danger"></span>
+                    </div>
 
-    <div class="form-group">
-        <label asp-for="IdPessoa"></label>
-        <input asp-for="IdPessoa" class="form-control" />
-        <span asp-validation-for="IdPessoa" class="text-danger"></span>
-    </div>
+                    <div class="form-group">
+                        <label asp-for="IdPersonagem"></label>
+                        <input asp-for="IdPersonagem" class="form-control" />
+                        <span asp-validation-for="IdPersonagem" class="text-danger"></span>
+                    </div>
 
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
-</form>
+                    <div class="form-group">
+                        <label asp-for="IdPessoa"></label>
+                        <input asp-for="IdPessoa" class="form-control" />
+                        <span asp-validation-for="IdPessoa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .itemPedido-card {
+        flex-direction: column;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-color: #fff;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .itemPedido-card form {
+        gap: 0.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+</style>
 
 @section Scripts {
     @{

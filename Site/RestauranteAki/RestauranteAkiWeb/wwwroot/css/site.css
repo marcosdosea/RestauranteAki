@@ -160,6 +160,14 @@ body.home-page .container-fluid {
     color: var(--bs-primary);
 }
 
+.btn-danger {
+    border: 2px solid #dc3545;
+}
+
+.btn-success {
+    border: 2px solid #198754;
+}
+
 /* Card custom */
 .card-header {
     background-color: var(--bs-primary);
@@ -169,7 +177,7 @@ body.home-page .container-fluid {
 .card-list-section {
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 24px #0001;
+    box-shadow: 1px 1px 0px #b5b5b5;
     margin-top: 16px;
 }
 
@@ -184,7 +192,7 @@ body.home-page .container-fluid {
 }
 
 .card-list {
-    padding: 48px 24px;
+    padding: 48px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -198,12 +206,21 @@ body.home-page .container-fluid {
     border-radius: 32px;
     padding: 16px 32px;
     gap: 32px;
-    box-shadow: 0 2px 8px #0001;
     margin-bottom: 0;
     justify-content: flex-start;
 }
 
-.person-avatar {
+.itemPedido-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid var(--bs-primary);
+    border-radius: 2rem;
+}
+
+.person-avatar, .itemPedido-img {
     width: 64px;
     height: 64px;
     border-radius: 50%;
@@ -212,17 +229,23 @@ body.home-page .container-fluid {
     background: #fff;
 }
 
-.person-info {
+.person-info, .itemPedido-info {
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-left: 16px;
 }
 
-.person-name {
+.person-name, .itemPedido-name {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #222;
+}
+
+.itemPedido-status {
+    margin-right: 5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
 }
 
 .person-actions {
