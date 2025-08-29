@@ -14,10 +14,28 @@ namespace Service
             this.context = context;
         }
 
-        public int Create(Itemcardapio itemcardapio)
+        public int Create(Itemcardapio itemcardapio, string[] diasSemana, ICardapioService cardapioService)
         {
+            // Define os dias da semana selecionados
+            itemcardapio.DiaSemana = string.Join(",", diasSemana ?? Array.Empty<string>());
+
+            // Busca e associa os cardápios existentes conforme os dias selecionados
+            var cardapiosAssociados = diasSemana?
+                .SelectMany(dia => cardapioService.GetByNome(dia))
+                .Distinct()
+                .ToList() ?? new List<Cardapio>();
+
+            itemcardapio.IdCardapios = cardapiosAssociados;
+
+            // Anexa os cardápios ao contexto para garantir o rastreamento correto
+            foreach (var cardapio in itemcardapio.IdCardapios)
+            {
+                context.Attach(cardapio);
+            }
+
             context.Add(itemcardapio);
             context.SaveChanges();
+
             return itemcardapio.Id;
         }
 

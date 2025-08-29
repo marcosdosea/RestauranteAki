@@ -7,5 +7,6 @@
         void Delete(int id);
         Cardapio? Get(int id);
         IEnumerable<Cardapio> GetAll();
+        IEnumerable<Cardapio> GetByNome(string nome);
     }
 }
