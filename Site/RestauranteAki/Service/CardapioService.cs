@@ -28,7 +28,7 @@ namespace Service
         /// Remove um cardapio do banco de dados.
         /// </summary>
         /// <param name="id">Id do cardapio a ser removido.</param>
-       
+
         public void Delete(int id)
         {
             var cardapio = context.Cardapios.Find(id);
@@ -53,7 +53,10 @@ namespace Service
         /// <returns>Cardapio encontrado ou null.</returns>
         public Cardapio? Get(int id)
         {
-            return context.Cardapios.Find(id);
+
+            return context.Cardapios
+                .Include(c => c.IdItemCardapios)
+                .FirstOrDefault(c => c.Id == id);
         }
 
         /// <summary>
@@ -63,6 +66,11 @@ namespace Service
         public IEnumerable<Cardapio> GetAll()
         {
             return context.Cardapios.AsNoTracking();
+        }
+
+        public IEnumerable<Cardapio> GetByNome(string nome)
+        {
+            return context.Cardapios.AsNoTracking().Where(c => c.Nome == nome);
         }
     }
 }
