@@ -7,13 +7,13 @@ public partial class Contum
 {
     public int Id { get; set; }
 
-    public DateTime DataHoraEncerramento { get; set; }
-
     public float Valor { get; set; }
 
     public string FormaPagamento { get; set; } = null!;
 
     public string Status { get; set; } = null!;
+
+    public DateTime DataHoraEncerramento { get; set; }
 
     public int IdMesa { get; set; }
 

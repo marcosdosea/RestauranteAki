@@ -11,11 +11,11 @@ public partial class Pessoa
 
     public string Cpf { get; set; } = null!;
 
+    public DateTime DataNascimento { get; set; }
+
     public string? Email { get; set; }
 
     public string Telefone { get; set; } = null!;
-
-    public DateTime DataNascimento { get; set; }
 
     public string Cep { get; set; } = null!;
 
