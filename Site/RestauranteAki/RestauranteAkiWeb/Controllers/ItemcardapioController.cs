@@ -10,11 +10,13 @@ namespace RestauranteAkiWeb.Controllers
     {
         private readonly IMapper mapper;
         private readonly IItemcardapioService itemcardapioService;
+        private readonly ICardapioService cardapioService;
 
-        public ItemcardapioController(IMapper mapper, IItemcardapioService itemcardapioService)
+        public ItemcardapioController(IMapper mapper, IItemcardapioService itemcardapioService, ICardapioService cardapioService)
         {
             this.mapper = mapper;
             this.itemcardapioService = itemcardapioService;
+            this.cardapioService = cardapioService;
         }
 
         // GET: ItemCardapioController
@@ -46,18 +48,16 @@ namespace RestauranteAkiWeb.Controllers
         {
             if (itemcardapioViewModel != null)
             {
-                // Corrige o campo DiaSemana para receber os valores dos checkboxes
                 itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? Array.Empty<string>());
+                
                 var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
-                itemcardapioService.Create(itemcardapio);
+                itemcardapioService.Create(itemcardapio, DiasSemana, cardapioService);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
                 return BadRequest();
             }
-
-
         }
 
         // GET: ItemCardapioController/Edit/5
