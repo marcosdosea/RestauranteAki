@@ -20,9 +20,9 @@ namespace RestauranteAkiWeb.Controllers
         // GET: RestauranteController
         public ActionResult Index()
         {
-            var listaRestaurantes = restauranteService.GetAll();
-            var listaRestaurantesViewModel = mapper.Map<List<RestauranteViewModel>>(listaRestaurantes);
-            return View(listaRestaurantesViewModel);
+            var restaurantes = restauranteService.GetAll();
+            var listaRestaurantes = mapper.Map<List<RestauranteViewModel>>(restaurantes);
+            return View(listaRestaurantes);
         }
 
         // GET: RestauranteController/Details/5
