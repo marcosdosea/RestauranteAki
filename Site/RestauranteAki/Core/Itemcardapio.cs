@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Core;
+﻿namespace Core;
 
 public partial class Itemcardapio
 {
@@ -26,4 +23,6 @@ public partial class Itemcardapio
     public virtual ICollection<PedidoItemcardapio> PedidoItemcardapios { get; set; } = new List<PedidoItemcardapio>();
 
     public virtual ICollection<Cardapio> IdCardapios { get; set; } = new List<Cardapio>();
+
+
 }

@@ -25,13 +25,13 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string? Cep { get; set; }
 
+        [Display(Name = "Logradouro")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string? Logradouro { get; set; }
+
         [Display(Name = "Bairro")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string? Bairro { get; set; }
-
-        [Display(Name = "Logradouro")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string Logradouro { get; set; } = null!;
 
         [Display(Name = "Estado")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]

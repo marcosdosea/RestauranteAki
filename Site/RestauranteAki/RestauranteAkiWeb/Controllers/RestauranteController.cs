@@ -4,7 +4,6 @@ using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
 
-
 namespace RestauranteAkiWeb.Controllers
 {
     public class RestauranteController : Controller
@@ -65,7 +64,7 @@ namespace RestauranteAkiWeb.Controllers
         // POST: RestauranteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, RestauranteViewModel restauranteViewModel)
+        public ActionResult Edit(RestauranteViewModel restauranteViewModel)
         {
             if (ModelState.IsValid)
             {
