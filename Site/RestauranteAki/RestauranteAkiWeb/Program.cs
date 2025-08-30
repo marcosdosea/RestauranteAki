@@ -18,6 +18,7 @@ builder.Services.AddTransient<IGarcomService, GarcomService>();
 builder.Services.AddTransient<IItemcardapioService, ItemcardapioService>();
 builder.Services.AddTransient<ICardapioService, CardapioService>();
 builder.Services.AddTransient<IRestauranteService, RestauranteService>();
+builder.Services.AddTransient<IMesaService, MesaService>();
 
 builder.Services.AddHttpContextAccessor();
 
