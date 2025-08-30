@@ -1,0 +1,103 @@
+﻿@model RestauranteAkiWeb.Models.ContumViewModel
+
+@{
+    ViewData["Title"] = "Nova Conta";
+}
+
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
+
+    <section class="card-list-section">
+        <div class="card-list-header">Conta</div>
+        <div class="card-list">
+            <div class="itemConta-card">
+                <form asp-action="Create" method="post">
+
+                    <div class="form-group">
+                        <label asp-for="DataHoraEncerramento"></label>
+                        <input asp-for="DataHoraEncerramento" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="DataHoraEncerramento" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Valor"></label>
+                        <input asp-for="Valor" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="Valor" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FormaPagamento"></label>
+                        <select asp-for="FormaPagamento" class="form-control">
+                            <option value="">Selecione a forma</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão Crédito">Cartão Crédito</option>
+                            <option value="Cartão Débito">Cartão Débito</option>
+                            <option value="Pix">Pix</option>
+                        </select>
+                        <span asp-validation-for="FormaPagamento" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Status"></label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="">Selecione um status</option>
+                            <option value="A">Aberta</option>
+                            <option value="F">Fechada</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IdMesa"></label>
+                        <input asp-for="IdMesa" class="form-control" />
+                        <span asp-validation-for="IdMesa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .itemConta-card {
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        border: 2px solid var(--bs-primary);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .itemConta-card form {
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
