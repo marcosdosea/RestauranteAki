@@ -1,0 +1,102 @@
+﻿@model RestauranteAkiWeb.Models.ContumViewModel
+
+@{
+    ViewData["Title"] = "Detalhes da Conta";
+}
+
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
+            <div><a asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
+    </div>
+
+    <section class="card-list-section">
+        <div class="card-list-header">Conta</div>
+        <div class="card-list">
+            <div class="itemConta-card">
+                <div class="itemConta-info">
+                    <div class="itemConta-detail">
+                        <strong>Código:</strong> @Model.Id
+                    </div>
+                    <div class="itemConta-detail">
+                        <strong>Data Encerramento:</strong> @Model.DataHoraEncerramento.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+                    <div class="itemConta-detail">
+                        <strong>Valor Total:</strong> @Model.Valor.ToString("C")
+                    </div>
+                    <div class="itemConta-detail">
+                        <strong>Forma de Pagamento:</strong> @Model.FormaPagamento
+                    </div>
+                    <div class="itemConta-detail">
+                        <strong>Status:</strong> @Model.Status
+                    </div>
+                    <div class="itemConta-detail">
+                        <strong>Mesa:</strong> @Model.IdMesa
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @* Listagem de Pedidos *@
+    @* @if (Model.Pedidos?.Any() == true)
+    {
+        <section class="card-list-section">
+            <div class="card-list-header">Pedidos da Conta</div>
+            <ul class="list-group">
+                @foreach (var pedido in Model.Pedidos)
+                {
+                    <li class="list-group-item">
+                        Pedido @pedido.Id - Status: @pedido.Status
+                    </li>
+                }
+            </ul>
+        </section>
+    } *@
+
+    @* Listagem de Pagamentos *@
+    @* @if (Model.Pagamentos?.Any() == true)
+    {
+        <section class="card-list-section">
+            <div class="card-list-header">Pagamentos</div>
+            <ul class="list-group">
+                @foreach (var pagamento in Model.Pagamentos)
+                {
+                    <li class="list-group-item">
+                        Pagamento @pagamento.Id - Valor: @pagamento.Valor.ToString("C")
+                    </li>
+                }
+            </ul>
+        </section>
+    } *@
+</div>
+
+<style>
+    .itemConta-info {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 2rem;
+    }
+
+    .itemConta-detail {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .list-group {
+        margin-top: 1rem;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-group-item {
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+</style>

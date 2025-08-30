@@ -1,0 +1,63 @@
+﻿@model IEnumerable<RestauranteAkiWeb.Models.ContumViewModel>
+
+@{
+    ViewData["Title"] = "Contas";
+}
+
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Create" class="btn btn-primary">Adicionar Nova</a></div>
+            <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
+    </div>
+
+    <section class="card-list-section">
+        <div class="card-list-header">Lista de Contas</div>
+        <div class="cabecalho-lista">
+            <div class="cabecalho-item">Data/Hora Encerramento</div>
+            @* <div class="cabecalho-item">Id</div> *@
+            <div class="cabecalho-item">Mesa</div> @* Vai ser numero da mesa *@
+            <div class="cabecalho-item">Valor</div>
+            <div class="cabecalho-item">Forma de Pagamento</div>
+            <div class="cabecalho-item">Status</div>
+            @* <div class="cabecalho-item">Ações</div> *@
+        </div>
+        <div class="card-list">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="itemPedido-card">
+                        <div class="itemPedido-info">
+                            <div class="itemPedido-name">@item.DataHoraEncerramento</div>
+                            @* <div class="itemPedido-name">@item.Id</div> *@
+                            <div class="itemPedido-name">@item.IdMesa</div> @* Vai ser numero da mesa *@
+                            <div class="itemPedido-name">@item.Valor</div>
+                            <div class="itemPedido-name">@item.FormaPagamento</div>
+                            <div class="itemPedido-name">@item.Status</div>
+                        </div>
+                        <div class="itemPedido-actions">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-data">Nenhuma conta encontrada.</div>
+            }
+        </div>
+    </section>
+</div>
+
+<style>
+    .cabecalho-lista{
+        display: flex;
+        justify-content: space-between;
+        background-color: #f8f9fa;
+        font-weight: bold;
+        border-bottom: 2px solid #dee2e6;
+        padding: 10px 220px 10px 80px; /* provisorio */
+    }
+</style>

@@ -19,7 +19,7 @@ namespace RestauranteAkiWeb.Models
 
         [Display(Name = "Forma de Pagamento")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? FormaPagamento { get; set; }
+        public string FormaPagamento { get; set; } = string.Empty;
 
         [Display(Name = "Status")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
@@ -29,11 +29,9 @@ namespace RestauranteAkiWeb.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int IdMesa { get; set; }
 
-        public Mesa? IdMesaNavigation { get; set; }
-
-        public ICollection<Pagamento> Pagamentos { get; set; } = new List<Pagamento>();
-
-        public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        public MesaViewModel? Mesa { get; set; }
+        public List<PagamentoViewModel> Pagamentos { get; set; } = new();
+        public List<PedidoViewModel> Pedidos { get; set; } = new();
     }
 }
 
