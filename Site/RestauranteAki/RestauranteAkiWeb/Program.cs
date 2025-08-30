@@ -11,21 +11,21 @@ builder.Services.AddControllersWithViews();
 // Registra AutoMapper e procura automaticamente os profiles
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Seus serviÁos
+// Seus servi√ßos
 builder.Services.AddTransient<IPessoaService, PessoaService>();
 builder.Services.AddTransient<IPedidoService, PedidoService>();
 builder.Services.AddTransient<IGarcomService, GarcomService>();
 builder.Services.AddTransient<IItemcardapioService, ItemcardapioService>();
 builder.Services.AddTransient<ICardapioService, CardapioService>();
+builder.Services.AddTransient<IMesaService, MesaService>();
 builder.Services.AddTransient<IRestauranteService, RestauranteService>();
-builder.Services.AddTransient<IContumService, ContumService>();
 
 builder.Services.AddHttpContextAccessor();
 
 var connectionString = builder.Configuration.GetConnectionString("RestauranteAkiConnection");
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new InvalidOperationException("A string de conex„o 'RestauranteAkiConnection' n„o foi encontrada ou est· vazia.");
+    throw new InvalidOperationException("A string de conex√£o 'RestauranteAkiConnection' n√£o foi encontrada ou est√° vazia.");
 }
 builder.Services.AddDbContext<RestauranteAkiContext>(options => options.UseMySQL(connectionString));
 
