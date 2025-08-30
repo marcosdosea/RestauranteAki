@@ -3,7 +3,6 @@ using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
-using System.Collections.Generic;
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -21,9 +20,9 @@ namespace RestauranteAkiWeb.Controllers
         // GET: RestauranteController
         public ActionResult Index()
         {
-            var listaRestaurantes = restauranteService.GetAll();
-            var listaRestaurantesViewModel = mapper.Map<List<RestauranteViewModel>>(listaRestaurantes);
-            return View(listaRestaurantesViewModel);
+            var restaurantes = restauranteService.GetAll();
+            var listaRestaurantes = mapper.Map<List<RestauranteViewModel>>(restaurantes);
+            return View(listaRestaurantes);
         }
 
         // GET: RestauranteController/Details/5
@@ -45,27 +44,27 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RestauranteViewModel restauranteViewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var restaurante = mapper.Map<Restaurante>(restauranteViewModel);
                 restauranteService.Create(restaurante);
             }
             return RedirectToAction(nameof(Index));
-          
+
         }
 
         // GET: RestauranteController/Edit/5
         public ActionResult Edit(int id)
         {
             var restaurante = restauranteService.Get(id);
-            RestauranteViewModel restauranteViewModel = mapper.Map<RestauranteViewModel>(restaurante);
+            var restauranteViewModel = mapper.Map<RestauranteViewModel>(restaurante);
             return View(restauranteViewModel);
         }
 
         // POST: RestauranteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, RestauranteViewModel restauranteViewModel)
+        public ActionResult Edit(RestauranteViewModel restauranteViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -79,16 +78,16 @@ namespace RestauranteAkiWeb.Controllers
         public ActionResult Delete(int id)
         {
             var restaurante = restauranteService.Get(id);
-            RestauranteViewModel restauranteViewModel = mapper.Map<RestauranteViewModel>(restaurante);
+            var restauranteViewModel = mapper.Map<RestauranteViewModel>(restaurante);
             return View(restauranteViewModel);
         }
 
         // POST: RestauranteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, RestauranteViewModel restauranteViewModel)
+        public ActionResult Delete(RestauranteViewModel restauranteViewModel)
         {
-            restauranteService.Delete(id);
+            restauranteService.Delete(restauranteViewModel.Id);
             return RedirectToAction(nameof(Index));
         }
     }

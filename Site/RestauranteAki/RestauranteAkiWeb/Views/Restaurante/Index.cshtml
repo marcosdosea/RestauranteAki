@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RestauranteAkiWeb.Models.RestauranteViewModel>
+
+@{
+    ViewData["Title"] = "Painel - Restaurantes";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/list-style.css" />
+}
+
+<div class="list-wrapper">
+    <div class="header-bar">
+        <h2>Lista de Restaurantes</h2>
+        <a asp-action="Create" class="btn-custom-primary">Adicionar Novo</a>
+    </div>
+
+    <div class="list-container">
+        @if (Model.Any())
+
+        {
+            @foreach (var item in Model)
+
+            {
+                <div class="list-item">
+                    <div class="item-avatar">
+                        <i class="bi bi-building"></i>
+                    </div>
+
+                    <div class="item-details">
+                        @Html.DisplayFor(modelItem => item.NomeFantasia)
+                    </div>
+
+                    <div class="item-actions">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-custom-secondary">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-custom-secondary">
+                            <i class="bi bi-search"></i> Detalhes
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-custom-secondary">
+                            <i class="bi bi-trash3-fill"></i> Deletar
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+
+        else
+
+        {
+            <div class="list-item">
+                <p>Nenhum restaurante cadastrado ainda.</p>
+            </div>
+        }
+    </div>
+</div>

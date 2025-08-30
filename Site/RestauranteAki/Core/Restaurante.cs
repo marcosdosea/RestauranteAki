@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Core;
+﻿namespace Core;
 
 public partial class Restaurante
 {
@@ -13,7 +10,11 @@ public partial class Restaurante
 
     public string Cnpj { get; set; } = null!;
 
-    public string Endereco { get; set; } = null!;
+    public string? Cep { get; set; }
+
+    public string Logradouro { get; set; } = null!;
+
+    public int Numero { get; set; }
 
     public string Bairro { get; set; } = null!;
 
@@ -26,4 +27,6 @@ public partial class Restaurante
     public virtual ICollection<Cardapio> Cardapios { get; set; } = new List<Cardapio>();
 
     public virtual ICollection<Pessoa> Pessoas { get; set; } = new List<Pessoa>();
+
+
 }
