@@ -8,13 +8,15 @@ namespace Service
     public class ItemcardapioService : IItemcardapioService
     {
         private readonly RestauranteAkiContext context;
+        private readonly ICardapioService cardapioService;
 
-        public ItemcardapioService(RestauranteAkiContext context)
+        public ItemcardapioService(RestauranteAkiContext context, ICardapioService cardapioService)
         {
             this.context = context;
+            this.cardapioService = cardapioService;
         }
 
-        public int Create(Itemcardapio itemcardapio, string[] diasSemana, ICardapioService cardapioService)
+        public int Create(Itemcardapio itemcardapio, string[] diasSemana)
         {
             // Define os dias da semana selecionados
             itemcardapio.DiaSemana = string.Join(",", diasSemana ?? Array.Empty<string>());

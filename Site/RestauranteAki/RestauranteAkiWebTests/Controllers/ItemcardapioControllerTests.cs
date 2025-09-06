@@ -12,11 +12,12 @@ namespace RestauranteAkiWeb.Tests.Controllers
     public class ItemcardapioControllerTests
     {
         private static ItemcardapioController controller;
+        private static Mock<IItemcardapioService> mockService;
 
         [TestInitialize]
         public void Initialize()
         {
-            var mockService = new Mock<IItemcardapioService>();
+            mockService = new Mock<IItemcardapioService>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
                 cfg.CreateMap<Itemcardapio, ItemcardapioViewModel>().ReverseMap()).CreateMapper();
@@ -25,7 +26,8 @@ namespace RestauranteAkiWeb.Tests.Controllers
                 .Returns(GetTestItens());
             mockService.Setup(service => service.Get(1))
                 .Returns(GetTargetItem());
-            mockService.Setup(service => service.Create(It.IsAny<Itemcardapio>()))
+            mockService.Setup(service => service.Create(It.IsAny<Itemcardapio>(), It.IsAny<string[]>()))
+                .Returns(4) // Simula ID gerado
                 .Verifiable();
             mockService.Setup(service => service.Edit(It.IsAny<Itemcardapio>()))
                 .Verifiable();
@@ -72,8 +74,12 @@ namespace RestauranteAkiWeb.Tests.Controllers
         [TestMethod]
         public void CreateTest_Post_Valido()
         {
-            var result = controller.Create(GetNewItem());
+            var novoItem = GetNewItem();
+            var diasSemana = new[] { "Segunda", "Sexta" };
 
+            var result = controller.Create(novoItem, diasSemana);
+
+            mockService.Verify(s => s.Create(It.IsAny<Itemcardapio>(), diasSemana), Times.Once);
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
             var redirect = (RedirectToActionResult)result;
             Assert.AreEqual("Index", redirect.ActionName);
@@ -83,11 +89,13 @@ namespace RestauranteAkiWeb.Tests.Controllers
         public void CreateTest_Post_Invalido()
         {
             controller.ModelState.AddModelError("Nome", "Campo requerido");
+            var diasSemana = new[] { "Segunda" };
 
-            var result = controller.Create(GetNewItem());
+            var result = controller.Create(GetNewItem(), diasSemana);
 
             Assert.AreEqual(1, controller.ModelState.ErrorCount);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
+            mockService.Verify(s => s.Create(It.IsAny<Itemcardapio>(), It.IsAny<string[]>()), Times.Never);
         }
 
         [TestMethod]

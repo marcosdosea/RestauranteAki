@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 
 namespace Service.Tests
@@ -10,6 +11,7 @@ namespace Service.Tests
     {
         private RestauranteAkiContext context;
         private IItemcardapioService itemcardapioService;
+        private Mock<ICardapioService> mockCardapioService;
 
         [TestInitialize]
         public void Initialize()
@@ -32,17 +34,27 @@ namespace Service.Tests
             context.AddRange(itens);
             context.SaveChanges();
 
-            itemcardapioService = new ItemcardapioService(context);
+            mockCardapioService = new Mock<ICardapioService>();
+            mockCardapioService.Setup(s => s.GetByNome(It.IsAny<string>()))
+                               .Returns(new List<Cardapio>());
+
+            itemcardapioService = new ItemcardapioService(context, mockCardapioService.Object);
         }
 
         [TestMethod()]
         public void CreateTest()
         {
-            itemcardapioService.Create(new Itemcardapio() { Id = 4, Nome = "Lasanha", PrecoUnitario = (float)40.0M });
+            var novoItem = new Itemcardapio() { Id = 4, Nome = "Lasanha", PrecoUnitario = 40f };
+            var dias = new[] { "Segunda", "Quarta" };
+
+            itemcardapioService.Create(novoItem, dias);
+
             Assert.AreEqual(4, itemcardapioService.GetAll().Count());
             var item = itemcardapioService.Get(4);
+            Assert.IsNotNull(item);
             Assert.AreEqual("Lasanha", item.Nome);
-            Assert.AreEqual((float)40.0M, item.PrecoUnitario);
+            Assert.AreEqual(40f, item.PrecoUnitario);
+            Assert.AreEqual("Segunda,Quarta", item.DiaSemana);
         }
 
         [TestMethod()]
@@ -59,13 +71,13 @@ namespace Service.Tests
         {
             var item = itemcardapioService.Get(3);
             item.Nome = "Salada Caesar";
-            item.PrecoUnitario = 18;
+            item.PrecoUnitario = 18f;
             itemcardapioService.Edit(item);
 
-            item = itemcardapioService.Get(3);
-            Assert.IsNotNull(item);
-            Assert.AreEqual("Salada Caesar", item.Nome);
-            Assert.AreEqual(18, item.PrecoUnitario);
+            var atualizado = itemcardapioService.Get(3);
+            Assert.IsNotNull(atualizado);
+            Assert.AreEqual("Salada Caesar", atualizado.Nome);
+            Assert.AreEqual(18f, atualizado.PrecoUnitario);
         }
 
         [TestMethod()]
@@ -74,7 +86,7 @@ namespace Service.Tests
             var item = itemcardapioService.Get(1);
             Assert.IsNotNull(item);
             Assert.AreEqual("Pizza", item.Nome);
-            Assert.AreEqual(35, item.PrecoUnitario);
+            Assert.AreEqual(35f, item.PrecoUnitario);
         }
 
         [TestMethod()]
