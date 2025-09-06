@@ -39,18 +39,19 @@ namespace RestauranteAkiWeb.Controllers
             return View();
         }
 
-        // POST: RestauranteController/Create
+        // POST: RestaunteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RestauranteViewModel restauranteViewModel)
         {
+
             if (ModelState.IsValid)
             {
                 var restaurante = mapper.Map<Restaurante>(restauranteViewModel);
                 restauranteService.Create(restaurante);
             }
-            return RedirectToAction(nameof(Index));
 
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RestauranteController/Edit/5
