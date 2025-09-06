@@ -205,14 +205,6 @@ namespace RestauranteAkiWeb.Controllers.Tests
                 new Cardapio { Id = 3, Nome = "Cardápio Especial", DataInicio = DateTime.Now, DataFim = DateTime.Now.AddMonths(1), Ativo = 1, IdRestaurante = 1 }
             };
         }
-        public ActionResult Details(int id)
-        {
-            var cardapio = cardapioService.Get(id);
-            if (cardapio == null)
-                return NotFound();
-            var cardapioViewModel = mapper.Map<CardapioViewModel>(cardapio);
-            return View(cardapioViewModel);
-        }
         #endregion
     }
 }

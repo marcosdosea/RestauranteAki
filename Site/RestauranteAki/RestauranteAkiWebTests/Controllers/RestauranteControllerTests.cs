@@ -170,7 +170,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
         public void Edit_Post_ComModeloValido_ChamaEditERedireciona()
         {
             var restauranteEditado = GetTargetRestauranteViewModel();
-            var result = controller.Edit(restauranteEditado.Id, restauranteEditado);
+            var result = controller.Edit(restauranteEditado);
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
             var redirectToActionResult = result as RedirectToActionResult;
             Assert.AreEqual("Index", redirectToActionResult.ActionName);
@@ -183,7 +183,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
             var restauranteEditado = GetTargetRestauranteViewModel();
             controller.ModelState.AddModelError("Nome", "Nome é obrigatório");
 
-            var result = controller.Edit(restauranteEditado.Id, restauranteEditado);
+            var result = controller.Edit(restauranteEditado);
 
             if (result is ViewResult viewResult)
             {
@@ -204,7 +204,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
 
             var restauranteEditado = GetTargetRestauranteViewModel();
             restauranteEditado.Id = 1;
-            var result = controller.Edit(2, restauranteEditado);
+            var result = controller.Edit(restauranteEditado);
             Assert.IsNotNull(result, "O resultado não deveria ser null");
 
             if (result is NotFoundResult)
@@ -260,7 +260,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
         [TestMethod()]
         public void Delete_Post_ComIdValido_ChamaDeleteERedireciona()
         {
-            var result = controller.Delete(1, new RestauranteViewModel());
+            var result = controller.Delete(new RestauranteViewModel());
 
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
             var redirectToActionResult = result as RedirectToActionResult;

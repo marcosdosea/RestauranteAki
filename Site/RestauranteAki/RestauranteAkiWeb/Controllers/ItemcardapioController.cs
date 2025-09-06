@@ -10,13 +10,11 @@ namespace RestauranteAkiWeb.Controllers
     {
         private readonly IMapper mapper;
         private readonly IItemcardapioService itemcardapioService;
-        private readonly ICardapioService cardapioService;
 
-        public ItemcardapioController(IMapper mapper, IItemcardapioService itemcardapioService, ICardapioService cardapioService)
+        public ItemcardapioController(IMapper mapper, IItemcardapioService itemcardapioService)
         {
             this.mapper = mapper;
             this.itemcardapioService = itemcardapioService;
-            this.cardapioService = cardapioService;
         }
 
         // GET: ItemCardapioController
@@ -51,7 +49,7 @@ namespace RestauranteAkiWeb.Controllers
                 itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? Array.Empty<string>());
                 
                 var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
-                itemcardapioService.Create(itemcardapio, DiasSemana, cardapioService);
+                itemcardapioService.Create(itemcardapio, DiasSemana);
                 return RedirectToAction(nameof(Index));
             }
             else

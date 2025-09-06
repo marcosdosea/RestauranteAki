@@ -40,7 +40,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
         public void IndexTest_Valido()
         {
             // Act
-            var result = controller.Index();
+            var result = controller.IndexGestor(); // Consertar isso depois
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -70,7 +70,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
         public void CreateTest_Get_Valido()
         {
             // Act
-            var result = controller.Create();
+            var result = controller.Create("G");
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
