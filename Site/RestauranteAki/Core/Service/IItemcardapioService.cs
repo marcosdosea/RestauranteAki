@@ -2,7 +2,7 @@
 {
     public interface IItemcardapioService
     {
-        int Create(Itemcardapio itemcardapio, string[] diasSemana);
+        int Create(Itemcardapio itemcardapio);
         void Edit(Itemcardapio itemcardapio);
         void Delete(int id);
         Itemcardapio? Get(int id);

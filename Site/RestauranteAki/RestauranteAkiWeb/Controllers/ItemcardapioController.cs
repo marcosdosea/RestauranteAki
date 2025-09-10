@@ -49,7 +49,7 @@ namespace RestauranteAkiWeb.Controllers
                 itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? Array.Empty<string>());
                 
                 var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
-                itemcardapioService.Create(itemcardapio, DiasSemana);
+                itemcardapioService.Create(itemcardapio);
                 return RedirectToAction(nameof(Index));
             }
             else
