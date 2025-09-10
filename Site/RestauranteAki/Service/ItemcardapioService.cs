@@ -9,36 +9,42 @@ namespace Service
     public class ItemcardapioService : IItemcardapioService
     {
         private readonly RestauranteAkiContext context;
-        private readonly ICardapioService cardapioService;
 
-        public ItemcardapioService(RestauranteAkiContext context, ICardapioService cardapioService)
+        public ItemcardapioService(RestauranteAkiContext context)
         {
             this.context = context;
-            this.cardapioService = cardapioService;
+            
         }
 
-        public int Create(Itemcardapio itemcardapio, string[] diasSemana)
+        // Pseudocódigo detalhado:
+        // 1. No método Create, ao verificar cardapiosExistentes, preciso tratar o campo DiaSemana do itemcardapio.
+        // 2. Se DiaSemana contém vírgula, significa que há mais de um dia.
+        // 3. Dividir DiaSemana em uma lista de dias.
+        // 4. Para cada cardápio ativo, verificar se o Nome do cardápio está presente na lista de dias.
+        // 5. Se sim, adicionar o itemcardapio ao cardápio se ainda não estiver presente.
+
+        public int Create(Itemcardapio itemcardapio)
         {
-            // Define os dias da semana selecionados
-            itemcardapio.DiaSemana = string.Join(",", diasSemana ?? []);
+            var cardapiosExistentes = context.Cardapios
+                .Where(cardapios => cardapios.Ativo == 1)
+                .ToList();
 
-            // Busca e associa os cardápios existentes conforme os dias selecionados
-            var cardapiosAssociados = diasSemana?
-                .SelectMany(dia => cardapioService.GetByNome(dia))
-                .Distinct()
-                .ToList() ?? new List<Cardapio>();
+            // Tratar DiaSemana para múltiplos dias separados por vírgula
+            var diasSemana = itemcardapio.DiaSemana.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(d => d.Trim());
 
-            itemcardapio.IdCardapios = cardapiosAssociados;
-
-            // Anexa os cardápios ao contexto para garantir o rastreamento correto
-            foreach (var cardapio in itemcardapio.IdCardapios)
+            foreach (var cardapio in cardapiosExistentes)
             {
-                context.Attach(cardapio);
+                if (diasSemana.Contains(cardapio.Nome, StringComparer.OrdinalIgnoreCase))
+                {
+                    if (!cardapio.IdItemCardapios.Any(itemCardapio => itemCardapio.Id == itemcardapio.Id))
+                    {
+                        cardapio.IdItemCardapios.Add(itemcardapio);
+                        context.Cardapios.Update(cardapio);
+                    }
+                }
             }
-
-            context.Add(itemcardapio);
             context.SaveChanges();
-
             return itemcardapio.Id;
         }
 

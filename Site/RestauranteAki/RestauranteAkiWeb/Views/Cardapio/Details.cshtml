@@ -1,60 +1,137 @@
 ﻿@model RestauranteAkiWeb.Models.CardapioViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes Cardápio";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>CardapioViewModel</h4>
-    <hr />
-    <dl class="row">
-        <!-- Campos do Cardapio -->
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nome)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nome)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DataInicio)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.DataInicio)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DataFim)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.DataFim)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ativo)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Ativo)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.IdRestaurante)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.IdRestaurante)</dd>
-    </dl>
+<div class="main-content">
+    <section class="card-list-section">
+        <div class="card-list-header">Cardápio</div>
+        <div class="form-cardapio">
+            <div class="form-row">
+                <div class="flex-two">
+                    <div class="form-group">
+                        <label class="form-label">Nome do Cardápio</label>
+                        <input type="text" class="input-box" value="@Model.Nome" readonly />
+                    </div>
+                    <div class="form-group margin-top">
+                        <label class="form-label">Data de Início</label>
+                        <input type="text" class="input-box" value="@Model.DataInicio.ToString("dd/MM/yyyy")" readonly />
+                    </div>
+                    <div class="form-group margin-top">
+                        <label class="form-label">Data de Fim</label>
+                        <input type="text" class="input-box" value="@Model.DataFim.ToString("dd/MM/yyyy")" readonly />
+                    </div>
+                    <div class="form-row margin-top">
+                        <div class="form-group flex-one">
+                            <label class="form-label">Ativo</label>
+                            <div class="input-box switch-container" style="pointer-events:none; padding: 0 16px;">
+                                <input type="checkbox" class="toggle-switch" @(Convert.ToBoolean(Model.Ativo) ? "checked" : "") disabled />
+                            </div>
+                        </div>
+                        <div class="form-group flex-one">
+                            <label class="form-label">Restaurante</label>
+                            <input type="text" class="input-box" value="@Model.IdRestaurante" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.IdItemCardapios != null && Model.IdItemCardapios.Any())
+            {
+                <div class="margin-top">
+                    <label class="form-label">Itens do Cardápio</label>
+                    <div class="card-list card-list-grid">
+                        @foreach (var item in Model.IdItemCardapios)
+                        {
+                            <div class="person-card item-card">
+                                <span class="person-name item-name">@item.Nome</span>
+                                <span class="person-details">Descrição: @item.Descricao</span>
+                                <span class="person-details">Preço: R$ @item.PrecoUnitario.ToString("N2")</span>
+                                <span class="person-details">Porção: @item.Porcao</span>
+                                <span class="person-details">Dia da Semana: @item.DiaSemana</span>
+                                <span class="person-details">Status: @(item.Status ? "Disponível" : "Indisponível")</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="form-actions">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-rounded">Editar</a>
+                <a asp-action="Index" class="btn btn-secondary btn-rounded">Voltar</a>
+            </div>
+        </div>
+    </section>
 </div>
 
-@if (Model.IdItemCardapios != null && Model.IdItemCardapios.Any())
-{
-    <h4>Itens do Cardápio</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço Unitário</th>
-                <th>Porção</th>
-                <th>Dia da Semana</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model.IdItemCardapios)
-        {
-            <tr>
-                <td>@item.Nome</td>
-                <td>@item.Descricao</td>
-                <td>@item.PrecoUnitario</td>
-                <td>@item.Porcao</td>
-                <td>@item.DiaSemana</td>
-                <td>@item.Status</td>
-            </tr>
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+    <style>
+        .input-box {
+            background: #f3f3f9;
+            border: 1px solid #d1d1e0;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: 700;
+            color: #2d2d7f;
+            width: 100%;
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
-        </tbody>
-    </table>
-}
 
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+        .form-group {
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .flex-two {
+            flex: 2;
+            min-width: 320px;
+        }
+
+        .flex-one {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .card-list-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .item-card {
+            border: 2px solid #ff8000;
+            border-radius: 16px;
+            background: #fff;
+            padding: 12px 24px;
+            min-width: 320px;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .item-name {
+            font-weight: 700;
+            color: #2d2d7f;
+            font-size: 1.1rem;
+            margin-right: 8px;
+            background: #f3f3f9;
+            border-radius: 8px;
+            padding: 4px 12px;
+        }
+
+        .person-details {
+            display: inline;
+            color: #444;
+            font-size: 0.95rem;
+            margin-left: 8px;
+        }
+    </style>
+}
