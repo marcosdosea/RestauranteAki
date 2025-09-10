@@ -1,9 +1,11 @@
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
+using System.Diagnostics;
 
 namespace RestauranteAkiWeb.Controllers
 {
+    [AllowAnonymous] //permite deixa a página home publica(não exige autenticação)
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

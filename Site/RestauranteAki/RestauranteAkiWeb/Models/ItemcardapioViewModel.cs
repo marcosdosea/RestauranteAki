@@ -33,7 +33,7 @@ namespace RestauranteAkiWeb.Models
         public bool Status { get; set; }
 
         [Display(Name = "Imagem")]
-
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public byte[]? Imagem { get; set; }
 
         [Display(Name = "Categoria")]

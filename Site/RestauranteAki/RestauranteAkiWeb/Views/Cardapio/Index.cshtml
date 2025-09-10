@@ -1,47 +1,59 @@
 ﻿@model IEnumerable<RestauranteAkiWeb.Models.CardapioViewModel>
 
 @{
-    ViewData["Title"] = "Cardápio";
+    ViewData["Title"] = "Index";
 }
 
-<div>
-    <div class="main-header">
-        <h1 class="main-title"></h1>
-        <div class="main-actions">
-            <a asp-action="Create" class="btn btn-primary">Adicionar Novo</a>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>
-        </div>
-    </div>
+<h1>Index</h1>
 
-    <section class="card-list-section">
-        <div class="card-list-header">Cardápio</div>
-        <div class="card-list">
-            @if (Model != null && Model.Any())
-            {
-                foreach (var item in Model)
-                {
-                    <div class="person-card">
-                        <div class="person-info">
-                            <span class="person-name">@item.Nome</span>
-                            <span class="person-details">Início: @item.DataInicio.ToString("dd/MM/yyyy")</span>
-                            <span class="person-details">Fim: @item.DataFim.ToString("dd/MM/yyyy")</span>
-                        </div>
-                        <div class="person-actions">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
-                        </div>
-                    </div>
-                }
-            }
-            else
-            {
-                <p class="no-data">Nenhum Cardápio cadastrado.</p>
-            }
-        </div>
-    </section>
-</div>
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRestaurante)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRestaurante)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

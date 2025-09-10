@@ -90,4 +90,94 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/profile.css" />
+    /<style>
+        .main-content {
+            margin-top: 32px;
+        }
+        .card-list-section {
+            margin-top: 24px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #2d2d7f;
+            padding-left: 24px;
+        }
+        .form-control-plaintext {
+            padding: 8px 0 8px 24px;
+            color: #222;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .dias-semana { display: flex; gap: 8px; margin-top: 8px; padding-left: 24px; }
+        .dia-checkbox input { display: none; }
+        .dia-checkbox span {
+            display: inline-block;
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: #ff6c00;
+            color: #fff;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            cursor: default;
+            transition: background 0.2s;
+        }
+        .dia-checkbox input:checked + span {
+            background: #2d2d7f;
+            color: #fff;
+        }
+        .foto-upload { margin-top: 8px; padding-left: 24px; }
+        .foto-dropzone {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #bdbdbd;
+            border-radius: 12px;
+            width: 160px;
+            height: 160px;
+            cursor: pointer;
+            color: #888;
+            text-align: center;
+            font-size: 0.95rem;
+            background: #fafaff;
+            transition: border 0.2s;
+        }
+        .foto-dropzone:hover {
+            border-color: #ff6c00;
+        }
+        .toggle-switch {
+            width: 40px;
+            height: 22px;
+            appearance: none;
+            background: #ff6c00;
+            outline: none;
+            border-radius: 20px;
+            position: relative;
+            transition: background 0.2s;
+        }
+        .toggle-switch:checked {
+            background: #2d2d7f;
+        }
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: left 0.2s;
+        }
+        .toggle-switch:checked::before {
+            left: 22px;
+        }
+        .main-content {
+            margin-top: 32px; /* Espaço do topo */
+        }
+        .card-list-section {
+            margin-top: 24px; /* Espaço extra entre header e card */
+        }
+    </style>
 }
