@@ -68,7 +68,7 @@ namespace ServiceTests
         [TestMethod]
         public void GetAllTest()
         {
-            var listaContas = contaService.GetAll().OrderBy(c => c.Id).ToList();
+            var listaContas = contaService.GetAll();
 
             Assert.IsInstanceOfType(listaContas, typeof(IEnumerable<Contum>));
             Assert.IsNotNull(listaContas);
