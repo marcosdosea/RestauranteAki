@@ -1,11 +1,11 @@
-﻿namespace Core.Service
+﻿namespace Core.Service;
+
+public interface IItemcardapioService
 {
-    public interface IItemcardapioService
-    {
-        int Create(Itemcardapio itemcardapio, string[] diasSemana);
-        void Edit(Itemcardapio itemcardapio);
-        void Delete(int id);
-        Itemcardapio? Get(int id);
-        IEnumerable<Itemcardapio> GetAll();
-    }
+    int Create(Itemcardapio itemcardapio, string[] diasSemana);
+    void Edit(Itemcardapio itemcardapio);
+    void Delete(int id);
+    Itemcardapio? Get(int id);
+    IEnumerable<Itemcardapio> GetAll();
+    IEnumerable<string> GetAllIngredientes();
 }

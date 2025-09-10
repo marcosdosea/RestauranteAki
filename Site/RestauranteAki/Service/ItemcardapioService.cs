@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Service;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -19,7 +20,7 @@ namespace Service
         public int Create(Itemcardapio itemcardapio, string[] diasSemana)
         {
             // Define os dias da semana selecionados
-            itemcardapio.DiaSemana = string.Join(",", diasSemana ?? Array.Empty<string>());
+            itemcardapio.DiaSemana = string.Join(",", diasSemana ?? []);
 
             // Busca e associa os cardápios existentes conforme os dias selecionados
             var cardapiosAssociados = diasSemana?
@@ -66,6 +67,27 @@ namespace Service
         public IEnumerable<Itemcardapio> GetAll()
         {
             return context.Itemcardapios.AsNoTracking();
+        }
+
+        public IEnumerable<string> GetAllIngredientes()
+        {
+            var todosIngredientes = context.Itemcardapios.AsNoTracking()// puxa tudo do campo descrição.
+                .Where(p => !string.IsNullOrEmpty(p.Descricao))
+                .Select(p => p.Descricao)
+                .ToList();
+
+            if(todosIngredientes.Count == 0)
+            {
+                return [];
+            }
+
+            var ingredientesUnicos = todosIngredientes
+              .SelectMany(d => d.Split(',', StringSplitOptions.RemoveEmptyEntries))// divide em vírgulas, retira espaços em brancos e duplicatas.
+              .Select(i => i.Trim())
+              .Distinct(StringComparer.CurrentCultureIgnoreCase)
+              .OrderBy(i => i);// lista em ordem alfabética.
+
+            return ingredientesUnicos;
         }
     }
 }
