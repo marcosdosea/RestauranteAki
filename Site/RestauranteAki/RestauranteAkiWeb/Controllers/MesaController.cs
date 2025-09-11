@@ -85,7 +85,7 @@ namespace RestauranteAkiWeb.Controllers
         // POST: MesaController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, MesaViewModel mesaViewModel)
+        public ActionResult Delete(MesaViewModel mesaViewModel)
         {
             mesaService.Delete(mesaViewModel.Id);
             return RedirectToAction(nameof(Index));
