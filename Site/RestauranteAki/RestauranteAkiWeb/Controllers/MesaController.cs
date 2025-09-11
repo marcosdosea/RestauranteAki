@@ -4,6 +4,7 @@ using Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
+using Service;
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -44,22 +45,20 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MesaViewModel mesaViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
                 var mesa = mapper.Map<Mesa>(mesaViewModel);
                 mesaService.Create(mesa);
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: MesaController1/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var mesa = mesaService.Get(id);
+            var mesaViewModel = mapper.Map<MesaViewModel>(mesa);
+            return View(mesaViewModel);
         }
 
         // POST: MesaController1/Edit/5
@@ -67,16 +66,12 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, MesaViewModel mesaViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
                 var mesa = mapper.Map<Mesa>(mesaViewModel);
                 mesaService.Edit(mesa);
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: MesaController1/Delete/5
@@ -92,37 +87,8 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, MesaViewModel mesaViewModel)
         {
-            try
-            {
-                if(id != mesaViewModel.Id)
-                {
-                    return NotFound();
-                }
-                mesaService.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        //TODO melhorar implementação, seguinda a arquitetura
-        [HttpPost]
-        public IActionResult CreateMesaAjax()
-        {
-            var novaMesa = new MesaViewModel
-            {
-                // Inicialize propriedades padrão se necessário
-            };
-
-            // Mapeie para o modelo de domínio e salve
-            var mesa = mapper.Map<Mesa>(novaMesa);
-            mesaService.Create(mesa);
-
-            // Retorne o grid atualizado
-            var listaMesa = mesaService.GetAll();
-            var MesaViewModel = mapper.Map<List<MesaViewModel>>(listaMesa);
-            return PartialView("_MesasGridPartial", MesaViewModel);
+            mesaService.Delete(mesaViewModel.Id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

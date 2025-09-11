@@ -1,38 +1,95 @@
 ﻿@model RestauranteAkiWeb.Models.MesaViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Mesa";
 }
 
-<h1>Edit</h1>
-
-<h4>MesaViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Imagem" class="control-label"></label>
-                <input asp-for="Imagem" class="form-control" />
-                <span asp-validation-for="Imagem" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
+
+    <section class="card-list-section">
+        <div class="card-list-header">Mesa</div>
+        <div class="card-list">
+            <div class="item-card">
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Id"></label>
+                        <input asp-for="Id" class="form-control" readonly />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Imagem atual</label>
+                        <img class="item-mesa-img"
+                             src="@(Model.Imagem != null && Model.Imagem.Length > 0
+                                                                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Imagem)}"
+                                                                 : "/avatar-default.jpg")"
+                             alt="Imagem da mesa" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Imagem">Alterar Imagem</label>
+                        <input asp-for="Imagem" type="file" class="form-control" />
+                        <span asp-validation-for="Imagem" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
+
+<style>
+    .item-card {
+        flex-direction: column;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-color: #fff;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .item-card form {
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+
+    .item-mesa-img {
+        width: 240px;
+        height: 240px;
+        object-fit: cover;
+        border: 2px solid var(--bs-primary);
+        border-radius: 0.5rem;
+        margin-top: 0.5rem;
+        background: #fff;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+</style>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
