@@ -10,5 +10,7 @@ public interface IItemcardapioService
         Itemcardapio? Get(int id);
         IEnumerable<Itemcardapio> GetAll();
         IEnumerable<string> GetAllIngredientes();
+        IEnumerable<Itemcardapio> GetByCategoria(int categoria);
+
     }
 }

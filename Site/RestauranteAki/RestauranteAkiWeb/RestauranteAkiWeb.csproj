@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+
     <Content Remove="wwwroot\JavaScript.js" />
     <Content Remove="wwwroot\js\Index.cshtml" />
     <Content Remove="wwwroot\js\Index.cshtml.cs" />

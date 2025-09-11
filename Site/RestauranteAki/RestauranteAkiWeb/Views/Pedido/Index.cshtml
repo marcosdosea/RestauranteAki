@@ -19,19 +19,19 @@
             {
                 @foreach (var item in Model)
                 {
-                    <div class="itemPedido-card">
-                        @* <img class="itemPedido-img"
+                    <div class="item-card">
+                        @* <img class="item-pedido-img"
                              src="@(item.Imagem != null && item.Imagem.Length > 0
                                                              ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
                                                              : "/avatar-default.jpg")"
                              alt="Foto de @item." /> *@
-                        <img class="itemPedido-img" src="/avatar-default.jpg" /> @* Imagem momentanea *@
-                        <div class="itemPedido-info">
-                            @* <span class="itemPedido-name">@item.NomeItem</span> *@
-                            <span class="itemPedido-name">@item.Id</span> @* Nome momentaneo *@
-                            <div class="itemPedido-status">@item.Status</div>
+                        <img class="item-pedido-img" src="/avatar-default.jpg" /> @* Imagem momentanea *@
+                        <div class="item-info">
+                            @* <span class="item-nome">@item.NomeItem</span> *@
+                            <span class="item-nome">@item.Id</span> @* Nome momentaneo *@
+                            <div class="item-pedido-status">@item.Status</div>
                         </div>
-                        <div class="itemPedido-actions">
+                        <div class="item-pedido-actions">
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
                         </div>
                     </div>
@@ -44,3 +44,11 @@
         </div>
     </section>
 </div>
+
+<style>
+    .item-pedido-status {
+        margin-right: 5rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+</style>

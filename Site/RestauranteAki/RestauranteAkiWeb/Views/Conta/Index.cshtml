@@ -28,16 +28,16 @@
             {
                 @foreach (var item in Model)
                 {
-                    <div class="itemPedido-card">
-                        <div class="itemPedido-info">
-                            <div class="itemPedido-name">@item.DataHoraEncerramento</div>
-                            @* <div class="itemPedido-name">@item.Id</div> *@
-                            <div class="itemPedido-name">@item.IdMesa</div> @* Vai ser numero da mesa *@
-                            <div class="itemPedido-name">@item.Valor</div>
-                            <div class="itemPedido-name">@item.FormaPagamento</div>
-                            <div class="itemPedido-name">@item.Status</div>
+                    <div class="item-card">
+                        <div class="item-info">
+                            <div class="item-nome">@item.DataHoraEncerramento</div>
+                            @* <div class="item-nome">@item.Id</div> *@
+                            <div class="item-nome">@item.IdMesa</div> @* Vai ser numero da mesa *@
+                            <div class="item-nome">@item.Valor</div>
+                            <div class="item-nome">@item.FormaPagamento</div>
+                            <div class="item-nome">@item.Status</div>
                         </div>
-                        <div class="itemPedido-actions">
+                        <div class="item-pedido-actions">
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
                         </div>
                     </div>

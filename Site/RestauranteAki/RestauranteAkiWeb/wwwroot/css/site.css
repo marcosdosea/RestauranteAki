@@ -102,13 +102,6 @@ html, body {
     margin-bottom: 16px;
 }
 
-.view-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2d2d7f;
-    margin: 0;
-}
-
 .view-actions {
     display: flex;
     gap: 24px;
@@ -198,29 +191,16 @@ body.home-page .container-fluid {
     gap: 24px;
 }
 
-.person-card {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border: 2px solid var(--bs-primary);
-    border-radius: 32px;
-    padding: 16px 32px;
-    gap: 32px;
-    margin-bottom: 0;
-    justify-content: flex-start;
-}
-
-.itemPedido-card {
+.item-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem;
     border: 2px solid var(--bs-primary);
     border-radius: 2rem;
+    padding: 1rem;
 }
 
-.person-avatar, .itemPedido-img {
+.item-avatar, .item-pedido-img {
     width: 64px;
     height: 64px;
     border-radius: 50%;
@@ -229,7 +209,7 @@ body.home-page .container-fluid {
     background: #fff;
 }
 
-.person-info, .itemPedido-info {
+.item-info {
     flex: 1;
     display: flex;
     align-items: center;
@@ -237,25 +217,19 @@ body.home-page .container-fluid {
     margin-left: 16px;
 }
 
-.person-name, .itemPedido-name {
+.item-nome {
     font-size: 1.3rem;
     font-weight: 700;
 }
 
-.itemPedido-status {
-    margin-right: 5rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.person-actions {
+.item-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
     margin-left: auto;
 }
 
-.person-actions .btn {
+.item-actions .btn {
     flex: 1 1 auto;
     min-width: 120px;
 }
@@ -270,11 +244,6 @@ body.home-page .container-fluid {
 
 
 /* C - PAGINA DO RESTAURANTE */
-
-body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 .header-actions {
     display: flex;
