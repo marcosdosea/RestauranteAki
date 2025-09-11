@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Controllers\CategoriaController.cs~RF3382fb3f.TMP" />
+
+    <Content Remove="wwwroot\JavaScript.js" />
+    <Content Remove="wwwroot\js\Index.cshtml" />
+    <Content Remove="wwwroot\js\Index.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
