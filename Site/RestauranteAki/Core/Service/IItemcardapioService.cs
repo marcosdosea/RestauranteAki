@@ -7,5 +7,6 @@
         void Delete(int id);
         Itemcardapio? Get(int id);
         IEnumerable<Itemcardapio> GetAll();
+        IEnumerable<Itemcardapio> GetByCategoria(int categoria);
     }
 }

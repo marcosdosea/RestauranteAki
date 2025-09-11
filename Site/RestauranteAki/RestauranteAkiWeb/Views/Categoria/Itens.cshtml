@@ -1,0 +1,44 @@
+﻿@model IEnumerable<RestauranteAkiWeb.Models.ItemcardapioViewModel>
+
+@{
+    ViewData["Title"] = "Cardapio";
+}
+
+<div>
+
+
+    <section class="card-list-section">
+        <div class="card-list-header">Cardapio</div>
+        <div class="card-list">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="person-card">
+                        <img class="person-avatar"
+                             src="@(item.Imagem != null && item.Imagem.Length > 0
+                                                                                                                                                    ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
+                                                                                                                                                    : "/avatar-default.jpg")"
+                     alt="Foto de @item.Nome" />
+                <div class="person-info">
+                    <span class="person-name">@item.Nome</span>
+                </div>
+                <div class="person-actions">
+                    <a asp-action="Edit" asp-controller="itemcardapio" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Details" asp-controller="itemcardapio" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
+                    <a asp-action="Delete" asp-controller="itemcardapio" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
+                </div>
+            </div>
+                        }
+            }
+            else
+            {
+                <p class="no-data">Nenhum Cardapio cadastrado.</p>
+            }
+        </div>
+    </section>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}

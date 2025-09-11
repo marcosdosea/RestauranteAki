@@ -76,5 +76,12 @@ namespace Service
         {
             return context.Itemcardapios.AsNoTracking();
         }
+
+        public IEnumerable<Itemcardapio> GetByCategoria(int categoria)
+        {
+            return context.Itemcardapios
+                .Where(i => i.Categoria == categoria)
+                .AsNoTracking();
+        }
     }
 }
