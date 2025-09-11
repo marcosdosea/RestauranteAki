@@ -29,7 +29,8 @@ if (string.IsNullOrEmpty(connectionString))
     throw new InvalidOperationException("A string de conexão 'RestauranteAkiConnection' não foi encontrada ou está vazia.");
 }
 builder.Services.AddDbContext<RestauranteAkiContext>(options => options.UseMySQL(connectionString));
-
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<ViaCepService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
