@@ -225,7 +225,7 @@ body.home-page .container-fluid {
 .item-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 10px;
     margin-left: auto;
 }
 
@@ -314,12 +314,6 @@ body.home-page .container-fluid {
     flex-grow: 1;
     font-size: 1.1rem;
     color: #333;
-}
-
-
-.item-actions {
-    display: flex;
-    gap: 10px;
 }
 
 .btn-custom-primary {

@@ -1,41 +1,43 @@
 ﻿@model IEnumerable<RestauranteAkiWeb.Models.MesaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Mesas";
 }
 
-<h1>Index</h1>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Create" class="btn btn-primary">Adicionar Mesa</a></div>
+            <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Imagem)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imagem)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <section class="card-list-section">
+        <div class="card-list-header">Lista de Mesas</div>
+        <div class="card-list">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="item-card">
+                        <div class="item-info">
+                            <span class="item-nome">Mesa @item.Id</span>
+                        </div>
+
+                        <div class="item-actions">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir esta mesa?');">
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-data">Nenhuma mesa cadastrada.</div>
+            }
+        </div>
+    </section>
+</div>
