@@ -1,5 +1,6 @@
-using Core;
+﻿using Core;
 using Core.Service;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -24,9 +25,6 @@ namespace Service
 
         public int Create(Itemcardapio itemcardapio)
         {
-            context.Add(itemcardapio);
-            context.SaveChanges();
-
             var cardapiosExistentes = context.Cardapios
                 .Where(cardapios => cardapios.Ativo == 1)
                 .ToList();
@@ -75,6 +73,35 @@ namespace Service
         public IEnumerable<Itemcardapio> GetAll()
         {
             return context.Itemcardapios.AsNoTracking();
+        }
+
+        public IEnumerable<string> GetAllIngredientes()
+        {
+            var todosIngredientes = context.Itemcardapios.AsNoTracking()// puxa tudo do campo descrição.
+                .Where(p => !string.IsNullOrEmpty(p.Descricao))
+                .Select(p => p.Descricao)
+                .ToList();
+
+            if(todosIngredientes.Count == 0)
+            {
+                return [];
+            }
+
+            var ingredientesUnicos = todosIngredientes
+              .SelectMany(d => d.Split(',', StringSplitOptions.RemoveEmptyEntries))// divide em vírgulas, retira espaços em brancos e duplicatas.
+              .Select(i => i.Trim())
+              .Distinct(StringComparer.CurrentCultureIgnoreCase)
+              .OrderBy(i => i);// lista em ordem alfabética.
+
+            return ingredientesUnicos;
+        }
+
+        public IEnumerable<Itemcardapio> GetByCategoria(int categoria)
+        {
+            return context.Itemcardapios
+                .Where(i => i.Categoria == categoria)
+                .AsNoTracking();
+
         }
     }
 }
