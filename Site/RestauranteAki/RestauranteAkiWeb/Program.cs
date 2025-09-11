@@ -42,6 +42,7 @@ if (string.IsNullOrEmpty(connectionString))
 }
 builder.Services.AddDbContext<RestauranteAkiContext>(options => options.UseMySQL(connectionString));
 
+
 builder.Services.AddDbContext<IdentityContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("IdentityContextConnection")));
 
 builder.Services.AddDefaultIdentity<UsuarioIdentity>(options =>
@@ -93,6 +94,10 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/ResetPassword");
 });
 
+
+
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<ViaCepService>();
 
 var app = builder.Build();
 

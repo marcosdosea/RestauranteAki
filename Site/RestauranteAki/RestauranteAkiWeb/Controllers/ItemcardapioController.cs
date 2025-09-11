@@ -3,6 +3,7 @@ using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
+using System.Diagnostics.Contracts;
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -36,7 +37,8 @@ namespace RestauranteAkiWeb.Controllers
         // GET: ItemCardapioController/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new ItemcardapioViewModel(); ///cria uma instancia vazia.
+            return View(model);
         }
 
         // POST: ItemCardapioController/Create
@@ -46,7 +48,7 @@ namespace RestauranteAkiWeb.Controllers
         {
             if (itemcardapioViewModel != null)
             {
-                itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? Array.Empty<string>());
+                itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? []);
                 
                 var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
                 itemcardapioService.Create(itemcardapio);
@@ -124,5 +126,19 @@ namespace RestauranteAkiWeb.Controllers
                 return View();
             }
         }
+        [HttpGet] // Apenas para garantir que só aceite requisições GET
+        public IActionResult GetIngredientesUnicos()
+        {
+            try
+            {
+                var ingredientes = itemcardapioService.GetAllIngredientes();
+                return Ok(ingredientes); // Retorna a lista de ingredientes em formato JSON
+            }
+            catch (System.Exception ex)
+            {
+                // Se algo der errado no servidor, isso ajudará a depurar
+                return StatusCode(500, "Ocorreu um erro interno ao buscar os ingredientes.");
+            }
+        } 
     }
 }

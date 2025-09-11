@@ -26,9 +26,9 @@ namespace Service.Tests
 
             var itens = new List<Itemcardapio>
             {
-                new() { Id = 1, Nome = "Pizza", PrecoUnitario = (float)35.0m },
-                new() { Id = 2, Nome = "Hamburguer", PrecoUnitario = (float)25.0m },
-                new() { Id = 3, Nome = "Salada", PrecoUnitario = 15 }
+                new() { Id = 1, Nome = "Pizza", PrecoUnitario = (float)35.0m, Categoria = 1, Imagem= [4], DiaSemana="Terça" },
+                new() { Id = 2, Nome = "Hamburguer", PrecoUnitario = (float)25.0m, Categoria = 1, Imagem =[4], DiaSemana = "Segunda" },
+                new() { Id = 3, Nome = "Salada", PrecoUnitario = 15, Categoria = 2, Imagem = [4], DiaSemana="Terça" }
             };
 
             context.AddRange(itens);
@@ -44,7 +44,7 @@ namespace Service.Tests
         [TestMethod()]
         public void CreateTest()
         {
-            var novoItem = new Itemcardapio() { Id = 4, Nome = "Lasanha", PrecoUnitario = 40f };
+            var novoItem = new Itemcardapio() { Id = 4, Nome = "Lasanha", PrecoUnitario = 40f, Imagem = new byte[2] };
             var dias = new[] { "Segunda", "Quarta" };
 
             itemcardapioService.Create(novoItem, dias);
@@ -98,6 +98,27 @@ namespace Service.Tests
             Assert.AreEqual(3, listaItens.Count());
             Assert.AreEqual(1, listaItens.First().Id);
             Assert.AreEqual("Pizza", listaItens.First().Nome);
+        }
+
+        [TestMethod()]
+        public void GetByCategoriaTestWithNoItens()
+        {
+            var categoriaId = 4;
+            var itensCategoria = itemcardapioService.GetByCategoria(categoriaId);
+            Assert.IsInstanceOfType(itensCategoria, typeof(IEnumerable<Itemcardapio>));
+            Assert.IsNotNull(itensCategoria);
+            Assert.AreEqual(0, itensCategoria.Count());
+        }
+
+        [TestMethod()]
+        public void GetByCategoriaTest()
+        {
+            var categoriaId = 1;
+            var itensCategoria = itemcardapioService.GetByCategoria(categoriaId);
+            Assert.IsInstanceOfType(itensCategoria, typeof(IEnumerable<Itemcardapio>));
+            Assert.IsNotNull(itensCategoria);
+            Assert.AreEqual(2, itensCategoria.Count());
+            Assert.IsTrue(itensCategoria.All(i => i.Categoria == categoriaId));
         }
     }
 }

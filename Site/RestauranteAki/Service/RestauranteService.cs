@@ -7,6 +7,7 @@ namespace Service
     {
         private readonly RestauranteAkiContext context;
 
+
         /// <summary>
         /// Implementa os serviços para manter os dados de Restaurante
         /// </summary>
@@ -41,7 +42,7 @@ namespace Service
                 context.Remove(restaurante);
                 context.SaveChanges();
             }
-            
+
         }
 
         /// <summary>
@@ -50,8 +51,8 @@ namespace Service
         /// <param name="restaurante">Entidade Restaurante com os dados atualizados</param>
         public void Edit(Restaurante restaurante)
         {
-                context.Update(restaurante);
-                context.SaveChanges();
+            context.Update(restaurante);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -73,5 +74,7 @@ namespace Service
 
             return context.Restaurantes.AsNoTracking();
         }
+
+
     }
 }

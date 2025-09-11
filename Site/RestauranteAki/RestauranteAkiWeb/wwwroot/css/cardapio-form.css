@@ -1,0 +1,163 @@
+﻿/* Estilos Gerais do Formulário */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.flex-two {
+    flex: 2;
+    min-width: 320px;
+}
+
+.flex-one {
+    flex: 1;
+}
+
+.flex-one-min {
+    flex: 1;
+    min-width: 220px;
+}
+
+.margin-top {
+    margin-top: 18px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 48px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #2d2d7f;
+}
+
+.btn-ingredientes {
+    background: #ff6c00;
+    color: #fff;
+    border-radius: 20px;
+    padding: 8px 32px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .btn-ingredientes:hover {
+        background: #e65c00;
+    }
+
+.btn-rounded {
+    border-radius: 20px;
+    min-width: 140px;
+}
+
+/* Dias da Semana */
+.dias-semana {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.dia-checkbox input {
+    display: none;
+}
+
+.dia-checkbox span {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #ff6c00;
+    color: #fff;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dia-checkbox input:checked + span {
+    background: #2d2d7f;
+}
+
+/* Upload de Foto */
+.foto-upload {
+    margin-top: 8px;
+}
+
+.foto-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #bdbdbd;
+    border-radius: 12px;
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+    color: #888;
+    text-align: center;
+    font-size: 0.95rem;
+    background: #fafaff;
+    transition: border 0.2s;
+}
+
+    .foto-dropzone:hover {
+        border-color: #ff6c00;
+    }
+
+/* Switch Toggle 'Disponível' */
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 28px;
+    vertical-align: middle;
+}
+
+    .switch-toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ff6c00;
+    border-radius: 28px;
+    transition: background 0.2s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.2s;
+    }
+
+.switch-toggle input:checked + .slider {
+    background: #2d2d7f;
+}
+
+    .switch-toggle input:checked + .slider:before {
+        transform: translateX(28px);
+    }
+
+/* Lista no Modal */
+.list-group-item .form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
