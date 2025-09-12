@@ -2,10 +2,9 @@
 {
     public interface IPersonagemService
     {
-        int Create(Personagem personagem);
-        void Edit(Personagem personagem);
-        void Delete(int id);
-        Personagem? Get(int id);
-        IEnumerable<Personagem> GetAll();
+        Task<Personagem> AddPersonagemAsync();
+        Task<Personagem?> GetPersonagemAsync(int id);
+        Task<IEnumerable<Personagem>> GetPersonagensByMesaAsync(int idMesa);
+        Task DeleteAsync(int id);
     }
 }

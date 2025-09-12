@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Core;
 using Core.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
-using Service;
 
 namespace RestauranteAkiWeb.Controllers
 {
