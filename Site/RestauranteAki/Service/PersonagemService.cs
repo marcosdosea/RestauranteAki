@@ -1,7 +1,6 @@
 ﻿using Core;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Crypto;
 
 namespace Service
 {

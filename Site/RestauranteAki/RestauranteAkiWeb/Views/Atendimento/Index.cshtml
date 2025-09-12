@@ -1,0 +1,85 @@
+@model IEnumerable<RestauranteAkiWeb.Models.MesaViewModel>
+
+@{
+    ViewData["Title"] = "Atendimento";
+}
+
+<div>
+    <section class="card-list-section">
+        <div class="card-list-header">Mesas Disponíveis</div>
+        <div class="mesa-grid">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="mesa-card">
+                        <div class="mesa-circle"></div>
+                        <div class="mesa-info">
+                            <span class="mesa-nome">Mesa @item.Id</span>
+                        </div>
+                        <div class="mesa-actions">
+                            <a asp-action="IniciarAtendimento" asp-route-id="@item.Id" class="btn btn-primary">Atender Mesa</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-data">Nenhuma mesa disponível.</div>
+            }
+        </div>
+    </section>
+</div>
+
+<style>
+    .mesa-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    .mesa-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+        border: 1px solid var(--bs-primary);
+        border-radius: 0.5rem;
+        background: #fff;
+        transition: transform 0.2s;
+    }
+
+    .mesa-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .mesa-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: var(--bs-primary);
+        margin-bottom: 1rem;
+    }
+
+    .mesa-info {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .mesa-nome {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .mesa-actions {
+        margin-top: auto;
+    }
+
+    @@media (max-width: 1024px) {
+        .mesa-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
