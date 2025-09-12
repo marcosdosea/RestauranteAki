@@ -16,11 +16,13 @@ namespace Service
 
         public async Task<Personagem> AddPersonagemAsync()
         {
+            var horaAtual = DateTime.Now;
+
             var novoPersonagem = new Personagem
             {
                 IdentificadorCor = $"#{new Random().Next(0x1000000):X6}", // Gera uma cor aleatória
-                DataCriacao = DateTime.Now,
-                DataAtualizacao = DateTime.Now
+                DataCriacao = horaAtual,
+                DataAtualizacao = horaAtual
             };
 
             context.Personagems.Add(novoPersonagem);
