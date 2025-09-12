@@ -23,5 +23,11 @@ namespace RestauranteAkiWeb.Controllers
 
             return View(mesasViewModel);
         }
+
+        [HttpGet]
+        public IActionResult Mesa(int id)
+        {
+            return View(id);
+        }
     }
 }
