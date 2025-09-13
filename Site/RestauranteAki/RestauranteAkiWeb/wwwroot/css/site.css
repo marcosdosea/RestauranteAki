@@ -341,6 +341,12 @@ body.home-page .container-fluid {
         width: 100%;
     }
 
+.item-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 .no-data {
     color: #888;
     text-align: center;
@@ -359,13 +365,15 @@ body.home-page .container-fluid {
     font-size: 1.1rem;
 }
 
+.form-group, .form-group > * {
+    font-size: inherit;
+}
+
 .form-actions {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
     .form-actions .btn {
@@ -405,7 +413,7 @@ body.home-page .container-fluid {
 
         .form-actions .btn {
             width: auto;
-            min-width: 150px;
+            flex: 1;
         }
 }
 
