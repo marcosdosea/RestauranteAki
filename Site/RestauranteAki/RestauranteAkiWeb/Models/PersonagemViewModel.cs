@@ -20,9 +20,5 @@ namespace RestauranteAkiWeb.Models
         [Display(Name = "Data de Atualização")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public DateTime DataAtualizacao { get; set; }
-
-        public ICollection<Pagamento>? Pagamentos { get; set; } 
-
-        public ICollection<Pedido>? Pedidos { get; set; } 
     }
 }

@@ -35,6 +35,7 @@ namespace Service
             var personagem = await context.Personagems.FindAsync(id);
             if (personagem != null && personagem.DataCriacao == personagem.DataAtualizacao)
             {
+                context.Pedidos.RemoveRange(context.Pedidos.Where(p => p.IdPersonagem == id));
                 context.Personagems.Remove(personagem);
                 await context.SaveChangesAsync();
             }

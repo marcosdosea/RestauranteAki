@@ -2,7 +2,6 @@ using AutoMapper;
 using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RestauranteAkiWeb.Models;
 
 namespace RestauranteAkiWeb.Controllers.Api
@@ -35,16 +34,20 @@ namespace RestauranteAkiWeb.Controllers.Api
             var novoPersonagem = await personagemService.AddPersonagemAsync();
 
             //// Criar um pedido inicial para vincular o personagem à mesa
-            //var pedido = new Pedido
-            //{
-            //    IdMesa = idMesa,
-            //    IdPersonagem = novoPersonagem.Id,
-            //    Status = "S" // Status inicial
-            //};
+            var pedido = new Pedido
+            {
+                IdMesa = idMesa,
+                IdPersonagem = novoPersonagem.Id,
+                IdConta = 1, // Conta padrão (por enquanto)
+                IdPessoa = 2, // Pessoa padrão (por enquanto)
+                Status = "S" // Status inicial
+            };
 
-            //pedidoService.Create(pedido);
+            pedidoService.Create(pedido);
 
-            return Ok(mapper.Map<PersonagemViewModel>(novoPersonagem));
+            var personagemViewModel = mapper.Map<PersonagemViewModel>(novoPersonagem);
+
+            return Ok(personagemViewModel);
         }
 
         [HttpDelete("personagens/{id}")]

@@ -7,13 +7,13 @@
 <div>
     <div class="view-header">
         <div class="view-actions">
-            <button id="btnAddPersonagem" class="btn btn-primary">Adicionar Personagem</button>
+            <button id="btnAddPersonagem" class="btn btn-primary">Adicionar Cliente</button>
             <div><a asp-action="Index" class="btn btn-secondary">Voltar</a></div>
         </div>
     </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Personagens da Mesa @Model</div>
+        <div class="card-list-header">Clientes da Mesa @Model</div>
         <div id="personagensContainer" class="personagem-grid">
             <!-- Personagens serão carregados via JavaScript -->
         </div>
@@ -53,6 +53,7 @@
 
     .personagem-actions {
         display: flex;
+        flex-direction: column;
         gap: 0.5rem;
         margin-top: 1rem;
     }
@@ -115,7 +116,7 @@
             if (!confirm('Deseja realmente remover este personagem?')) return;
 
             try {
-                await fetch(`/api/AtendimentoApi/personagens/${id}`, {
+                const response = await fetch(`/api/AtendimentoApi/personagens/${id}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -139,8 +140,8 @@
                 <div class="personagem-card">
                     <div class="personagem-circle" style="background-color: ${p.identificadorCor}"></div>
                     <div class="personagem-actions">
-                        <a href="/Pedido/Create?personagemId=${p.id}" class="btn btn-primary">Fazer Pedido</a>
-                        <button onclick="removerPersonagem(${p.id})" class="btn btn-danger">Remover</button>
+                        <a href="/Pedido/Create?personagemId=${p.id}" class="btn btn-primary">Novo Pedido</a>
+                        <button onclick="removerPersonagem(${p.id})" class="btn btn-danger">Remover Cliente</button>
                     </div>
                 </div>
             `).join('');
