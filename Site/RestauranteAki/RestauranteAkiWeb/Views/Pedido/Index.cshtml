@@ -14,25 +14,27 @@
 
     <section class="card-list-section">
         <div class="card-list-header">Lista de Pedidos</div>
-        <div class="card-list">
+        <div class="row g-3 p-3">
             @if (Model.Any())
             {
                 @foreach (var item in Model)
                 {
-                    <div class="item-card">
-                        @* <img class="item-pedido-img"
-                             src="@(item.Imagem != null && item.Imagem.Length > 0
-                                                             ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
-                                                             : "/avatar-default.jpg")"
-                             alt="Foto de @item." /> *@
-                        <img class="item-pedido-img" src="/avatar-default.jpg" /> @* Imagem momentanea *@
-                        <div class="item-info">
-                            @* <span class="item-nome">@item.NomeItem</span> *@
-                            <span class="item-nome">@item.Id</span> @* Nome momentaneo *@
-                            <div class="item-pedido-status">@item.Status</div>
-                        </div>
-                        <div class="item-pedido-actions">
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
+                    <div class="col-12">
+                        <div class="item-card">
+                            @* <img class="item-pedido-img"
+                                 src="@(item.Imagem != null && item.Imagem.Length > 0
+                                                                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
+                                                                 : "/avatar-default.jpg")"
+                                 alt="Foto de @item." /> *@
+                            <img class="item-pedido-img" src="/avatar-default.jpg" /> @* Imagem momentanea *@
+                            <div class="item-info">
+                                @* <span class="item-nome">@item.NomeItem</span> *@
+                                <span class="item-nome">@item.Id</span> @* Nome momentaneo *@
+                                <div class="item-pedido-status">@item.Status</div>
+                            </div>
+                            <div class="item-pedido-actions">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
+                            </div>
                         </div>
                     </div>
                 }
@@ -46,9 +48,17 @@
 </div>
 
 <style>
+    .item-pedido-img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--bs-primary);
+        background: #fff;
+    }
+
     .item-pedido-status {
-        margin-right: 5rem;
-        font-size: 1.3rem;
+        /* margin-right: 5rem; */
         font-weight: 700;
     }
 </style>
