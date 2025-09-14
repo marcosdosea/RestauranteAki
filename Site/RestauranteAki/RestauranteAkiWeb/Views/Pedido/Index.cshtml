@@ -14,12 +14,12 @@
 
     <section class="card-list-section">
         <div class="card-list-header">Lista de Pedidos</div>
-        <div class="row g-3 p-3">
+        <div class="row g-0">
             @if (Model.Any())
             {
                 @foreach (var item in Model)
                 {
-                    <div class="col-12">
+                    <div class="col-12 item-container">
                         <div class="item-card">
                             @* <img class="item-pedido-img"
                                  src="@(item.Imagem != null && item.Imagem.Length > 0
@@ -29,7 +29,7 @@
                             <img class="item-pedido-img" src="/avatar-default.jpg" /> @* Imagem momentanea *@
                             <div class="item-info">
                                 @* <span class="item-nome">@item.NomeItem</span> *@
-                                <span class="item-nome">@item.Id</span> @* Nome momentaneo *@
+                                <div class="item-nome">@item.Id</div> @* Nome momentaneo *@
                                 <div class="item-pedido-status">@item.Status</div>
                             </div>
                             <div class="item-pedido-actions">
