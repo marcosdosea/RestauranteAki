@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Core;
 using Core.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
-using Service;
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -13,7 +11,7 @@ namespace RestauranteAkiWeb.Controllers
         private readonly IMesaService mesaService;
         private readonly IMapper mapper;
 
-        public MesaController(IMesaService mesaService,IMapper mapper)
+        public MesaController(IMesaService mesaService, IMapper mapper)
         {
             this.mesaService = mesaService;
             this.mapper = mapper;
@@ -21,7 +19,7 @@ namespace RestauranteAkiWeb.Controllers
         // GET: MesaController1
         public ActionResult Index()
         {
-            var listaMesa = mesaService.GetAll();   
+            var listaMesa = mesaService.GetAll();
             var MesaViewModel = mapper.Map<List<MesaViewModel>>(listaMesa);
             return View(MesaViewModel);
         }
