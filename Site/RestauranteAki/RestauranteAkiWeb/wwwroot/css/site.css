@@ -304,7 +304,7 @@ body.home-page .container-fluid {
     padding: 18px 24px;
 }
 
-.item-card {
+.item-card, .item-card-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -313,6 +313,16 @@ body.home-page .container-fluid {
     border-radius: 2rem;
     padding: 1rem;
     text-align: center;
+}
+
+.item-card-form {
+    text-align: left;
+}
+
+.item-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .item-avatar {
@@ -340,12 +350,6 @@ body.home-page .container-fluid {
     .item-actions .btn {
         width: 100%;
     }
-
-.item-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
 
 .no-data {
     color: #888;

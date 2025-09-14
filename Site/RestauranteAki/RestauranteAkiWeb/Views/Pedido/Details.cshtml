@@ -8,33 +8,35 @@
     <div class="view-header">
         <div class="view-actions">
             <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
-            <div><a asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
         </div>
     </div>
 
     <section class="card-list-section">
         <div class="card-list-header">Pedido</div>
-        <div class="card-list">
-            <div class="item-card">
-                <img class="item-pedido-img" src="/avatar-default.jpg" alt="Imagem do pedido" /> @* Imagem momentânea *@
-                <div class="item-info">
-                    <div class="item-pedido-detail">
-                        <strong>Id:</strong> @Model.Id
-                    </div>
-                    <div class="item-pedido-detail">
-                        <strong>Status:</strong> @Model.Status
-                    </div>
-                    <div class="item-pedido-detail">
-                        <strong>Conta:</strong> @Model.IdConta
-                    </div>
-                    <div class="item-pedido-detail">
-                        <strong>Mesa:</strong> @Model.IdMesa
-                    </div>
-                    <div class="item-pedido-detail">
-                        <strong>Personagem:</strong> @Model.IdPersonagem
-                    </div>
-                    <div class="item-pedido-detail">
-                        <strong>Pessoa:</strong> @Model.IdPessoa
+        <div class="row g-3 p-3">
+            <div class="col-12">
+                <div class="item-card">
+                    <img class="item-pedido-img" src="/avatar-default.jpg" alt="Imagem do pedido" /> @* Imagem momentânea *@
+                    <div class="item-info">
+                        <div class="item-pedido-detail">
+                            <strong>Id:</strong> @Model.Id
+                        </div>
+                        <div class="item-pedido-detail">
+                            <strong>Status:</strong> @Model.Status
+                        </div>
+                        <div class="item-pedido-detail">
+                            <strong>Conta:</strong> @Model.IdConta
+                        </div>
+                        <div class="item-pedido-detail">
+                            <strong>Mesa:</strong> @Model.IdMesa
+                        </div>
+                        <div class="item-pedido-detail">
+                            <strong>Personagem:</strong> @Model.IdPersonagem
+                        </div>
+                        <div class="item-pedido-detail">
+                            <strong>Pessoa:</strong> @Model.IdPessoa
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,19 +46,27 @@
 
 <style>
     .item-pedido-img {
-        width: 240px;
-        height: 240px;
+        width: 50%;
+        height: auto;
+        max-width: 160px;
         object-fit: cover;
         border-radius: 0.5rem;
     }
 
     .item-info {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-left: 2rem;
+        align-items: center;
     }
 
-    .item-pedido-detail {
-        font-size: 1.5rem;
+    @@media (min-width: 768px) {
+        .item-pedido-img {
+            max-width: 240px;
+            height: auto;
+        }
+
+        .item-info {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 2rem;
+        }
     }
 </style>

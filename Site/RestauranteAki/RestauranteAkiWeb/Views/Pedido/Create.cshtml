@@ -15,7 +15,7 @@
         <div class="card-list-header">Pedido</div>
         <div class="row g-3 p-3">
             <div class="col-12">
-                <div class="item-card">
+                <div class="item-card-form">
                     <form asp-action="Create" method="post">
                         <div class="form-group">
                             <label asp-for="Status"></label>
@@ -62,12 +62,6 @@
         </div>
     </section>
 </div>
-
-<style>
-    .item-card {
-        text-align: left;
-    }
-</style>
 
 @section Scripts {
     @{
