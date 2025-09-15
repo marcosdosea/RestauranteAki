@@ -14,24 +14,26 @@
 
     <section class="card-list-section">
         <div class="card-list-header">Lista de Garçons</div>
-        <div class="card-list">
+        <div class="row g-3 p-3">
             @if (Model.Any())
             {
                 @foreach (var item in Model)
                 {
-                    <div class="item-card">
-                        <img class="item-avatar"
-                             src="@(item.Foto != null && item.Foto.Length > 0
-                                ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
-                                : "/avatar-default.jpg")"
-                             alt="Foto de @item.NomeCompleto" />
-                        <div class="item-info">
-                            <span class="item-nome">@item.NomeCompleto</span>
-                        </div>
-                        <div class="item-actions">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Deletar</a>
+                    <div class="col-12">
+                        <div class="item-card">
+                            <img class="item-avatar"
+                                    src="@(item.Foto != null && item.Foto.Length > 0
+                                    ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
+                                    : "/avatar-default.jpg")"
+                                    alt="Foto de @item.NomeCompleto" />
+                            <div class="item-info">
+                                <span class="item-nome">@item.NomeCompleto</span>
+                            </div>
+                            <div class="item-actions">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Deletar</a>
+                            </div>
                         </div>
                     </div>
                 }
