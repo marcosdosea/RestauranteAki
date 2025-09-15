@@ -9,13 +9,16 @@ namespace RestauranteAkiWeb.Controllers
     public class ContaController : Controller
     {
         private readonly IContumService contaService;
+        private readonly IMesaService mesaService;
         private readonly IMapper mapper;
 
-        public ContaController(IContumService contaService, IMapper mapper)
+        public ContaController(IContumService contaService, IMesaService mesaService, IMapper mapper)
         {
             this.contaService = contaService;
+            this.mesaService = mesaService;
             this.mapper = mapper;
         }
+
 
         // GET: ContaController
         public ActionResult Index()
@@ -44,6 +47,12 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ContumViewModel contaViewModel)
         {
+            var mesa = mesaService.Get(contaViewModel.IdMesa);
+            if (mesa == null)
+            {
+                ModelState.AddModelError("IdMesa", "A mesa deve estar disponível para abrir uma nova conta.");
+                return View(contaViewModel);
+            }
             if (ModelState.IsValid)
             {
                 var conta = mapper.Map<Contum>(contaViewModel);

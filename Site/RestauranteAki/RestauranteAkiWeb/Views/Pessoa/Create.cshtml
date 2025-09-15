@@ -56,11 +56,9 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label asp-for="IdRestaurante"
-                                    class="form-label fw-semibold">ID do Restaurante (Apenas para
-                                    Teste)*</label>
-                                <input asp-for="IdRestaurante" type="number" class="form-control"
-                                    placeholder="Ex. 1" />
+                                <select asp-items="@ViewBag.Restaurantes" asp-for="IdRestaurante" class="form-select">
+                                    <option value="">Selecione um Restaurante</option>
+                                </select>
                                 <span asp-validation-for="IdRestaurante" class="text-danger"></span>
                             </div>
                         </div>
@@ -83,12 +81,12 @@
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <label asp-for="Cep" class="form-label fw-semibold">CEP*</label>
-                                <input asp-for="Cep" class="form-control" placeholder="Ex. 49160-00" />
+                                <input asp-for="Cep" id="cep-input" class="form-control" placeholder="Ex. 49160-00" />
                                 <span asp-validation-for="Cep" class="text-danger"></span>
                             </div>
                             <div class="col-md-7">
                                 <label asp-for="Logradouro" class="form-label fw-semibold">Logradouro*</label>
-                                <input asp-for="Logradouro" class="form-control"
+                                <input asp-for="Logradouro" id="rua-input" class="form-control"
                                     placeholder="Ex. Rua Presidente Prudente" />
                                 <span asp-validation-for="Logradouro" class="text-danger"></span>
                             </div>
@@ -107,17 +105,17 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label asp-for="Bairro" class="form-label fw-semibold">Bairro*</label>
-                                <input asp-for="Bairro" class="form-control" placeholder="Ex. Soledade" />
+                                <input asp-for="Bairro" id="bairro-input" class="form-control" placeholder="Ex. Soledade" />
                                 <span asp-validation-for="Bairro" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="Cidade" class="form-label fw-semibold">Cidade*</label>
-                                <input asp-for="Cidade" class="form-control" placeholder="Ex. Aracaju" />
+                                <input asp-for="Cidade" id="cidade-input" class="form-control" placeholder="Ex. Aracaju" />
                                 <span asp-validation-for="Cidade" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="Estado" class="form-label fw-semibold">Estado*</label>
-                                <input asp-for="Estado" class="form-control" placeholder="Ex. Sergipe" />
+                                <input asp-for="Estado" id="estado-input" class="form-control" placeholder="Ex. Sergipe" />
                                 <span asp-validation-for="Estado" class="text-danger"></span>
                             </div>
                         </div>
@@ -131,5 +129,6 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/cadastro-restaurante.js"></script>
     }
 }

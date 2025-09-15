@@ -1,55 +1,79 @@
 ﻿@model RestauranteAkiWeb.Models.CardapioViewModel
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Cardápio";
 }
-
-<h1>Create</h1>
-
-<h4>CardapioViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataInicio" class="control-label"></label>
-                <input asp-for="DataInicio" class="form-control" />
-                <span asp-validation-for="DataInicio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataFim" class="control-label"></label>
-                <input asp-for="DataFim" class="form-control" />
-                <span asp-validation-for="DataFim" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ativo" class="control-label"></label>
-                <input asp-for="Ativo" class="form-control" />
-                <span asp-validation-for="Ativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdRestaurante" class="control-label"></label>
-                <input asp-for="IdRestaurante" class="form-control" />
-                <span asp-validation-for="IdRestaurante" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
+    <section class="card-list-section">
+        <div class="card-list-header">Cardápio</div>
+        <div class="card-list">
+            <div class="item-card">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Nome"></label>
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DataInicio"></label>
+                        <input asp-for="DataInicio" class="form-control" />
+                        <span asp-validation-for="DataInicio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DataFim"></label>
+                        <input asp-for="DataFim" class="form-control" />
+                        <span asp-validation-for="DataFim" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <select asp-items="@ViewBag.Restaurantes" asp-for="IdRestaurante" class="form-select">
+                            <option value="">Selecione um Restaurante</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
+<style>
+    .item-card {
+        flex-direction: column;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        background-color: #fff;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
+        .item-card form {
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+</style>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-
-
