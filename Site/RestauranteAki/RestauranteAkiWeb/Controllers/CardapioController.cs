@@ -3,6 +3,7 @@ using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RestauranteAkiWeb.Mappers;
 using RestauranteAkiWeb.Models;
 
@@ -11,12 +12,14 @@ namespace RestauranteAkiWeb.Controllers
     public class CardapioController : Controller
     {
         private ICardapioService cardapioService;
+        private IRestauranteService restauranteService;
         private IMapper mapper;
 
-        public CardapioController(IMapper mapper, ICardapioService cardapioService)
+        public CardapioController(ICardapioService cardapioService, IRestauranteService restauranteService, IMapper mapper)
         {
-            this.mapper = mapper;
             this.cardapioService = cardapioService;
+            this.restauranteService = restauranteService;
+            this.mapper = mapper;
         }
 
         // GET: CardapioController
@@ -39,6 +42,7 @@ namespace RestauranteAkiWeb.Controllers
         // GET: CardapioController/Create
         public ActionResult Create()
         {
+            SelectListRestaurante();
             return View();
         }
 
@@ -55,6 +59,7 @@ namespace RestauranteAkiWeb.Controllers
             }
             catch
             {
+                SelectListRestaurante();
                 ModelState.AddModelError(String.Empty, "Ocorreu um erro inesperádo. Tente novamente.");
                 return View(cardapioViewModel);
             }
@@ -118,5 +123,16 @@ namespace RestauranteAkiWeb.Controllers
                 return View();
             }
         }
+
+        private void SelectListRestaurante()
+        {
+            var restaurantes = restauranteService.GetAll();
+            ViewBag.Restaurantes = restaurantes.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Nome
+            }).ToList();
+        }
+
     }
 }

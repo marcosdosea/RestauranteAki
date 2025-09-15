@@ -3,19 +3,23 @@ using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RestauranteAkiWeb.Models;
+using Service;
 
 namespace RestauranteAkiWeb.Controllers
 {
     public class PessoaController : Controller
     {
         private IPessoaService pessoaService;
+        private IRestauranteService restauranteService;
         private IMapper mapper;
 
-        public PessoaController(IMapper mapper, IPessoaService pessoaService)
+        public PessoaController(IPessoaService pessoaService, IRestauranteService restauranteService, IMapper mapper)
         {
-            this.mapper = mapper;
             this.pessoaService = pessoaService;
+            this.restauranteService = restauranteService;
+            this.mapper = mapper;
         }
 
         // GET: PessoaController/IndexGestor
@@ -47,6 +51,7 @@ namespace RestauranteAkiWeb.Controllers
         // GET: PessoaController/Create
         public ActionResult Create(string tipo)
         {
+            SelectListRestaurante();
             ViewBag.TipoPessoa = tipo; // "G" ou "F"
             return View();
         }
@@ -133,6 +138,15 @@ namespace RestauranteAkiWeb.Controllers
                 ModelState.AddModelError(String.Empty, "Ocorreu um erro inesperádo. Tente Novamente.");
                 return View();
             }
+        }
+        private void SelectListRestaurante()
+        {
+            var restaurantes = restauranteService.GetAll();
+            ViewBag.Restaurantes = restaurantes.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Nome
+            }).ToList();
         }
     }
 }
