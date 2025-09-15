@@ -7,9 +7,9 @@
 <div>
     <div class="view-header">
         <div class="view-actions">
-            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+            @* <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
                 <button type="submit" class="btn btn-danger">Excluir</button>
-            </form>
+            </form> *@
             <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
         </div>
     </div>

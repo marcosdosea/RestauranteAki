@@ -1,82 +1,66 @@
 ﻿@model RestauranteAkiWeb.Models.RestauranteViewModel
 
 @{
-    ViewData["Title"] = "Painel – Exclusão de Restaurante";
+    ViewData["Title"] = "Excluir Restaurante";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/list-style.css" />
-}
-
-<div class="list-wrapper">
-    <form asp-action="Delete">
-
-        <div class="header-bar form-header">
-            <h2>Confirmar Exclusão</h2>
-
-            <div class="header-actions">
-                <button type="submit" class="btn-custom-danger">
-                    <i class="bi bi-trash3-fill"></i> Sim, Excluir
-                </button>
-                <a asp-action="Index" class="btn-custom-tertiary">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                </a>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                <button type="submit" class="btn btn-danger">Excluir</button>
+            </form>
+            <div>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
             </div>
         </div>
+    </div>
 
-        <div class="list-container" style="padding: 30px;">
+    <section class="card-list-section">
+        <div class="card-list-header">Excluir Restaurante</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="delete-warning">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <strong>Atenção!</strong> Você tem certeza que deseja excluir permanentemente o restaurante abaixo?
+                </div>
 
-            <input type="hidden" asp-for="Id" />
-
-            <div class="delete-warning">
-                <i class="bi bi-exclamation-triangle-fill"></i>
-                <strong>Atenção!</strong> Você tem certeza que deseja excluir permanentemente o restaurante abaixo?
+                <div class="item-card">
+                    <div class="item-info">
+                        <div class="item-restaurante-detail">
+                            <strong>Nome:</strong> @Model.Nome
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>CNPJ:</strong> @Model.Cnpj
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>CEP:</strong> @Model.Cep
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Logradouro:</strong> @Model.Logradouro
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Bairro:</strong> @Model.Bairro
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Cidade:</strong> @Model.Cidade
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Estado:</strong> @Model.Estado
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <dl class="row details-list">
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.NomeFantasia)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.NomeFantasia)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Cnpj)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Cnpj)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Cep)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Cep)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Bairro)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Bairro)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Cidade)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Cidade)
-                </dd>
-
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Estado)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Estado)
-                </dd>
-            </dl>
-
         </div>
-    </form>
+    </section>
 </div>
+
+<style>
+    @@media (min-width: 768px) {
+        .item-info {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 2rem;
+        }
+    }
+</style>

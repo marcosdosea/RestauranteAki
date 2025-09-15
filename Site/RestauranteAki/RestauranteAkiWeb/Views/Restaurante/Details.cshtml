@@ -1,93 +1,66 @@
 ﻿@model RestauranteAkiWeb.Models.RestauranteViewModel
 
 @{
-    ViewData["Title"] = "Painel - Detalhes do Restaurante";
+    ViewData["Title"] = "Detalhes do Restaurante";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/list-style.css" />
-}
-
-<div class="list-wrapper">
-    <div class="header-bar form-header">
-        <h2>Detalhes: @Model.NomeFantasia</h2>
-
-        <div class="header-actions">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-custom-primary">
-                <i class="bi bi-pencil-square"></i> Editar
-            </a>
-            <a asp-action="Index" class="btn-custom-tertiary">
-                <i class="bi bi-arrow-left"></i> Voltar
-            </a>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
         </div>
     </div>
 
-    <div class="list-container" style="padding: 30px;">
-
-        <dl class="row details-list">
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Nome)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Nome)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.NomeFantasia)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.NomeFantasia)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Cnpj)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Cnpj)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Cep)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Cep)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Logradouro)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Logradouro)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Bairro)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Bairro)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Cidade)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Cidade)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Estado)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Estado)
-            </dd>
-
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Complemento)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Complemento)
-            </dd>
-        </dl>
-
-    </div>
+    <section class="card-list-section">
+        <div class="card-list-header">Restaurante</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card">
+                    <div class="item-info">
+                        <div class="item-restaurante-detail">
+                            <strong>Id:</strong> @Model.Id
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Nome:</strong> @Model.Nome
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Nome Fantasia:</strong> @Model.NomeFantasia
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>CNPJ:</strong> @Model.Cnpj
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>CEP:</strong> @Model.Cep
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Logradouro:</strong> @Model.Logradouro
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Bairro:</strong> @Model.Bairro
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Cidade:</strong> @Model.Cidade
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Estado:</strong> @Model.Estado
+                        </div>
+                        <div class="item-restaurante-detail">
+                            <strong>Complemento:</strong> @Model.Complemento
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+
+<style>
+    @@media (min-width: 768px) {
+        .item-info {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 2rem;
+        }
+    }
+</style>
