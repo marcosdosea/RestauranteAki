@@ -132,14 +132,6 @@ namespace Service
                 FormaPagamento = ""
             };
 
-            var ultimoPersonagem = await context.Pedidos
-                .Where(x => x.IdMesa == novoPedido.IdMesa)
-                .OrderByDescending(x => x.IdPersonagem)
-                .Select(x => x.IdPersonagem)
-                .FirstOrDefaultAsync();
-
-            var idPersonagem = ultimoPersonagem + 1;
-
             var pedido = new Pedido
             {
                 IdMesa = novoPedido.IdMesa,
@@ -147,7 +139,7 @@ namespace Service
                 Status = "S", // S - Solicitado
                 IdContaNavigation = conta,
                 PedidoItemcardapios = pedidosItens,
-                IdPersonagem = idPersonagem,
+                IdPersonagem = novoPedido.IdPersonagem,
             };
             await context.Pedidos.AddAsync(pedido);
             await context.SaveChangesAsync();

@@ -46,6 +46,7 @@ namespace RestauranteAkiWeb.Controllers
         }
 
         // GET: PedidoController/Create
+        [HttpGet]
         public ActionResult Create([FromQuery] int personagemId)
         {
             var mesas = mesaService.GetAll();
@@ -66,7 +67,7 @@ namespace RestauranteAkiWeb.Controllers
 
         // POST: PedidoController/Create
         [Authorize]
-        [HttpPost]
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(NovoPedidoViewModel pedidoViewModel)
         {
