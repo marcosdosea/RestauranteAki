@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core;
+using Core.Dto;
 using RestauranteAkiWeb.Models;
 
 namespace RestauranteAkiWeb.Mappers
@@ -9,6 +10,8 @@ namespace RestauranteAkiWeb.Mappers
         public PedidoProfile()
         {
             CreateMap<PedidoViewModel, Pedido>().ReverseMap();
+            CreateMap<NovoPedidoViewModel, NovoPedidoDto>().ReverseMap();
+            CreateMap<ItemCardapioQuantidadeDto, ItemCardapioQuantidadeViewModel>().ReverseMap();
         }
     }
 }

@@ -20,7 +20,6 @@
             <div class="cabecalho-item">Mesa</div> @* Vai ser numero da mesa *@
             <div class="cabecalho-item">Valor</div>
             <div class="cabecalho-item">Forma de Pagamento</div>
-            <div class="cabecalho-item">Status</div>
             @* <div class="cabecalho-item">Ações</div> *@
         </div>
         <div class="card-list">
@@ -30,12 +29,19 @@
                 {
                     <div class="item-card">
                         <div class="item-info">
-                            <div class="item-nome">@item.DataHoraEncerramento</div>
+                            @if (item.Status == "A")
+                            {
+                                <div class="item-nome">Conta Aberta</div>
+                            }
+                            else
+                            {
+                                <div class="item-nome">@item.DataHoraEncerramento</div>
+                            }
                             @* <div class="item-nome">@item.Id</div> *@
                             <div class="item-nome">@item.IdMesa</div> @* Vai ser numero da mesa *@
                             <div class="item-nome">@item.Valor</div>
                             <div class="item-nome">@item.FormaPagamento</div>
-                            <div class="item-nome">@item.Status</div>
+
                         </div>
                         <div class="item-pedido-actions">
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Exibir</a>
@@ -52,7 +58,7 @@
 </div>
 
 <style>
-    .cabecalho-lista{
+    .cabecalho-lista {
         display: flex;
         justify-content: space-between;
         background-color: #f8f9fa;

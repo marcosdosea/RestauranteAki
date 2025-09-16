@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Dto;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,7 @@ namespace Service
     /// </summary>
     public class PedidoService : IPedidoService
     {
-        
+
         private readonly RestauranteAkiContext context;
 
         public PedidoService(RestauranteAkiContext context)
@@ -70,6 +71,79 @@ namespace Service
         public IEnumerable<Pedido> GetAll()
         {
             return context.Pedidos.AsNoTracking();
+        }
+
+        public async Task<int> IniciarPedido(NovoPedidoDto novoPedido)
+        {
+            var mesa = await context.Mesas.AnyAsync(m => m.Id == novoPedido.IdMesa);
+            if (!mesa)
+            {
+                throw new ArgumentException("Mesa não encontrada");
+            }
+            var pessoa = await context.Pessoas.FirstOrDefaultAsync(p => p.Email == novoPedido.EmailPessoa)
+                ?? throw new ArgumentException("Pessoa não encontrada");
+
+
+            var pedidosItens = novoPedido.ItensCardapios.Where(x => x.Quantidade > 0).Select(x => new PedidoItemcardapio
+            {
+                IdItemCardapio = x.ItemCardapioId,
+                Quantidade = x.Quantidade,
+            }).ToList();
+
+            var valorTotal = (await context.Itemcardapios
+                .Where(ic => novoPedido.ItensCardapios.Select(i => i.ItemCardapioId).Contains(ic.Id))
+                .ToListAsync())
+                .Sum(ic => ic.PrecoUnitario * novoPedido.ItensCardapios.First(i => i.ItemCardapioId == ic.Id).Quantidade);
+
+            var pedidoExistente = context.Pedidos
+                .Include(x => x.IdContaNavigation).Where(x => x.IdMesa == novoPedido.IdMesa && x.Status != "E"
+                && x.IdPersonagem == novoPedido.IdPersonagem
+            ).FirstOrDefault();
+
+            if (pedidoExistente != null)
+            {
+                var pedidosExistentes =
+                    context.PedidoItemcardapios.Where(x => x.IdPedido == pedidoExistente.Id && pedidosItens.Select(x => x.IdItemCardapio).Contains(x.IdItemCardapio)).ToList();
+
+                foreach (var item in pedidosItens)
+                {
+                    item.Quantidade += pedidosExistentes.FirstOrDefault(x => x.IdItemCardapio == item.IdItemCardapio)?.Quantidade ?? 0;
+                }
+
+                var novosPedidosItens = pedidosItens.Where(x => !pedidosExistentes.Any(y => y.IdItemCardapio == x.IdItemCardapio)).ToList();
+                foreach (var item in novosPedidosItens)
+                {
+                    item.IdPedido = pedidoExistente.Id;
+                }
+
+                await context.PedidoItemcardapios.AddRangeAsync(novosPedidosItens);
+                await context.PedidoItemcardapios.AddRangeAsync(pedidosItens);
+
+                pedidoExistente.IdContaNavigation!.Valor += valorTotal;
+                await context.SaveChangesAsync();
+                return pedidoExistente.Id;
+            }
+
+            var conta = new Contum
+            {
+                IdMesa = novoPedido.IdMesa,
+                Status = "A", // A - Aberta
+                Valor = valorTotal,
+                FormaPagamento = ""
+            };
+
+            var pedido = new Pedido
+            {
+                IdMesa = novoPedido.IdMesa,
+                IdPessoa = pessoa.Id,
+                Status = "S", // S - Solicitado
+                IdContaNavigation = conta,
+                PedidoItemcardapios = pedidosItens,
+                IdPersonagem = novoPedido.IdPersonagem,
+            };
+            await context.Pedidos.AddAsync(pedido);
+            await context.SaveChangesAsync();
+            return pedido.Id;
         }
     }
 }
