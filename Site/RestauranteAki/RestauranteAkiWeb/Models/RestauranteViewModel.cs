@@ -5,8 +5,7 @@ namespace RestauranteAkiWeb.Models
 {
     public class RestauranteViewModel
     {
-        [Display(Name = "Id")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        [Display(Name = "Código")]
         public int Id { get; set; }
 
         [Display(Name = "Nome")]
@@ -28,6 +27,10 @@ namespace RestauranteAkiWeb.Models
         [Display(Name = "Logradouro")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string? Logradouro { get; set; }
+
+        [Display(Name = "Número")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public int Numero { get; set; }
 
         [Display(Name = "Bairro")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
