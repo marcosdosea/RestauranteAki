@@ -7,31 +7,43 @@
 <div>
     <div class="view-header">
         <div class="view-actions">
-            <div><a asp-action="Create" asp-route-tipo="G" class="btn btn-primary">Adicionar Novo</a></div>
+            <div><a asp-action="CreateGestor" class="btn btn-primary">Adicionar Novo</a></div>
             <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
         </div>
     </div>
 
     <section class="card-list-section">
         <div class="card-list-header">Lista de Gestores</div>
-        <div class="card-list">
+        <div class="row g-0">
             @if (Model.Any())
             {
                 @foreach (var item in Model)
                 {
-                    <div class="item-card">
-                        <img class="item-avatar"
-                             src="@(item.Foto != null && item.Foto.Length > 0
+                    <div class="col-12 item-container">
+                        <div class="item-card">
+                            <img class="item-avatar"
+                                src="/avatar-default.jpg"
+                                @* src="@(item.Foto != null && item.Foto.Length > 0
                                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
-                                : "/avatar-default.jpg")"
-                             alt="Foto de @item.NomeCompleto" />
-                        <div class="item-info">
-                            <span class="item-nome">@item.NomeCompleto</span>
-                        </div>
-                        <div class="item-actions">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Deletar</a>
+                                : "/avatar-default.jpg")" *@
+                                alt="Foto de @item.NomeCompleto" />
+                            <div class="item-info">
+                                <span class="item-nome">@item.NomeCompleto</span>
+                            </div>
+                            <div class="item-actions">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-search"></i>
+                                    Detalhes
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-trash3-fill"></i>
+                                    Deletar
+                                </a>
+                            </div>
                         </div>
                     </div>
                 }

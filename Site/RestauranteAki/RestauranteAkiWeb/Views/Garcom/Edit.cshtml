@@ -1,33 +1,127 @@
-﻿@model RestauranteAkiWeb.Models.GarcomViewModel
+﻿@model RestauranteAkiWeb.Models.PessoaViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = ViewBag.Title;
 }
 
-<h1>Edit</h1>
-
-<h4>GarcomViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
+    <section class="card-list-section">
+        <div class="card-list-header">@ViewBag.HeaderText</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card-form">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="TipoPessoa" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <h4>Dados Pessoais</h4>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label asp-for="NomeCompleto"></label>
+                                <input asp-for="NomeCompleto" class="form-control" />
+                                <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="Cpf"></label>
+                                <input asp-for="Cpf" class="form-control" />
+                                <span asp-validation-for="Cpf" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="DataNascimento"></label>
+                                <input asp-for="DataNascimento" class="form-control" type="date" />
+                                <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="Telefone"></label>
+                                <input asp-for="Telefone" class="form-control" />
+                                <span asp-validation-for="Telefone" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Foto</h4>
+                        <hr />
+                        <div class="row">
+                            @if (Model.Foto != null)
+                            {
+                                <div class="col-12 form-group">
+                                    <label>Foto Atual</label>
+                                    <div>
+                                        @{
+                                            // var base64 = Convert.ToBase64String(Model.Foto);
+                                            // var imgSrc = $"data:image/jpeg;base64,{base64}";
+                                            var imgSrc = "/avatar-default.jpg";
+                                        }
+                                        <img src="@imgSrc" style="max-width: 150px; border-radius: 5px;" alt="Foto Atual" />
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-12 form-group">
+                                <label asp-for="Foto">Trocar Foto</label>
+                                <input asp-for="Foto" class="form-control" type="file" />
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Endereço e Lotação</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Cep"></label>
+                                <input asp-for="Cep" class="form-control" />
+                                <span asp-validation-for="Cep" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <label asp-for="Logradouro"></label>
+                                <input asp-for="Logradouro" class="form-control" />
+                                <span asp-validation-for="Logradouro" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <label asp-for="Bairro"></label>
+                                <input asp-for="Bairro" class="form-control" />
+                                <span asp-validation-for="Bairro" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="Cidade"></label>
+                                <input asp-for="Cidade" class="form-control" />
+                                <span asp-validation-for="Cidade" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="Estado"></label>
+                                <input asp-for="Estado" class="form-control" />
+                                <span asp-validation-for="Estado" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label asp-for="IdRestaurante"></label>
+                                <select asp-for="IdRestaurante" asp-items="@ViewBag.Restaurantes" class="form-select">
+                                    <option value="">Selecione um Restaurante</option>
+                                </select>
+                                <span asp-validation-for="IdRestaurante" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a asp-action="@ViewBag.CancelAction" class="btn btn-danger">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

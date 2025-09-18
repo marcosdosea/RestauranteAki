@@ -112,7 +112,7 @@ body.home-page .container-fluid {
 }
 
 .main-content {
-/*    padding: 1rem;*/
+    padding-bottom: 1rem;
     min-width: 0;
 }
 

@@ -7,7 +7,7 @@
 <div>
     <div class="view-header">
         <div class="view-actions">
-            <div><a asp-action="Create" asp-route-tipo="F" class="btn btn-primary">Adicionar Novo</a></div>
+            <div><a asp-action="CreateGarcom" class="btn btn-primary">Adicionar Novo</a></div>
             <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
         </div>
     </div>
@@ -22,10 +22,11 @@
                     <div class="col-12 item-container">
                         <div class="item-card">
                             <img class="item-avatar"
-                                    src="@(item.Foto != null && item.Foto.Length > 0
-                                    ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
-                                    : "/avatar-default.jpg")"
-                                    alt="Foto de @item.NomeCompleto" />
+                                src="/avatar-default.jpg"
+                                @* src="@(item.Foto != null && item.Foto.Length > 0
+                                ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Foto)}"
+                                : "/avatar-default.jpg")" *@
+                                alt="Foto de @item.NomeCompleto" />
                             <div class="item-info">
                                 <span class="item-nome">@item.NomeCompleto</span>
                             </div>
