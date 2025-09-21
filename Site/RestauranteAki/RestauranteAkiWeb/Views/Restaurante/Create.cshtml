@@ -5,20 +5,14 @@
 }
 
 <div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
+
     <section class="card-list-section">
         <div class="card-list-header">Adicionar Novo Restaurante</div>
-        <div class="row">
-            <div class="col-12">
-                <div class="view-header justify-content-start mt-3 ms-3">
-                    <div>
-                        <a class="btn btn-secondary" onclick="history.back();">
-                            <i class="bi bi-arrow-left"></i>
-                            Voltar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-12">
                 <div class="item-card-form">
@@ -50,25 +44,31 @@
                             <input asp-for="Logradouro" class="form-control" id="rua-input" />
                             <span asp-validation-for="Logradouro" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Numero" class="control-label"></label>
-                            <input asp-for="Numero" class="form-control" />
-                            <span asp-validation-for="Numero" class="text-danger"></span>
+
+                        <div class="row">
+                            <div class="form-group col-3">
+                                <label asp-for="Numero" class="control-label"></label>
+                                <input asp-for="Numero" class="form-control" />
+                                <span asp-validation-for="Numero" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-9">
+                                <label asp-for="Bairro" class="control-label"></label>
+                                <input asp-for="Bairro" class="form-control" id="bairro-input" />
+                                <span asp-validation-for="Bairro" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Bairro" class="control-label"></label>
-                            <input asp-for="Bairro" class="form-control" id="bairro-input" />
-                            <span asp-validation-for="Bairro" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Cidade" class="control-label"></label>
-                            <input asp-for="Cidade" class="form-control" id="cidade-input" />
-                            <span asp-validation-for="Cidade" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Estado" class="control-label"></label>
-                            <input asp-for="Estado" class="form-control" id="estado-input" />
-                            <span asp-validation-for="Estado" class="text-danger"></span>
+
+                        <div class="row">
+                            <div class="form-group col-9">
+                                <label asp-for="Cidade" class="control-label"></label>
+                                <input asp-for="Cidade" class="form-control" id="cidade-input" />
+                                <span asp-validation-for="Cidade" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-3">
+                                <label asp-for="Estado" class="control-label"></label>
+                                <input asp-for="Estado" class="form-control" id="estado-input" />
+                                <span asp-validation-for="Estado" class="text-danger"></span>
+                            </div>
                         </div>
 
                         <div class="form-group">
