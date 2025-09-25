@@ -1,90 +1,94 @@
 ﻿@model RestauranteAkiWeb.Models.RestauranteViewModel
 
 @{
-    ViewData["Title"] = "Painel - Editar Restaurante";
+    ViewData["Title"] = "Editar Restaurante";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/list-style.css" />
-}
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
 
-<div class="list-wrapper">
-    <form asp-action="Edit">
+    <section class="card-list-section">
+        <div class="card-list-header">Restaurante</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card-form">
+                    <form asp-action="Edit" method="post">
+                        <div class="form-group">
+                            <label asp-for="Nome"></label>
+                            <input asp-for="Nome" class="form-control" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
 
-        <div class="header-bar form-header">
-            <h2>Editar: @Model.NomeFantasia</h2>
+                        <div class="form-group">
+                            <label asp-for="NomeFantasia"></label>
+                            <input asp-for="NomeFantasia" class="form-control" />
+                            <span asp-validation-for="NomeFantasia" class="text-danger"></span>
+                        </div>
 
-            <div class="header-actions">
-                <button type="submit" class="btn-custom-primary">
-                    <i class="bi bi-save"></i> Salvar Alterações
-                </button>
-                <a asp-action="Index" class="btn-custom-tertiary">
-                    <i class="bi bi-arrow-left"></i> Voltar
-                </a>
+                        <div class="form-group">
+                            <label asp-for="Cnpj"></label>
+                            <input asp-for="Cnpj" class="form-control" />
+                            <span asp-validation-for="Cnpj" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Cep"></label>
+                            <input asp-for="Cep" class="form-control" />
+                            <span asp-validation-for="Cep" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Logradouro"></label>
+                            <input asp-for="Logradouro" class="form-control" />
+                            <span asp-validation-for="Logradouro" class="text-danger"></span>
+                        </div>
+
+                        
+                        <div class="row">
+                            <div class="form-group col-3">
+                                <label asp-for="Numero" class="control-label"></label>
+                                <input asp-for="Numero" class="form-control" />
+                                <span asp-validation-for="Numero" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-9">
+                                <label asp-for="Bairro" class="control-label"></label>
+                                <input asp-for="Bairro" class="form-control" />
+                                <span asp-validation-for="Bairro" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-9">
+                                <label asp-for="Cidade" class="control-label"></label>
+                                <input asp-for="Cidade" class="form-control" />
+                                <span asp-validation-for="Cidade" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-3">
+                                <label asp-for="Estado" class="control-label"></label>
+                                <input asp-for="Estado" class="form-control" />
+                                <span asp-validation-for="Estado" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Complemento"></label>
+                            <input asp-for="Complemento" class="form-control" />
+                            <span asp-validation-for="Complemento" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div class="list-container" style="padding: 30px;">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <input type="hidden" asp-for="Id" />
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label asp-for="Nome" class="control-label"></label>
-                        <input asp-for="Nome" class="form-control" />
-                        <span asp-validation-for="Nome" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="NomeFantasia" class="control-label"></label>
-                        <input asp-for="NomeFantasia" class="form-control" />
-                        <span asp-validation-for="NomeFantasia" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Cnpj" class="control-label"></label>
-                        <input asp-for="Cnpj" class="form-control" />
-                        <span asp-validation-for="Cnpj" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Cep" class="control-label"></label>
-                        <input asp-for="Cep" class="form-control" />
-                        <span asp-validation-for="Cep" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label asp-for="Logradouro" class="control-label"></label>
-                        <input asp-for="Logradouro" class="form-control" />
-                        <span asp-validation-for="Logradouro" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Bairro" class="control-label"></label>
-                        <input asp-for="Bairro" class="form-control" />
-                        <span asp-validation-for="Bairro" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Cidade" class="control-label"></label>
-                        <input asp-for="Cidade" class="form-control" />
-                        <span asp-validation-for="Cidade" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Estado" class="control-label"></label>
-                        <input asp-for="Estado" class="form-control" />
-                        <span asp-validation-for="Estado" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="Complemento" class="control-label"></label>
-                <input asp-for="Complemento" class="form-control" />
-                <span asp-validation-for="Complemento" class="text-danger"></span>
-            </div>
-
-        </div>
-    </form>
+    </section>
 </div>
 
 @section Scripts {

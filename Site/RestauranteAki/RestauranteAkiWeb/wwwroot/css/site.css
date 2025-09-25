@@ -3,9 +3,13 @@
    ========================================================================== */
 :root {
     --bs-primary: #F97316;
-    --bs-primary-hover: #EA580C;
-    --bs-body-bg: #F8F7FF;
+    --bs-primary-bg-hover: #EA580C;
+    --bs-secondary: #FFF;
+    --bs-secondary-bg-hover: #E8E8E8FF;
+    --bs-danger: #DC3545;
+    --bs-success: #198754;
     --bs-body-color: #333;
+    --bs-body-bg: #F8F7FF;
     --active-blue: #4338CA;
     --text-light: #555;
 }
@@ -122,7 +126,7 @@ body.home-page .container-fluid {
 
 .view-actions {
     display: flex;
-    gap: 24px;
+    gap: 0.75rem;
 }
 
 @media (min-width: 992px) {
@@ -146,47 +150,42 @@ body.home-page .container-fluid {
    3. Componentes Reutilizáveis (Botões, Cards, Listas)
    ========================================================================== */
 .btn {
-    padding: 12px;
-    border-radius: 8px;
+    border-radius: 5px;
     font-size: inherit;
-    font-weight: 500;
     border: none;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    text-align: center;
-    box-shadow: 1px 1px 0px #b5b5b5;
 }
 
 .btn-primary {
     background-color: var(--bs-primary);
-    color: #fff;
-    border: 2px solid var(--bs-primary);
+    color: var(--bs-white);
+    border: 1px solid var(--bs-primary);
 }
 
     .btn-primary:hover {
-        background-color: var(--bs-primary-hover);
+        background-color: var(--bs-primary-bg-hover);
         border-color: var(--bs-primary);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
     }
 
 .btn-secondary {
-    background: #fff;
+    background-color: var(--bs-white);
     color: var(--bs-primary);
-    border: 2px solid var(--bs-primary);
+    border: 1px solid var(--bs-primary);
 }
 
     .btn-secondary:hover {
-        background: #e8e8e8ff;
+        background-color: var(--bs-secondary-bg-hover);
         border-color: var(--bs-primary);
         color: var(--bs-primary);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
     }
 
 .btn-danger {
-    border: 2px solid #dc3545;
+    border: 1px solid var(--bs-danger);
 }
 
 .btn-success {
-    border: 2px solid #198754;
+    border: 1px solid var(--bs-success);
 }
 
 .btn-custom-primary {
@@ -304,18 +303,29 @@ body.home-page .container-fluid {
     padding: 18px 24px;
 }
 
-.item-card, .item-card-form {
+.item-container {
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.item-container:last-child {
+    border-bottom: none;
+}
+
+.item-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    border: 2px solid var(--bs-primary);
-    border-radius: 2rem;
+/*    border: 2px solid var(--bs-primary);
+    border-radius: 2rem;*/
     padding: 1rem;
-    text-align: center;
 }
 
 .item-card-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
     text-align: left;
 }
 
@@ -323,6 +333,11 @@ body.home-page .container-fluid {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+.item-card-form form {
+    width: 100%;
+    max-width: 500px;
 }
 
 .item-avatar {
@@ -334,9 +349,15 @@ body.home-page .container-fluid {
     background: #fff;
 }
 
+.item-avatar i {
+    font-size: 2.25rem;
+    color: var(--bs-primary);
+}
+
 .item-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.5rem;
 }
 
@@ -369,6 +390,12 @@ body.home-page .container-fluid {
     font-size: 1.1rem;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
 .form-group, .form-group > * {
     font-size: inherit;
 }
@@ -398,7 +425,6 @@ body.home-page .container-fluid {
     .item-info {
         flex: 1;
         flex-direction: row;
-        align-items: center;
         justify-content: space-between;
         margin-left: 16px;
         margin-right: 16px;
@@ -409,6 +435,10 @@ body.home-page .container-fluid {
         flex-direction: row;
         width: auto;
     }
+
+        .item-actions .btn {
+            width: auto;
+        }
 
     .form-actions {
         flex-direction: row;

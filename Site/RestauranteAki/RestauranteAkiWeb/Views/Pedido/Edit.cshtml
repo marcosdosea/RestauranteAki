@@ -7,16 +7,16 @@
 <div>
     <div class="view-header">
         <div class="view-actions">
-            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+            @* <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
                 <button type="submit" class="btn btn-danger">Excluir</button>
-            </form>
+            </form> *@
             <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
         </div>
     </div>
 
     <section class="card-list-section">
         <div class="card-list-header">Pedido</div>
-        <div class="row g-3 p-3">
+        <div class="row">
             <div class="col-12">
                 <div class="item-card-form">
                     <form asp-action="Edit" method="post">

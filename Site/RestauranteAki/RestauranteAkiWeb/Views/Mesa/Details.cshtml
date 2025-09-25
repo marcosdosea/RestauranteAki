@@ -8,23 +8,25 @@
     <div class="view-header">
         <div class="view-actions">
             <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
-            <div><a asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
         </div>
     </div>
 
     <section class="card-list-section">
         <div class="card-list-header">Mesa</div>
-        <div class="card-list">
-            <div class="item-card">
-                <img class="item-mesa-img"
-                     src="@(Model.Imagem != null && Model.Imagem.Length > 0
-                                                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Imagem)}"
-                                                 : "/avatar-default.jpg")"
-                     alt="Imagem da mesa" />
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card">
+                    <img class="item-mesa-img"
+                         src="@(Model.Imagem != null && Model.Imagem.Length > 0
+                                                     ? $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Imagem)}"
+                                                     : "/avatar-default.jpg")"
+                         alt="Imagem da mesa" />
 
-                <div class="item-info">
-                    <div class="item-mesa-detail">
-                        <strong>Id:</strong> @Model.Id
+                    <div class="item-info">
+                        <div class="item-mesa-detail">
+                            <strong>Id:</strong> @Model.Id
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,21 +36,27 @@
 
 <style>
     .item-mesa-img {
-        width: 240px;
-        height: 240px;
+        width: 50%;
+        height: auto;
+        max-width: 160px;
         object-fit: cover;
-        border: 2px solid var(--bs-primary);
         border-radius: 0.5rem;
-        background: #fff;
     }
 
     .item-info {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-left: 2rem;
+        align-items: center;
     }
 
-    .item-mesa-detail {
-        font-size: 2rem;
+    @@media (min-width: 768px) {
+        .item-mesa-img {
+            max-width: 240px;
+            height: auto;
+        }
+
+        .item-info {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 2rem;
+        }
     }
 </style>

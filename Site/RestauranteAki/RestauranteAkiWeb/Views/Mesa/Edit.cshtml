@@ -13,78 +13,50 @@
 
     <section class="card-list-section">
         <div class="card-list-header">Mesa</div>
-        <div class="card-list">
-            <div class="item-card">
-                <form asp-action="Edit" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label asp-for="Id"></label>
-                        <input asp-for="Id" class="form-control" readonly />
-                        <span asp-validation-for="Id" class="text-danger"></span>
-                    </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card-form">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="Id"></label>
+                            <input asp-for="Id" class="form-control" readonly />
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Imagem atual</label>
-                        <img class="item-mesa-img"
-                             src="@(Model.Imagem != null && Model.Imagem.Length > 0
-                                                                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Imagem)}"
-                                                                 : "/avatar-default.jpg")"
-                             alt="Imagem da mesa" />
-                    </div>
+                        <div class="form-group">
+                            <label>Imagem atual</label>
+                            <img class="item-mesa-img"
+                                 src="@(Model.Imagem != null && Model.Imagem.Length > 0
+                                                                     ? $"data:image/jpeg;base64,{Convert.ToBase64String(Model.Imagem)}"
+                                                                     : "/avatar-default.jpg")"
+                                 alt="Imagem da mesa" />
+                        </div>
 
-                    <div class="form-group">
-                        <label asp-for="Imagem">Alterar Imagem</label>
-                        <input asp-for="Imagem" type="file" class="form-control" />
-                        <span asp-validation-for="Imagem" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label asp-for="Imagem">Alterar Imagem</label>
+                            <input asp-for="Imagem" type="file" class="form-control" />
+                            <span asp-validation-for="Imagem" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                        <a asp-action="Index" class="btn btn-danger">Cancelar</a>
-                    </div>
-                </form>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 </div>
 
 <style>
-    .item-card {
-        flex-direction: column;
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        background-color: #fff;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-        .item-card form {
-            gap: 0.5rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1rem;
-    }
-
     .item-mesa-img {
-        width: 240px;
-        height: 240px;
+        width: 50%;
+        height: auto;
+        max-width: 160px;
         object-fit: cover;
         border: 2px solid var(--bs-primary);
         border-radius: 0.5rem;
-        margin-top: 0.5rem;
-        background: #fff;
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 1rem;
     }
 </style>
 

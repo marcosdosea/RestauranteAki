@@ -4,53 +4,51 @@
     ViewData["Title"] = "Painel - Restaurantes";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/list-style.css" />
-}
-
-<div class="list-wrapper">
-    <div class="header-bar">
-        <h2>Lista de Restaurantes</h2>
-        <a asp-action="Create" class="btn-custom-primary">Adicionar Novo</a>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Create" class="btn btn-primary">Adicionar Novo</a></div>
+            <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
     </div>
 
-    <div class="list-container">
-        @if (Model.Any())
-
-        {
-            @foreach (var item in Model)
-
+    <section class="card-list-section">
+        <div class="card-list-header">Lista de Restaurantes</div>
+        <div class="row g-0">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 item-container">
+                        <div class="item-card">
+                            <div class="item-avatar d-flex align-items-center justify-content-center"><i class="bi bi-building"></i></div>
+                            <div class="item-info">
+                                <div class="item-nomefantasia">@item.NomeFantasia</div>
+                            </div>
+                            <div class="item-actions">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-search"></i>
+                                    Detalhes
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-trash3-fill"></i>
+                                    Deletar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
             {
                 <div class="list-item">
-                    <div class="item-avatar">
-                        <i class="bi bi-building"></i>
-                    </div>
-
-                    <div class="item-details">
-                        @Html.DisplayFor(modelItem => item.NomeFantasia)
-                    </div>
-
-                    <div class="item-actions">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-custom-secondary">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-custom-secondary">
-                            <i class="bi bi-search"></i> Detalhes
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-custom-secondary">
-                            <i class="bi bi-trash3-fill"></i> Deletar
-                        </a>
-                    </div>
+                    <p>Nenhum restaurante cadastrado ainda.</p>
                 </div>
             }
-        }
-
-        else
-
-        {
-            <div class="list-item">
-                <p>Nenhum restaurante cadastrado ainda.</p>
-            </div>
-        }
-    </div>
+        </div>
+    </section>
 </div>
