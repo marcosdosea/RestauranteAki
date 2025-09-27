@@ -1,50 +1,94 @@
 ﻿@model IEnumerable<RestauranteAkiWeb.Models.ItemcardapioViewModel>
 
 @{
-    ViewData["Title"] = "Cardapio";
+    ViewData["Title"] = "Itens do Cardápio";
 }
 
 <div>
-    <div class="main-header">
-        <h1 class="main-title"></h1>
-        <div class="main-actions">
-            <a asp-action="Create" asp-route-tipo="F" class="btn btn-primary">Adicionar Novo</a>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Create" class="btn btn-primary">Adicionar Novo</a></div>
+            <div><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+        </div>
+    </div>
+
+    <div class="filter-section">
+        <h4 class="filter-section-title">Filtros</h4>
+        <div class="cardapio-filter">
+            <label for="cardapioSelect" class="form-label fw-bold">Cardápio</label>
+            <select class="form-select" id="cardapioSelect">
+                <option value="principal" selected>Cardápio principal</option>
+                <option value="c2">Cardápio 2</option>
+                <option value="c3">Cardápio 3</option>
+            </select>
+        </div>
+        <div class="category-filter">
+            <label for="categorySelect" class="form-label fw-bold">Categoria</label>
+            <select class="form-select" id="categorySelect" disabled>
+                <option value="all" selected>Todas as Categorias</option>
+                <option value="lanches">Lanches</option>
+                <option value="saladas">Saladas</option>
+            </select>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Pesquisar item..." class="form-control" />
+            <button id="searchButton" class="btn btn-primary">
+                <i class="bi bi-search"></i>
+            </button>
         </div>
     </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Cardapio</div>
-        <div class="card-list">
+        @* <div class="card-list-header">Itens Cardapio</div> *@
+        <div class="row g-0">
             @if (Model.Any())
             {
                 @foreach (var item in Model)
                 {
-                    <div class="item-card">
-                        <img class="item-avatar"
-                             src="@(item.Imagem != null && item.Imagem.Length > 0
-                                                             ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
-                                                             : "/avatar-default.jpg")"
-                     alt="Foto de @item.Nome" />
-                <div class="item-info">
-                    <span class="item-nome">@item.Nome</span>
-                </div>
-                <div class="item-actions">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Deletar</a>
-                </div>
-            </div>
-                        }
+                    <div class="col-12 item-container">
+                        <div class="item-card">
+                            <img class="item-avatar"
+                                 src="@(item.Imagem != null && item.Imagem.Length > 0
+                                        ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
+                                        : "/avatar-default.jpg")"
+                                alt="Foto de @item.Nome" />
+                            <div class="item-info">
+                                <span class="item-nome">@item.Nome</span>
+                            </div>
+                            <div class="item-actions">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-search"></i>
+                                    Detalhes
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary">
+                                    <i class="bi bi-trash3-fill"></i>
+                                    Deletar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
             else
             {
-                <p class="no-data">Nenhum Cardapio cadastrado.</p>
+                <p class="no-data">Nenhum item do cardápio cadastrado.</p>
             }
         </div>
     </section>
 </div>
 
+<style>
+    .card-list-section {
+        border: 1px solid #CCCCCC;
+        box-shadow: none;
+    }
+</style>
+
 @section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
+    <link rel="stylesheet" href="~/css/filter-search.css" />
 }
