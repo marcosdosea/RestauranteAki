@@ -4,7 +4,7 @@
     ViewData["Title"] = "Detalhes Item do Cardápio";
     var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
     var nomes = new[] { "Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom" };
-    var diasSelecionados = (Model.DiaSemana ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries);
+    var diasSelecionados = Model.DiasSemana;
 }
 
 <div class="main-content">
@@ -26,7 +26,7 @@
                                 var categorias = new Dictionary<int, string> {
                                     {1, "Hamburger"}, {2, "Pizza"}, {3, "Bebida"}, {4, "Sobremesa"}
                                 };
-                                @categorias.GetValueOrDefault(Model.Categoria, "Desconhecida")
+                                // @categorias.GetValueOrDefault(Model.Categoria, "Desconhecida")
                             }
                         </div>
                     </div>
@@ -68,10 +68,9 @@
                     <div class="form-group">
                         <label class="form-label">Foto *</label>
                         <div class="foto-upload">
-                            @if (Model.Imagem != null && Model.Imagem.Length > 0)
+                            @if (Model.ImagemAtual != null && Model.ImagemAtual.Length > 0)
                             {
-                                var base64 = Convert.ToBase64String(Model.Imagem);
-                                <img src="data:image/png;base64,@base64" style="max-width:150px;max-height:150px; margin-top:10px;" />
+                                <img src="/avatar-default.jpg" />
                             }
                             else
                             {

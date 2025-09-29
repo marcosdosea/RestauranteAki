@@ -3,6 +3,8 @@ using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
+using Service;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 
 namespace RestauranteAkiWeb.Controllers
@@ -37,34 +39,57 @@ namespace RestauranteAkiWeb.Controllers
         // GET: ItemCardapioController/Create
         public ActionResult Create()
         {
-            var model = new ItemcardapioViewModel(); ///cria uma instancia vazia.
-            return View(model);
+            return View(new ItemcardapioViewModel());
         }
 
         // POST: ItemCardapioController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ItemcardapioViewModel itemcardapioViewModel, string[] DiasSemana)
+        public ActionResult Create(ItemcardapioViewModel viewModel)
         {
-            if (itemcardapioViewModel != null)
+            if (string.IsNullOrWhiteSpace(viewModel.Descricao))
             {
-                itemcardapioViewModel.DiaSemana = string.Join(",", DiasSemana ?? []);
-                
-                var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
+                ModelState.AddModelError(nameof(viewModel.Descricao), "É necessário informar ao menos 1 ingrediente.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                Debug.WriteLine(viewModel.Categoria);
+                var itemcardapio = mapper.Map<Itemcardapio>(viewModel);
+
+                if (viewModel.ImagemUpload != null && viewModel.ImagemUpload.Length > 0)
+                {
+                    using var memoryStream = new MemoryStream();
+                    viewModel.ImagemUpload.CopyTo(memoryStream);
+                    itemcardapio.Imagem = memoryStream.ToArray();
+                }
+                else
+                {
+                    itemcardapio.Imagem = System.Text.Encoding.UTF8.GetBytes("placeholder");
+                }
+
                 itemcardapioService.Create(itemcardapio);
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                return BadRequest();
-            }
+
+            return View(viewModel);
         }
 
         // GET: ItemCardapioController/Edit/5
         public ActionResult Edit(int id)
         {
             var itemcardapio = itemcardapioService.Get(id);
+            if (itemcardapio == null)
+            {
+                return NotFound();
+            }
+
             var itemcardapioViewModel = mapper.Map<ItemcardapioViewModel>(itemcardapio);
+
+            if (itemcardapio.Imagem != null && itemcardapio.Imagem.Length > 0)
+            {
+                itemcardapioViewModel.ImagemAtual = Convert.ToBase64String(itemcardapio.Imagem);
+            }
 
             return View(itemcardapioViewModel);
         }
@@ -72,36 +97,60 @@ namespace RestauranteAkiWeb.Controllers
         // POST: ItemCardapioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ItemcardapioViewModel itemcardapioViewModel)
+        public ActionResult Edit(int id, ItemcardapioViewModel viewModel)
         {
-            if (id != itemcardapioViewModel.Id)
+            if (id != viewModel.Id)
             {
                 return BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(viewModel.Descricao))
             {
-                return View(itemcardapioViewModel);
+                ModelState.AddModelError(nameof(viewModel.Descricao), "É necessário informar ao menos 1 ingrediente.");
             }
 
-            try
+            if (ModelState.IsValid)
             {
-                var itemcardapio = mapper.Map<Itemcardapio>(itemcardapioViewModel);
-                itemcardapioService.Edit(itemcardapio); // <- ESSENCIAL
+                var itemcardapio = itemcardapioService.Get(id);
+                if (itemcardapio == null)
+                {
+                    return NotFound();
+                }
+
+                mapper.Map(viewModel, itemcardapio);
+
+                if (viewModel.ImagemUpload != null && viewModel.ImagemUpload.Length > 0)
+                {
+                    using var memoryStream = new MemoryStream();
+                    viewModel.ImagemUpload.CopyTo(memoryStream);
+                    itemcardapio.Imagem = memoryStream.ToArray();
+                }
+                else
+                {
+                    itemcardapio.Imagem = System.Text.Encoding.UTF8.GetBytes("placeholder");
+                }
+
+                itemcardapioService.Edit(itemcardapio);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Ocorreu um erro inesperado. Tente novamente.");
-                return View(itemcardapioViewModel);
-            }
+            return View(viewModel);
         }
 
         // GET: ItemCardapioController/Delete/5
         public ActionResult Delete(int id)
         {
             var itemcardapio = itemcardapioService.Get(id);
+            if (itemcardapio == null)
+            {
+                return NotFound();
+            }
+
             var itemcardapioViewModel = mapper.Map<ItemcardapioViewModel>(itemcardapio);
+            if (itemcardapio.Imagem != null && itemcardapio.Imagem.Length > 0)
+            {
+                itemcardapioViewModel.ImagemAtual = Convert.ToBase64String(itemcardapio.Imagem);
+            }
+
             return View(itemcardapioViewModel);
         }
 
@@ -110,33 +159,20 @@ namespace RestauranteAkiWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, ItemcardapioViewModel itemcardapioViewModel)
         {
-            if (id != itemcardapioViewModel.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                itemcardapioService.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Ocorreu um erro inesperado. Tente novamente.");
-                return View();
-            }
+            itemcardapioService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
-        [HttpGet] // Apenas para garantir que só aceite requisições GET
+
+        [HttpGet]
         public IActionResult GetIngredientesUnicos()
         {
             try
             {
                 var ingredientes = itemcardapioService.GetAllIngredientes();
-                return Ok(ingredientes); // Retorna a lista de ingredientes em formato JSON
+                return Ok(ingredientes);
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
-                // Se algo der errado no servidor, isso ajudará a depurar
                 return StatusCode(500, "Ocorreu um erro interno ao buscar os ingredientes.");
             }
         } 

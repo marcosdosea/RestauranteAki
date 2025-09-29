@@ -40,12 +40,12 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-12">
                                         <label asp-for="PrecoUnitario" class="control-label">Preço</label>
                                         <input asp-for="PrecoUnitario" class="form-control" placeholder="R$ 0,00" type="number" step="0.01" min="0" />
                                         <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-12">
                                         <label asp-for="Porcao" class="control-label"></label>
                                         <input asp-for="Porcao" class="form-control" type="number" min="1" />
                                         <span asp-validation-for="Porcao" class="text-danger"></span>
@@ -83,7 +83,9 @@
                                     </button>
                                 </div>
 
-                                <div class="modal fade" id="ingredientesModal" tabindex="-1" aria-labelledby="ingredientesModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="ingredientesModal" tabindex="-1" 
+                                     data-api-url="@Url.Action("GetIngredientesUnicos", "Itemcardapio")"
+                                     aria-labelledby="ingredientesModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -105,25 +107,20 @@
                                     </div>
                                 </div>
                                 <input type="hidden" id="descricao" asp-for="Descricao" />
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
 
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="Imagem" class="control-label">Foto</label>
+                                    <label asp-for="ImagemUpload" class="control-label">Foto</label>
                                     <div class="foto-upload">
-                                        <input asp-for="Imagem" type="file" accept="image/*" class="form-control-file" id="fotoInput" style="display: none;" />
-                                        <label for="fotoInput" class="foto-dropzone">
+                                        <input asp-for="ImagemUpload" type="file" accept="image/*" class="form-control-file" id="ImagemUpload" style="display: none;" />
+                                        <label for="ImagemUpload" class="foto-dropzone">
                                             <span>Drag and drop<br />ou clique aqui<br />para selecionar</span>
                                         </label>
                                     </div>
-                                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                                    <span asp-validation-for="ImagemUpload" class="text-danger"></span>
                                 </div>
-
-                                @* <div class="form-group">
-                                    <label asp-for="Imagem" class="control-label"></label>
-                                    <input asp-for="Imagem" type="file" accept="image/*" class="form-control" />
-                                    <span asp-validation-for="Imagem" class="text-danger"></span>
-                                </div> *@
                             </div>
                         </div>
 
@@ -139,213 +136,13 @@
 </div>
 
 @section Styles {
-<style>
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 56px;
-        height: 28px;
-    }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: 0.4s;
-        border-radius: 28px;
-    }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-    .switch input:checked + .slider {
-        background-color: var(--active-blue);
-    }
-
-        .switch input:checked + .slider:before {
-            transform: translateX(28px);
-        }
-
-    /* ===== Dias da Semana ===== */
-    .dias-semana {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .dia-checkbox {
-        position: relative;
-    }
-
-        .dia-checkbox input {
-            display: none;
-        }
-
-        .dia-checkbox span {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            background: var(--bs-primary);
-            color: var(--bs-white);
-            font-weight: bold;
-            text-align: center;
-            line-height: 32px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .dia-checkbox input:checked + span {
-            background: var(--active-blue);
-        }
-
-        /* ===== Upload de Foto ===== */
-        .foto-dropzone {
-            display: block;
-            border: 2px dashed #bbb;
-            border-radius: 12px;
-            padding: 30px 15px;
-            text-align: center;
-            color: #777;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-        }
-
-            .foto-dropzone:hover {
-                background: #f8f8f8;
-                border-color: var(--bs-primary);
-                color: var(--bs-primary);
-            }
-</style>
+    <link rel="stylesheet" href="~/css/itemcardapio.css" />
 }
-
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modalEl = document.getElementById('ingredientesModal');
-            const listaModalUl = document.getElementById('lista-modal');
-            const novoIngredienteInput = document.getElementById('novo-ingrediente-modal');
-            const btnAdicionar = document.getElementById('btn-adicionar-modal');
-            const btnSalvar = document.getElementById('btn-salvar-modal');
-            const descricaoInput = document.getElementById('descricao');
-            const apiUrl = '@Url.Action("GetIngredientesUnicos", "Itemcardapio")';
-
-            function criarItemHtml(nome, isChecked) {
-                const idSeguro = `ing-${nome.replace(/[^a-zA-Z0-9]/g, '-')}`;
-                return `
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="${nome}" id="${idSeguro}" ${isChecked ? 'checked' : ''}>
-                            <label class="form-check-label" for="${idSeguro}">${nome}</label>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-sm btn-outline-primary btn-editar me-1" title="Editar nome">✏️</button>
-                            <button type="button" class="btn btn-sm btn-outline-danger btn-remover" title="Remover item">🗑️</button>
-                        </div>
-                    </li>
-                `;
-            }
-
-            function renderizarLista(ingredientesDisponiveis, ingredientesJaSelecionados) {
-                listaModalUl.innerHTML = '';
-                const todosOsIngredientes = [...new Set([...ingredientesDisponiveis, ...ingredientesJaSelecionados])].sort();
-
-                todosOsIngredientes.forEach(nome => {
-                    if (!nome) return;
-                    const isChecked = ingredientesJaSelecionados.some(sel => sel.toLowerCase() === nome.toLowerCase());
-                    listaModalUl.insertAdjacentHTML('beforeend', criarItemHtml(nome, isChecked));
-                });
-            }
-
-            function adicionarNovoItemNaLista(nome) {
-                const nomeNormalizado = nome.toLowerCase();
-                for (let input of listaModalUl.querySelectorAll('input[type="checkbox"]')) {
-                    if (input.value.toLowerCase() === nomeNormalizado) {
-                        input.checked = true;
-                        return;
-                    }
-                }
-                listaModalUl.insertAdjacentHTML('beforeend', criarItemHtml(nome, true));
-            }
-
-            listaModalUl.addEventListener('click', (e) => {
-                const itemLi = e.target.closest('.list-group-item');
-                if (!itemLi) return;
-
-                const removerBtn = e.target.closest('.btn-remover');
-                if (removerBtn) {
-                    itemLi.remove();
-                    return;
-                }
-
-                const editarBtn = e.target.closest('.btn-editar');
-                if (editarBtn) {
-                    const checkbox = itemLi.querySelector('.form-check-input');
-                    const label = itemLi.querySelector('.form-check-label');
-                    const nomeAntigo = checkbox.value;
-                    const novoNome = prompt("Editar ingrediente:", nomeAntigo);
-                    if (novoNome && novoNome.trim() !== "" && novoNome.trim() !== nomeAntigo) {
-                        const nomeFinal = novoNome.trim();
-                        checkbox.value = nomeFinal;
-                        label.textContent = nomeFinal;
-                    }
-                }
-            });
-
-            modalEl.addEventListener('show.bs.modal', async () => {
-                try {
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) throw new Error(`Falha na API: ${response.status}`);
-
-                    const ingredientesDisponiveis = await response.json();
-                    const ingredientesJaSelecionados = descricaoInput.value ? descricaoInput.value.split(',').map(i => i.trim()) : [];
-                    renderizarLista(ingredientesDisponiveis, ingredientesJaSelecionados);
-                } catch (error) {
-                    console.error('Erro ao carregar ingredientes:', error);
-                    listaModalUl.innerHTML = `<li class="list-group-item text-danger"><b>Erro:</b> Não foi possível carregar os ingredientes.</li>`;
-                }
-            });
-
-            btnAdicionar.addEventListener('click', () => {
-                const nome = novoIngredienteInput.value.trim();
-                if (nome) {
-                    adicionarNovoItemNaLista(nome);
-                    novoIngredienteInput.value = "";
-                }
-            });
-
-            btnSalvar.addEventListener('click', () => {
-                const checkboxesMarcados = listaModalUl.querySelectorAll('input[type="checkbox"]:checked');
-                const nomesSelecionados = Array.from(checkboxesMarcados).map(cb => cb.value.trim());
-                descricaoInput.value = nomesSelecionados.join(',');
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                modal.hide();
-            });
-        });
-    </script>
+    <script src="~/js/itemcardapio.js"></script>
 }

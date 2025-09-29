@@ -48,11 +48,14 @@
                 {
                     <div class="col-12 item-container">
                         <div class="item-card">
-                            <img class="item-avatar"
-                                 src="@(item.Imagem != null && item.Imagem.Length > 0
-                                        ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
-                                        : "/avatar-default.jpg")"
-                                alt="Foto de @item.Nome" />
+                            @if (!string.IsNullOrEmpty(item.ImagemAtual))
+                            {
+                                <img src="@item.ImagemAtual" alt="Foto de @item.Nome" class="item-avatar" />
+                            }
+                            else
+                            {
+                                <img src="/avatar-default.jpg" alt="Sem Foto" class="item-avatar" />
+                            }
                             <div class="item-info">
                                 <span class="item-nome">@item.Nome</span>
                             </div>

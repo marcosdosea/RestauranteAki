@@ -16,9 +16,7 @@
                 {
                     <div class="person-card">
                         <img class="person-avatar"
-                             src="@(item.Imagem != null && item.Imagem.Length > 0
-                                                                                                                                                    ? $"data:image/jpeg;base64,{Convert.ToBase64String(item.Imagem)}"
-                                                                                                                                                    : "/avatar-default.jpg")"
+                             src="/avatar-default.jpg"
                      alt="Foto de @item.Nome" />
                 <div class="person-info">
                     <span class="person-name">@item.Nome</span>

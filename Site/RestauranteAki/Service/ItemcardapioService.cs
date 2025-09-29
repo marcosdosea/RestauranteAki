@@ -25,25 +25,28 @@ namespace Service
 
         public int Create(Itemcardapio itemcardapio)
         {
-            var cardapiosExistentes = context.Cardapios
-                .Where(cardapios => cardapios.Ativo == 1)
-                .ToList();
+            //var cardapiosExistentes = context.Cardapios
+            //    .Where(cardapios => cardapios.Ativo == 1)
+            //    .ToList();
 
-            // Tratar DiaSemana para múltiplos dias separados por vírgula
-            var diasSemana = itemcardapio.DiaSemana.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(d => d.Trim());
+            //// Tratar DiaSemana para múltiplos dias separados por vírgula
+            //var diasSemana = itemcardapio.DiaSemana.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            //    .Select(d => d.Trim());
 
-            foreach (var cardapio in cardapiosExistentes)
-            {
-                if (diasSemana.Contains(cardapio.Nome, StringComparer.OrdinalIgnoreCase))
-                {
-                    if (!cardapio.IdItemCardapios.Any(itemCardapio => itemCardapio.Id == itemcardapio.Id))
-                    {
-                        cardapio.IdItemCardapios.Add(itemcardapio);
-                        context.Cardapios.Update(cardapio);
-                    }
-                }
-            }
+            //foreach (var cardapio in cardapiosExistentes)
+            //{
+            //    if (diasSemana.Contains(cardapio.Nome, StringComparer.OrdinalIgnoreCase))
+            //    {
+            //        if (!cardapio.IdItemCardapios.Any(itemCardapio => itemCardapio.Id == itemcardapio.Id))
+            //        {
+            //            cardapio.IdItemCardapios.Add(itemcardapio);
+            //            context.Cardapios.Update(cardapio);
+            //        }
+            //    }
+            //}
+
+
+            context.Itemcardapios.Add(itemcardapio);
             context.SaveChanges();
             return itemcardapio.Id;
         }
