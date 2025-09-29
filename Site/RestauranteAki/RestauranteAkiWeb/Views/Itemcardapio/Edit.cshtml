@@ -43,12 +43,12 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label asp-for="PrecoUnitario" class="control-label">Preço</label>
+                                    <div class="form-group col-12">
+                                        <label asp-for="PrecoUnitario" class="control-label"></label>
                                         <input asp-for="PrecoUnitario" class="form-control" placeholder="R$ 0,00" type="number" step="0.01" min="0" />
                                         <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-12">
                                         <label asp-for="Porcao" class="control-label"></label>
                                         <input asp-for="Porcao" class="form-control" type="number" min="1" />
                                         <span asp-validation-for="Porcao" class="text-danger"></span>
@@ -117,16 +117,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="ImagemUpload" class="control-label">Alterar Foto</label>
+                                    <span class="control-label">Imagem atual</span>
+                                    @if (!string.IsNullOrEmpty(Model.ImagemAtual))
+                                    {
+                                        var imgSrc = $"data:image/jpeg;base64,{Model.ImagemAtual}";
+                                        <img src="@imgSrc" class="img-thumbnail mb-2" alt="Imagem Atual" />
+                                    }
                                     <div class="foto-upload">
-                                        @if (!string.IsNullOrEmpty(Model.ImagemAtual))
-                                        {
-                                            var imgSrc = $"data:image/jpeg;base64,{Model.ImagemAtual}";
-                                            <img src="@imgSrc" class="img-thumbnail mb-2" alt="Imagem Atual" />
-                                        }
                                         <input asp-for="ImagemUpload" type="file" accept="image/*" class="form-control-file" id="ImagemUpload" style="display: none;" />
+                                        <label asp-for="ImagemUpload" class="control-label">Nova imagem</label>
                                         <label for="ImagemUpload" class="foto-dropzone">
-                                            <span>Drag and drop<br />ou clique aqui<br />para selecionar nova foto</span>
+                                            <span>Drag and drop<br />ou clique aqui<br />para selecionar nova imagem</span>
                                         </label>
                                     </div>
                                     <span asp-validation-for="ImagemUpload" class="text-danger"></span>

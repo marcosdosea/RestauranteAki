@@ -19,7 +19,7 @@
                 <div class="item-card">
                     @if (Model.Foto != null)
                     {
-                        <div class="item-image me-md-4 mb-3 mb-md-0">
+                        <div class="item-image">
                             @{
                                 // var base64 = Convert.ToBase64String(Model.Foto);
                                 // var imgSrc = $"data:image/jpeg;base64,{base64}";
@@ -62,6 +62,10 @@
 </div>
 
 <style>
+    .item-image {
+        margin-bottom: 1rem;
+    }
+
     .item-detail {
         padding-bottom: 0.5rem;
         font-size: 1rem;
@@ -72,6 +76,11 @@
     }
 
     @@media (min-width: 768px) {
+        .item-image {
+            margin-bottom: 0;
+            margin-right: 1.5rem;
+        }
+
         .item-info {
             flex-direction: column;
             align-items: flex-start;

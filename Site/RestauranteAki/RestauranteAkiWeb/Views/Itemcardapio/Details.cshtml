@@ -1,92 +1,110 @@
 ﻿@model RestauranteAkiWeb.Models.ItemcardapioViewModel
 
 @{
-    ViewData["Title"] = "Detalhes Item do Cardápio";
-    var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
-    var nomes = new[] { "Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom" };
-    var diasSelecionados = Model.DiasSemana;
+    ViewData["Title"] = "Detalhes do Item do Cardápio";
 }
 
-<div class="main-content">
-    
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+            <a class="btn btn-secondary" onclick="history.back();">Voltar</a>
+        </div>
+    </div>
 
     <section class="card-list-section">
         <div class="card-list-header">Item do Cardápio</div>
-        <div class="form-cardapio">
-            <div class="form-row">
-                <div class="flex-two">
-                    <div class="form-group">
-                        <label class="form-label">Nome do Prato*</label>
-                        <div class="form-control-plaintext">@Model.Nome</div>
-                    </div>
-                    <div class="form-group margin-top">
-                        <label class="form-label">Categoria *</label>
-                        <div class="form-control-plaintext">
-                            @{
-                                var categorias = new Dictionary<int, string> {
-                                    {1, "Hamburger"}, {2, "Pizza"}, {3, "Bebida"}, {4, "Sobremesa"}
-                                };
-                                // @categorias.GetValueOrDefault(Model.Categoria, "Desconhecida")
-                            }
-                        </div>
-                    </div>
-                    <div class="form-row margin-top">
-                        <div class="form-group flex-one">
-                            <label class="form-label">Preço</label>
-                            <div class="form-control-plaintext">R$ @Model.PrecoUnitario.ToString("N2")</div>
-                        </div>
-                        <div class="form-group flex-one">
-                            <label class="form-label">Disponível</label>
-                            <div class="switch-container" style="pointer-events:none;">
-                                <input type="checkbox" class="toggle-switch" @(Model.Status ? "checked" : "") disabled />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group margin-top">
-                        <label class="form-label">Dia da semana</label>
-                        <div class="dias-semana">
-                            @for (int i = 0; i < dias.Length; i++)
+
+        <div class="row gy-2 gx-4 p-3">
+            <div class="col-md-8">
+                <dl class="row">
+                    <dt class="col-sm-4">Nome</dt>
+                    <dd class="col-sm-8">@Model.Nome</dd>
+
+                    <dt class="col-sm-4">Categoria</dt>
+                    <dd class="col-sm-8">
+                        @{
+                            var categorias = new Dictionary<string, string>
+                                                {
+                                                { "1", "Hamburger" },
+                                                { "2", "Pizza" },
+                                                { "3", "Bebida" },
+                                                { "4", "Sobremesa" }
+                                                };
+                            var categoriaNome = categorias.ContainsKey(Model.Categoria) ? categorias[Model.Categoria] : "Não definida";
+                        }
+                        <span class="badge bg-info text-dark">@categoriaNome</span>
+                    </dd>
+
+                    <dt class="col-sm-4">Preço</dt>
+                    <dd class="col-sm-8">R$ @Model.PrecoUnitario.ToString("N2")</dd>
+
+                    <dt class="col-sm-4">Porção</dt>
+                    <dd class="col-sm-8">@Model.Porcao</dd>
+
+                    <dt class="col-sm-4">Status</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Status)
+                        {
+                            <span class="badge bg-success">Disponível</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Indisponível</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Dias da Semana</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.DiasSemana != null && Model.DiasSemana.Any())
+                        {
+                            @foreach (var dia in Model.DiasSemana)
                             {
-                                <label class="dia-checkbox">
-                                    <input type="checkbox" value="@nomes[i]" @(diasSelecionados.Contains(nomes[i]) ? "checked" : "") disabled />
-                                    <span>@dias[i]</span>
-                                </label>
+                                <span class="badge bg-dark text-light me-1">@dia</span>
                             }
-                        </div>
-                    </div>
-                    <div class="form-group margin-top">
-                        <label class="form-label">Porção *</label>
-                        <div class="form-control-plaintext">@Model.Porcao</div>
-                    </div>
-                    <div class="form-group margin-top">
-                        <label class="form-label">Descrição</label>
-                        <div class="form-control-plaintext">@Model.Descricao</div>
-                    </div>
-                    
-                </div>
-                <div class="flex-one-min">
-                    <div class="form-group">
-                        <label class="form-label">Foto *</label>
-                        <div class="foto-upload">
-                            @if (Model.ImagemAtual != null && Model.ImagemAtual.Length > 0)
-                            {
-                                <img src="/avatar-default.jpg" />
-                            }
-                            else
-                            {
-                                <span>Sem imagem</span>
-                            }
-                        </div>
-                    </div>
-                </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Não definido</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Ingredientes</dt>
+                    <dd class="col-sm-8">
+                        @if (!string.IsNullOrEmpty(Model.Descricao))
+                        {
+                            var ingredientes = Model.Descricao.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                            <ul class="list-group list-group-flush">
+                                @foreach (var ing in ingredientes)
+                                {
+                                    <li class="list-group-item">@ing.Trim()</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Nenhum ingrediente informado</span>
+                        }
+                    </dd>
+                </dl>
             </div>
-            <div class="form-actions">
-                <a asp-action="Index" class="btn btn-secondary btn-rounded">Voltar</a>
+
+            <div class="col-md-4 text-centera">
+                <span class="d-block fw-bold mb-2">Imagem</span>
+                @if (!string.IsNullOrEmpty(Model.ImagemAtual))
+                {
+                    var imgSrc = $"data:image/jpeg;base64,{Model.ImagemAtual}";
+                    <img src="@imgSrc" class="img-thumbnail" alt="Imagem do item" />
+                }
+                else
+                {
+                    <p class="text-muted">Nenhuma imagem cadastrada</p>
+                }
             </div>
         </div>
     </section>
 </div>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
+    <link rel="stylesheet" href="~/css/itemcardapio.css" />
 }
