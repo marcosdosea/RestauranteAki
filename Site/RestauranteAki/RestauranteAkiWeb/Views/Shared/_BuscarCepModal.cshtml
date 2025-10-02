@@ -1,0 +1,28 @@
+﻿<div class="modal fade" id="cepModal" tabindex="-1" aria-labelledby="cepModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content container-modal">
+
+            <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close">×</button>
+
+            <div class="heading-modal">
+                <i class="bi bi-geo-alt-fill me-2"></i>
+                Consultar CEP
+            </div>
+
+            <form class="form-modal" onsubmit="return false;">
+                <label for="cep-modal-input" class="form-label">Digite o CEP para preencher o endereço</label>
+                <input required="" class="input-modal" type="text" id="cep-modal-input" placeholder="Ex: 49500-000">
+                <div id="cep-modal-error" class="text-danger mt-2"></div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-orange-outline" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-orange-solid" id="btn-preencher-endereco">
+                        <i class="bi bi-search"></i> Pesquisar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
