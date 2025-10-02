@@ -4,25 +4,47 @@
 @inject SignInManager<UsuarioIdentity> SignInManager
 @inject UserManager<UsuarioIdentity> UserManager
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
+
 {
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
-        </form>
-    </li>
+    <div class="user-profile-premium">
+        <div class="profile-content">
+
+            <div class="profile-email-wrapper">
+                <div class="profile-avatar-inline">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div class="profile-text-wrapper">
+                    <div class="profile-name">@UserManager.GetUserName(User)</div>
+                    <div class="profile-role">Usuário Autenticado</div>
+                </div>
+            </div>
+
+            <hr class="profile-divider" />
+            <div class="profile-actions">
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="premium-action-btn">
+                    <i class="bi bi-person-gear me-2"></i>Minha Conta
+                </a>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="premium-action-btn">
+                        <i class="bi bi-box-arrow-right me-2"></i>Sair
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 }
+
 else
+
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    // --- Bloco para visitantes (Login/Register) ---
+    <ul class="nav nav-pills flex-column mb-3">
+        <li class="nav-item">
+            <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+            </a>
+        </li>
+    </ul>
 }
-</ul>
