@@ -2,82 +2,131 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+
+    ViewData["SubTitle"] = "Bem vindo de volta";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">Email</label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="~/css/auth-styles.css" />
+
+<div class="container py-5">
+    <h1 class="text-center mb-4 header-title-standalone">@ViewData["SubTitle"]</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 mb-4 mb-md-0">
+            <div class="glass-card" data-aos="fade-right">
+
+                <div class="card-header-custom">
+                    <div class="logo-box">R</div>
+                    <span class="header-title">estauranteAki</span>
                 </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                <div class="card-body card-body-custom">
+                    <section>
+                        <form id="account" method="post">
+                            <h4 class="text-center">Use uma conta local para entrar.</h4>
+                            <hr />
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                <label asp-for="Input.Email" class="form-label">Email</label>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                                <label asp-for="Input.Password" class="form-label">Senha</label>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="checkbox mb-3">
+                                <label asp-for="Input.RememberMe" class="form-label">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                            <div>
+                                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-green btn-animated">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                                </button>
+                            </div>
+                            <div class="text-center small mt-4">
+                                <p class="mb-1">
+                                    <a id="forgot-password" asp-page="./ForgotPassword" class="auth-link">Esqueceu sua senha?</a>
+                                </p>
+                                <p class="mb-1">
+                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="auth-link fw-bold">
+                                        <i class="fas fa-user-plus me-2"></i>Registrar um novo usuário
+                                    </a>
+                                </p>
+                                <p class="mb-0">
+                                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="auth-link">Reenviar email de confirmação</a>
+                                </p>
+                            </div>
+                        </form>
+                    </section>
                 </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-5">
+            <div class="glass-card" data-aos="fade-left">
+
+                <div class="card-header-custom">
+                    <div class="logo-box"><i class="fas fa-users"></i></div>
+                    <span class="header-title">Outros Serviços</span>
                 </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+
+                <div class="card-body card-body-custom">
+                    <section>
+                        <h4 class="text-center">Use outro serviço para entrar.</h4>
+                        <hr />
+                        @{
+                            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+
+                            {
+                                <div>
+                                    <p class="text-muted small">
+                                        Não há serviços de autenticação externa configurados.
+                                    </p>
+                                </div>
+                            }
+
+                            else
+
+                            {
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                    <div>
+                                        @foreach (var provider in Model.ExternalLogins!)
+
+                                        {
+                                            <button type="submit" class="w-100 btn btn-lg btn-orange btn-animated mb-2" name="provider" value="@provider.Name" title="Logar usando sua conta @provider.DisplayName">
+                                                <i class="fab fa-@(provider.Name.ToLower()) me-2"></i> @provider.DisplayName
+                                            </button>
+                                        }
+                                    </div>
+                                </form>
+                            }
+                        }
+                    </section>
                 </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12 col-lg-10">
+            <div class="social-icons-footer" data-aos="fade-up" data-aos-delay="200">
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="~/js/interactive-animations.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

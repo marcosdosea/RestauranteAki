@@ -1,0 +1,111 @@
+﻿/* =============================================== */
+/* ESTILO SIMPLES (VERSÃO FINAL)  */
+/* =============================================== */
+
+.user-profile-premium {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding-top: 20px;
+    margin: 15px 12px 15px 12px;
+    position: relative;
+}
+
+.aurora-background {
+    display: none;
+}
+
+
+.profile-content {
+    background: transparent;
+    padding: 0;
+}
+
+.profile-avatar-inline {
+    width: 36px;
+    height: 36px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fd7e14;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+
+.profile-email-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.profile-name {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    text-shadow: none;
+    margin-left: 10px;
+}
+
+.profile-role {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    margin-left: 10px;
+}
+
+.profile-divider {
+    border-color: rgba(255, 255, 255, 0.2);
+    margin: 0.8rem 0;
+}
+
+.premium-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    padding: 9px;
+    margin-top: 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+    .premium-action-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .premium-action-btn:first-of-type {
+        background-color: #28a745;
+        color: white;
+        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.2);
+    }
+
+        .premium-action-btn:first-of-type:hover {
+            background-color: #ffffff;
+            color: #28a745;
+        }
+
+
+
+    .premium-action-btn:last-of-type {
+        background-color: transparent;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+        .premium-action-btn:last-of-type:hover {
+            background-color: #ffffff;
+            color: #fd7e14;
+            border-color: white;
+        }
+
+    .premium-action-btn::before {
+        display: none;
+    }
