@@ -151,3 +151,167 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
 
+/* ARQUIVO DE ESTILO DE AUTENTICAÇÃO    */
+
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+
+.card-header-custom {
+    background: linear-gradient(90deg, #ff6b35, #ff9e1b);
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-box {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.header-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+}
+
+
+.card-body-custom {
+    padding: 30px;
+    color: #333;
+}
+
+
+.btn-animated {
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    border: none;
+}
+
+    .btn-animated:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+
+/* ESTILO (DASHBOARD + GLASS CARD) */
+
+
+.manage-container {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+
+.manage-nav-panel {
+    padding: 2rem 1.5rem;
+   
+}
+
+    .manage-nav-panel .nav-pills .nav-link {
+        color: #495057;
+        font-weight: 500;
+        padding: 0.75rem 1rem;
+        border-radius: 14px; 
+        margin-bottom: 0.25rem;
+        transition: all 0.3s ease;
+    }
+
+        .manage-nav-panel .nav-pills .nav-link:hover {
+            background-color: #f1f1f1;
+        }
+
+        .manage-nav-panel .nav-pills .nav-link.active {
+            color: #fff;
+            background: linear-gradient(90deg, #ff8c42, #ff6b35);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            transform: scale(1.03);
+        }
+
+.manage-content-panel {
+    padding: 2.5rem;
+    border-left: 1px solid #dee2e6; 
+}
+
+    .manage-content-panel h3, .manage-content-panel h4 {
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #ff6b35; 
+        padding-bottom: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .manage-content-panel .form-control {
+        border-radius: 14px; 
+        padding: 0.75rem 1rem;
+    }
+
+        .manage-content-panel .form-control:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+        }
+
+    .manage-content-panel .btn {
+        font-weight: 600;
+        border-radius: 14px;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .manage-content-panel .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .manage-content-panel .btn-primary {
+        background: linear-gradient(90deg, #30b957, #4cd964);
+        color: white;
+    }
+
+    .manage-content-panel .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+        .manage-content-panel .btn-danger:hover {
+            background: #c82333;
+        }
+
+    .manage-content-panel .btn-default,
+    .manage-content-panel .btn-secondary,
+    .manage-content-panel .btn-warning {
+        background: linear-gradient(90deg, #ff6b35, #ff9e1b);
+        color: white;
+    }
+
+.button-group-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
+}

@@ -2,6 +2,7 @@
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
     var isHomePage = controller == "Home" && action == "Index";
+ 
 }
 
 <!DOCTYPE html>
@@ -22,6 +23,7 @@
     <link rel="stylesheet" href="~/RestauranteAkiWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/modalCep.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth-styles.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
 <body class="@(isHomePage ? "home-page" : "")">
@@ -62,24 +64,12 @@
             @if (!isHomePage)
             {
                 <h1 class="h2 m-0 fw-bold d-none d-lg-block">@ViewData["Title"]</h1>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="d-flex flex-column text-end">
-                        <span class="fw-bold text-dark">Marcos Dósea</span>
-                        <span class="text-muted small">Administrador</span>
-                    </div>
-                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width:56px; height:56px;">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
             }
             else
             {
                 <div class="h2 m-0 fw-bold d-none d-lg-block" aria-hidden="true"></div>
             }
-
         </header>
-
-
         <div class="container-fluid content-wrapper">
             @RenderBody()
         </div>

@@ -1,12 +1,12 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["SubTitle"] = "Gerencie seu perfil";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["SubTitle"]</h3>
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">

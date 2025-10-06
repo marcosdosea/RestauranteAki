@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Exceptions;
 using System.Text.Json;
 
 namespace Service
@@ -6,10 +7,12 @@ namespace Service
     public class ViaCepService
     {
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly ILogger<ViaCepService> logger;
 
-        public ViaCepService(IHttpClientFactory httpClientFactory)
+        public ViaCepService(IHttpClientFactory httpClientFactory, ILogger<ViaCepService> logger)
         {
             this.httpClientFactory = httpClientFactory;
+            this.logger = logger;
         }
 
         public async Task<ViaCepResponse?> GetAddressByCepAsync(string cep)
@@ -28,9 +31,10 @@ namespace Service
                     return JsonSerializer.Deserialize<ViaCepResponse>(jsonString);
                 }
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-
+                logger.LogError(ex, "Erro ao consultar o serviço ViaCEP.{Cep}", cep);
+                throw new CepServiceException("O serviço de busca de CEP está indisponível no momento.", ex);
             }
 
             return null;
