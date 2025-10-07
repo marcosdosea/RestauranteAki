@@ -1,0 +1,149 @@
+﻿/*
+ * ESTILOS PARA O NOVO MODAL DE CEP
+ */
+
+.container-modal {
+    background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(253, 250, 248) 100%);
+    border-radius: 20px;
+    padding: 25px 35px;
+    border: 3px solid rgb(255, 255, 255);
+    box-shadow: rgba(249, 115, 22, 0.4) 0px 30px 30px -20px;
+    position: relative; 
+}
+
+
+.heading-modal {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--cor-laranja-principal, #F97316); 
+}
+
+
+.form-modal {
+    margin-top: 20px;
+}
+
+   
+    .form-modal .input-modal {
+        width: 100%;
+        background: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 15px;
+        margin-top: 10px;
+        box-shadow: #fbe6d4 0px 10px 10px -5px;
+        border-inline: 2px solid transparent;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .form-modal .input-modal:focus {
+            outline: none;
+            border-inline: 2px solid var(--cor-laranja-principal, #F97316);
+        }
+
+    .form-modal .form-label {
+        font-size: 14px;
+        color: #555;
+        text-align: center;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+
+    
+    .form-modal .action-button-modal {
+        display: block;
+        width: 100%;
+        font-weight: bold;
+        background: linear-gradient(45deg, #F97316 0%, #EA580C 100%); 
+        color: white;
+        padding-block: 15px;
+        margin: 20px auto 0;
+        border-radius: 15px;
+        box-shadow: rgba(249, 115, 22, 0.5) 0px 20px 10px -15px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .form-modal .action-button-modal:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(249, 115, 22, 0.6) 0px 23px 10px -20px;
+        }
+
+        .form-modal .action-button-modal:active {
+            transform: scale(0.98);
+            box-shadow: rgba(249, 115, 22, 0.4) 0px 15px 10px -10px;
+        }
+
+
+.btn-close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f1f1;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .btn-close-modal:hover {
+        background: #e0e0e0;
+        transform: rotate(90deg);
+    }
+
+.modal-actions {
+    display: flex; 
+    gap: 15px; 
+    margin-top: 25px; 
+}
+
+    
+    .modal-actions button {
+        flex: 1;
+    }
+
+
+/* ---  ESTILOS DE BOTÃO DO CSS --- */
+
+.btn-orange-solid {
+    background-color: var(--cor-laranja-principal, #F97316);
+    border-color: var(--cor-laranja-principal, #F97316);
+    color: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-width: 2px;
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-orange-solid:hover {
+        background-color: var(--cor-laranja-hover, #EA580C);
+        border-color: var(--cor-laranja-hover, #EA580C);
+        color: #1d1616;
+    }
+
+
+.btn-orange-outline {
+    background-color: #fff;
+    border: 2px solid var(--cor-laranja-principal, #F97316);
+    color: var(--cor-laranja-principal, #F97316);
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-orange-outline:hover {
+        background-color: var(--cor-laranja-principal, #F9731á6);
+        color: red;
+    }

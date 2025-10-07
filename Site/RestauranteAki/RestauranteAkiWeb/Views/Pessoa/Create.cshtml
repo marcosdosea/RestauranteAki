@@ -4,15 +4,24 @@
     ViewData["Title"] = "Adicionar Gestor";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/modalCep.css" />
+}
+
 <div class="container-fluid p-0">
     <div class="row">
         <div class="col-md-10 col-lg-10 p-5 bg-light">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold">Adicionar Gestor</h2>
                 <div>
-                    <button type="button" class="btn btn-outline-secondary me-2"
-                        onclick="window.history.back()">Voltar</button>
-                    <button type="submit" form="formGestor" class="btn btn-orange">Salvar</button>
+                    <button type="button" class="btn btn-custom-tertiary"
+                            onclick="window.history.back()">
+                        <i class="bi bi-arrow-left"></i> Voltar
+                    </button>
+                    <button type="submit" form="formGestor" class="btn btn-custom-primary">
+                        <i class="bi bi-save"></i> Salvar
+                    </button>
                 </div>
             </div>
 
@@ -28,10 +37,9 @@
 
                         <div class="row mb-3 align-items-center">
                             <div class="col-md-9">
-                                <label asp-for="NomeCompleto" class="form-label fw-semibold">Nome
-                                    Completo*</label>
+                                <label asp-for="NomeCompleto" class="form-label fw-semibold">Nome Completo*</label>
                                 <input asp-for="NomeCompleto" class="form-control"
-                                    placeholder="Maria Joaquina da Silva Santos" />
+                                       placeholder="Maria Joaquina da Silva Santos" />
                                 <span asp-validation-for="NomeCompleto" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 text-center">
@@ -50,15 +58,16 @@
                             <div class="col-md-6">
                                 <label asp-for="Email" class="form-label fw-semibold">Email*</label>
                                 <input asp-for="Email" type="email" class="form-control"
-                                    placeholder="historia@gmail.com" />
+                                       placeholder="historia@gmail.com" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <select asp-items="@ViewBag.Restaurantes" asp-for="IdRestaurante" class="form-select">
-                                    <option value="">Selecione um Restaurante</option>
-                                </select>
+                                <label asp-for="IdRestaurante"
+                                       class="form-label fw-semibold">ID do Restaurante (Apenas para Teste)*</label>
+                                <input asp-for="IdRestaurante" type="number" class="form-control"
+                                       placeholder="Ex. 1" />
                                 <span asp-validation-for="IdRestaurante" class="text-danger"></span>
                             </div>
                         </div>
@@ -67,37 +76,40 @@
                             <div class="col-md-6">
                                 <label asp-for="Telefone" class="form-label fw-semibold">Telefone*</label>
                                 <input asp-for="Telefone" class="form-control"
-                                    placeholder="(+01) 23456-7890" />
+                                       placeholder="(+01) 23456-7890" />
                                 <span asp-validation-for="Telefone" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <label asp-for="DataNascimento" class="form-label fw-semibold">Data de
-                                    Nascimento*</label>
+                                <label asp-for="DataNascimento" class="form-label fw-semibold">Data de Nascimento*</label>
                                 <input asp-for="DataNascimento" type="date" class="form-control" />
                                 <span asp-validation-for="DataNascimento" class="text-danger"></span>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-3">
-                                <label asp-for="Cep" class="form-label fw-semibold">CEP*</label>
-                                <input asp-for="Cep" id="cep-input" class="form-control" placeholder="Ex. 49160-00" />
+                        <div class="row mb-3 align-items-end">
+                            <div class="col-md-4">
+                                <label asp-for="Cep" class="form-label fw-semibold" id="cep-input" >CEP*</label>
+                                <div class="input-group">
+                                    <button class="btn btn-custom-primary" type="button" id="btn-abrir-modal-cep">
+                                        <i class="bi bi-search"></i> Buscar CEP
+                                    </button>
+                                </div>
                                 <span asp-validation-for="Cep" class="text-danger"></span>
                             </div>
-                            <div class="col-md-7">
+
+                            <div class="col-md-8">
                                 <label asp-for="Logradouro" class="form-label fw-semibold">Logradouro*</label>
-                                <input asp-for="Logradouro" id="rua-input" class="form-control"
-                                    placeholder="Ex. Rua Presidente Prudente" />
+                                <input asp-for="Logradouro" class="form-control" id="rua-input"
+                                       placeholder="Ex. Rua Presidente Prudente" />
                                 <span asp-validation-for="Logradouro" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label asp-for="Complemento" class="form-label fw-semibold">Complemento
-                                    (opcional)</label>
+                                <label asp-for="Complemento" class="form-label fw-semibold">Complemento* </label>
                                 <input asp-for="Complemento" class="form-control"
-                                    placeholder="Ex. Casa de esquina" />
+                                       placeholder="Ex. Casa de esquina" />
                                 <span asp-validation-for="Complemento" class="text-danger"></span>
                             </div>
                         </div>
@@ -105,17 +117,17 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label asp-for="Bairro" class="form-label fw-semibold">Bairro*</label>
-                                <input asp-for="Bairro" id="bairro-input" class="form-control" placeholder="Ex. Soledade" />
+                                <input asp-for="Bairro" class="form-control" id="bairro-input" />
                                 <span asp-validation-for="Bairro" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="Cidade" class="form-label fw-semibold">Cidade*</label>
-                                <input asp-for="Cidade" id="cidade-input" class="form-control" placeholder="Ex. Aracaju" />
+                                <input asp-for="Cidade" class="form-control" placeholder="Ex. Aracaju" id="cidade-input" />
                                 <span asp-validation-for="Cidade" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="Estado" class="form-label fw-semibold">Estado*</label>
-                                <input asp-for="Estado" id="estado-input" class="form-control" placeholder="Ex. Sergipe" />
+                                <input asp-for="Estado" class="form-control" placeholder="Ex. Sergipe" id="estado-input" />
                                 <span asp-validation-for="Estado" class="text-danger"></span>
                             </div>
                         </div>
@@ -126,9 +138,12 @@
     </div>
 </div>
 
+@await Html.PartialAsync("_BuscarCepModal")
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        <script src="~/js/cadastro-restaurante.js"></script>
     }
+    <script src="~/js/modal-cep.js"></script>
+
 }

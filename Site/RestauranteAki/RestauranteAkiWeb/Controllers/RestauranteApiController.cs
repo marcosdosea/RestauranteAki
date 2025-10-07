@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Exceptions;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using Service;
@@ -27,14 +28,22 @@ namespace RestauranteAkiWeb.Controllers
         [HttpGet("consultar-cep/{cep}")]
         public async Task<IActionResult> ConsultarCep(string cep)
         {
-            var endereco = await viaCepService.GetAddressByCepAsync(cep);
-
-            if (endereco == null)
+            try
             {
-                return NotFound("CEP não encontrado ou inválido.");
+                var endereco = await viaCepService.GetAddressByCepAsync(cep);
+
+                if (endereco == null)
+                {
+                    return NotFound("CEP não encontrado ou inválido.");
+                }
+
+                return Ok(endereco);
+            }
+            catch (CepServiceException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, ex.Message);
             }
 
-            return Ok(endereco);
         }
     }
 }
