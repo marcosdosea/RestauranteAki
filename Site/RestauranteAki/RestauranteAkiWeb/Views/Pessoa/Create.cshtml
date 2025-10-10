@@ -1,45 +1,48 @@
 ﻿@model RestauranteAkiWeb.Models.PessoaViewModel
 
 @{
-    ViewData["Title"] = "Adicionar Gestor";
+    ViewData["SubTitle"] = "Adicionar Gestor";
+
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/adicionar-pessoa.css" />
     <link rel="stylesheet" href="~/css/modalCep.css" />
 }
 
-<div class="container-fluid p-0">
-    <div class="row">
-        <div class="col-md-10 col-lg-10 p-5 bg-light">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold">Adicionar Gestor</h2>
-                <div>
-                    <button type="button" class="btn btn-custom-tertiary"
-                            onclick="window.history.back()">
-                        <i class="bi bi-arrow-left"></i> Voltar
-                    </button>
-                    <button type="submit" form="formGestor" class="btn btn-custom-primary">
-                        <i class="bi bi-save"></i> Salvar
-                    </button>
+<div class="container-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="auth-card" data-aos="fade-up">
+                <div class="auth-card__header">
+                    <div class="auth-card__logo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <span class="auth-card__title">@ViewData["SubTitle"]</span>
                 </div>
-            </div>
+                <div class="auth-card__body">
 
-            <div class="card shadow rounded-4 border-0">
-                <div class="card-header bg-orange text-white rounded-top-4 fw-bold fs-5">
-                    Gestor
-                </div>
-                <div class="card-body p-4">
                     <form asp-action="Create" id="formGestor" method="post" enctype="multipart/form-data">
-                        <input type="hidden" asp-for="TipoPessoa" value="@ViewBag.TipoPessoa" />
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="mb-0">Informações do Gestor</h4>
+                            <div>
+                                <a asp-action="IndexGestor" class="btn btn-danger auth-btn">
+                                    <i class="fas fa-arrow-left me-2"></i> Voltar
+                                </a>
+                                <button type="submit" form="formGestor" class="btn auth-btn auth-btn--green">
+                                    <i class="fas fa-save me-2"></i> Salvar
+                                </button>
+                            </div>
+                        </div>
+                        <hr />
 
+                        <input type="hidden" asp-for="TipoPessoa" value="@ViewBag.TipoPessoa" />
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="row mb-3 align-items-center">
                             <div class="col-md-9">
                                 <label asp-for="NomeCompleto" class="form-label fw-semibold">Nome Completo*</label>
-                                <input asp-for="NomeCompleto" class="form-control"
-                                       placeholder="Maria Joaquina da Silva Santos" />
+                                <input asp-for="NomeCompleto" class="form-control" placeholder="Maria Joaquina da Silva Santos" />
                                 <span asp-validation-for="NomeCompleto" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 text-center">
@@ -57,17 +60,15 @@
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="Email" class="form-label fw-semibold">Email*</label>
-                                <input asp-for="Email" type="email" class="form-control"
-                                       placeholder="historia@gmail.com" />
+                                <input asp-for="Email" type="email" class="form-control" placeholder="historia@gmail.com" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label asp-for="IdRestaurante"
-                                       class="form-label fw-semibold">ID do Restaurante (Apenas para Teste)*</label>
-                                <input asp-for="IdRestaurante" type="number" class="form-control"
-                                       placeholder="Ex. 1" />
+                                <label asp-for="IdRestaurante" class="form-label fw-semibold">ID do Restaurante (Apenas para Teste)*</label>
+                                <input asp-for="IdRestaurante" type="number" class="form-control" placeholder="Ex. 1" />
                                 <span asp-validation-for="IdRestaurante" class="text-danger"></span>
                             </div>
                         </div>
@@ -75,8 +76,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label asp-for="Telefone" class="form-label fw-semibold">Telefone*</label>
-                                <input asp-for="Telefone" class="form-control"
-                                       placeholder="(+01) 23456-7890" />
+                                <input asp-for="Telefone" class="form-control" placeholder="(+01) 23456-7890" />
                                 <span asp-validation-for="Telefone" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
@@ -86,30 +86,31 @@
                             </div>
                         </div>
 
+                        <h5 class="mt-4">Endereço</h5>
+                        <hr />
+
                         <div class="row mb-3 align-items-end">
                             <div class="col-md-4">
-                                <label asp-for="Cep" class="form-label fw-semibold" id="cep-input" >CEP*</label>
-                                <div class="input-group">
-                                    <button class="btn btn-custom-primary" type="button" id="btn-abrir-modal-cep">
-                                        <i class="bi bi-search"></i> Buscar CEP
+                                <label asp-for="Cep" class="form-label fw-semibold">CEP*</label>
+                                <div>
+                                    <button class="btn auth-btn auth-btn--orange" type="button" id="btn-abrir-modal-cep">
+                                        <i class="fas fa-search me-2"></i> Procurar CEP
                                     </button>
+                                    <input type="hidden" asp-for="Cep" id="cep-input" />
                                 </div>
                                 <span asp-validation-for="Cep" class="text-danger"></span>
                             </div>
-
                             <div class="col-md-8">
                                 <label asp-for="Logradouro" class="form-label fw-semibold">Logradouro*</label>
-                                <input asp-for="Logradouro" class="form-control" id="rua-input"
-                                       placeholder="Ex. Rua Presidente Prudente" />
+                                <input asp-for="Logradouro" class="form-control" id="rua-input" placeholder="Ex. Rua Presidente Prudente" />
                                 <span asp-validation-for="Logradouro" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label asp-for="Complemento" class="form-label fw-semibold">Complemento* </label>
-                                <input asp-for="Complemento" class="form-control"
-                                       placeholder="Ex. Casa de esquina" />
+                                <label asp-for="Complemento" class="form-label fw-semibold">Complemento</label>
+                                <input asp-for="Complemento" class="form-control" placeholder="Ex. Casa de esquina" />
                                 <span asp-validation-for="Complemento" class="text-danger"></span>
                             </div>
                         </div>
@@ -141,9 +142,11 @@
 @await Html.PartialAsync("_BuscarCepModal")
 
 @section Scripts {
+    <script>
+        document.body.classList.add('auth-bg'); // Classe de fundo atualizada
+    </script>
+    <script src="~/js/modal-cep.js"></script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script src="~/js/modal-cep.js"></script>
-
 }

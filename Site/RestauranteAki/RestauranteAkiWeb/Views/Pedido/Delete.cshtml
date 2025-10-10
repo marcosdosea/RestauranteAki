@@ -1,36 +1,80 @@
 ﻿@model RestauranteAkiWeb.Models.PedidoViewModel
 
 @{
-    ViewData["Title"] = "Excluir Pedido";
+    ViewData["SubTitle"] = "Excluir Pedido";
+
+    Layout = "/Views/Shared/_Layout.cshtml"; 
 }
 
-<h2>Excluir Pedido</h2>
+@section Styles {
+    <link rel="stylesheet" href="~/css/create-pedido.css" />
+}
 
-<h4>Tem certeza que deseja excluir este pedido?</h4>
-<hr />
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="glass-card" data-aos="fade-up">
+                <div class="card-header-custom bg-danger">
+                    <div class="logo-box" style="background: rgba(255,255,255,0.1);">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <span class="header-title">@ViewData["SubTitle"]</span>
+                </div>
+                <div class="card-body card-body-custom">
 
-<dl class="row">
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Id)</dt>
-    <dd class="col-sm-10">@Model.Id</dd>
+                    <div class="alert alert-danger text-center">
+                        <h4 class="alert-heading">Atenção!</h4>
+                        <p class="mb-0">Tem certeza que deseja excluir este pedido? Esta ação não pode ser desfeita.</p>
+                    </div>
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Status)</dt>
-    <dd class="col-sm-10">@Model.Status</dd>
+                    <hr />
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdConta)</dt>
-    <dd class="col-sm-10">@Model.IdConta</dd>
+                    <h5 class="mt-4 mb-3">Detalhes do Pedido a ser excluído:</h5>
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdMesa)</dt>
-    <dd class="col-sm-10">@Model.IdMesa</dd>
+                    <dl class="row">
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Id)</dt>
+                        <dd class="col-sm-9">@Model.Id</dd>
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPersonagem)</dt>
-    <dd class="col-sm-10">@Model.IdPersonagem</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Status)</dt>
+                        <dd class="col-sm-9">@Model.Status</dd>
 
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.IdPessoa)</dt>
-    <dd class="col-sm-10">@Model.IdPessoa</dd>
-</dl>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.IdConta)</dt>
+                        <dd class="col-sm-9">@Model.IdConta</dd>
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Excluir</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.IdMesa)</dt>
+                        <dd class="col-sm-9">@Model.IdMesa</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.IdPersonagem)</dt>
+                        <dd class="col-sm-9">@Model.IdPersonagem</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.IdPessoa)</dt>
+                        <dd class="col-sm-9">@Model.IdPessoa</dd>
+                    </dl>
+
+                    <hr />
+
+                    <form asp-action="Delete" method="post" class="mt-4">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-danger btn-animated">
+                                <i class="fas fa-trash-alt me-2"></i>Confirmar Exclusão
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary btn-animated">Cancelar</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.body.classList.add('bg-animated');
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -2,67 +2,72 @@
 
 @{
     ViewData["Title"] = "Detalhes do Pedido";
+
 }
 
-<div>
-    <div class="view-header">
-        <div class="view-actions">
-            <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
-            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
-        </div>
-    </div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/auth-styles.css" />
+}
 
-    <section class="card-list-section">
-        <div class="card-list-header">Pedido</div>
-        <div class="row">
-            <div class="col-12">
-                <div class="item-card">
-                    <img class="item-pedido-img" src="/avatar-default.jpg" alt="Imagem do pedido" /> @* Imagem momentânea *@
-                    <div class="item-info">
-                        <div class="item-pedido-detail">
-                            <strong>Id:</strong> @Model.Id
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="glass-card" data-aos="fade-up">
+                <div class="card-header-custom">
+                    <div class="logo-box">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <span class="header-title">@ViewData["Title"] #@Model.Id</span>
+                </div>
+                <div class="card-body card-body-custom">
+
+                    <div class="d-flex justify-content-end gap-2 mb-4">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-orange btn-animated">
+                            <i class="fas fa-pencil-alt me-2"></i>Editar
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary btn-animated">Voltar para a Lista</a>
+                    </div>
+
+                    <hr />
+
+                    <div class="row mt-4 align-items-center">
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <img class="details-img" src="/avatar-default.jpg" alt="Imagem do pedido" />
                         </div>
-                        <div class="item-pedido-detail">
-                            <strong>Status:</strong> @Model.Status
-                        </div>
-                        <div class="item-pedido-detail">
-                            <strong>Conta:</strong> @Model.IdConta
-                        </div>
-                        <div class="item-pedido-detail">
-                            <strong>Mesa:</strong> @Model.IdMesa
-                        </div>
-                        <div class="item-pedido-detail">
-                            <strong>Personagem:</strong> @Model.IdPersonagem
-                        </div>
-                        <div class="item-pedido-detail">
-                            <strong>Pessoa:</strong> @Model.IdPessoa
+
+                        <div class="col-md-8">
+                            <h4 class="mb-4">Informações do Pedido</h4>
+                            <dl class="row details-list">
+                                <dt class="col-sm-4">Status</dt>
+                                <dd class="col-sm-8">@Model.Status</dd>
+
+                                <dt class="col-sm-4">ID da Conta</dt>
+                                <dd class="col-sm-8">@Model.IdConta</dd>
+
+                                <dt class="col-sm-4">ID da Mesa</dt>
+                                <dd class="col-sm-8">@Model.IdMesa</dd>
+
+                                <dt class="col-sm-4">ID do Personagem</dt>
+                                <dd class="col-sm-8">@Model.IdPersonagem</dd>
+
+                                <dt class="col-sm-4">ID da Pessoa</dt>
+                                <dd class="col-sm-8">@Model.IdPessoa</dd>
+                            </dl>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
-<style>
-    .item-pedido-img {
-        width: 50%;
-        height: auto;
-        max-width: 160px;
-        object-fit: cover;
-        border-radius: 0.5rem;
-    }
 
-    @@media (min-width: 768px) {
-        .item-pedido-img {
-            max-width: 240px;
-            height: auto;
-        }
-
-        .item-info {
-            flex-direction: column;
-            align-items: flex-start;
-            margin-left: 2rem;
-        }
+@section Scripts {
+    <script>
+        document.body.classList.add('bg-animated');
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</style>
+}

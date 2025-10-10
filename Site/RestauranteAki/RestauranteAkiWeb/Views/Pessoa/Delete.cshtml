@@ -1,110 +1,104 @@
 ﻿@model RestauranteAkiWeb.Models.PessoaViewModel
-
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["SubTitle"] = "Excluir Pessoa";
+
+    var indexAction = Model.TipoPessoa == "G" ? "IndexGestor" : "IndexGarcom";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/restaurante-styles.css" />
+}
+<div class="container-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="glass-card" data-aos="fade-up">
+                <div class="card-header-custom">
+                    <div class="logo-box bg-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <span class="header-title">@ViewData["SubTitle"]</span>
+                </div>
+                <div class="card-body card-body-custom">
+                    <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                        <i class="fas fa-exclamation-circle me-3 fs-4"></i>
+                        <div>
+                            <strong>Atenção!</strong> Tem certeza que deseja excluir este registro?
+                        </div>
+                    </div>
 
-<h1>Delete</h1>
+                    <div class="mb-4">
+                        <h4 class="mb-3">@Model.NomeCompleto</h4>
+                    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>PessoaViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeCompleto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NomeCompleto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cpf)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cpf)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Logradouro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Logradouro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Bairro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Bairro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Complemento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Complemento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdRestaurante)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdRestaurante)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoPessoa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoPessoa)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                    <hr />
+
+                    <dl class="row details-list mt-4">
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Id)</dt>
+                        <dd class="col-sm-9">@Model.Id</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.NomeCompleto)</dt>
+                        <dd class="col-sm-9">@Model.NomeCompleto</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Cpf)</dt>
+                        <dd class="col-sm-9">@Model.Cpf</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Email)</dt>
+                        <dd class="col-sm-9">@Model.Email</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Telefone)</dt>
+                        <dd class="col-sm-9">@Model.Telefone</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.DataNascimento)</dt>
+                        <dd class="col-sm-9">@Model.DataNascimento</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Cep)</dt>
+                        <dd class="col-sm-9">@Model.Cep</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Logradouro)</dt>
+                        <dd class="col-sm-9">@Model.Logradouro</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Bairro)</dt>
+                        <dd class="col-sm-9">@Model.Bairro</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Cidade)</dt>
+                        <dd class="col-sm-9">@Model.Cidade</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Estado)</dt>
+                        <dd class="col-sm-9">@Model.Estado</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Complemento)</dt>
+                        <dd class="col-sm-9">@Model.Complemento</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Foto)</dt>
+                        <dd class="col-sm-9">@Model.Foto</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.IdRestaurante)</dt>
+                        <dd class="col-sm-9">@Model.IdRestaurante</dd>
+
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.TipoPessoa)</dt>
+                        <dd class="col-sm-9">@Model.TipoPessoa</dd>
+                    </dl>
+
+                    <hr class="mt-4 mb-4" />
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="TipoPessoa" />
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-danger btn-animated">
+                                <i class="fas fa-trash-alt me-2"></i>Confirmar Exclusão
+                            </button>
+                            <a asp-action="@indexAction" class="btn btn-secondary btn-animated">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+@section Scripts {
+    <script>
+        document.body.classList.add('bg-animated');
+    </script>
+}

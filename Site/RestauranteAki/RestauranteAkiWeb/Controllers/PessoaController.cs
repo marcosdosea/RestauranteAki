@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Core;
 using Core.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RestauranteAkiWeb.Models;
-using Service;
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -62,7 +60,7 @@ namespace RestauranteAkiWeb.Controllers
         public ActionResult Create(PessoaViewModel pessoaViewModel)
         {
 
-            if(User.IsInRole("Gestor"))     
+            if (User.IsInRole("Gestor"))
             {
                 pessoaViewModel.TipoPessoa = "G";
             }
@@ -131,12 +129,15 @@ namespace RestauranteAkiWeb.Controllers
             try
             {
                 pessoaService.Delete(id);
-                return RedirectToAction(nameof(Index));
+                if (pessoaViewModel.TipoPessoa == "G")
+                    return RedirectToAction(nameof(IndexGestor));
+                else
+                    return RedirectToAction(nameof(IndexGarcom));
             }
             catch
             {
-                ModelState.AddModelError(String.Empty, "Ocorreu um erro inesperádo. Tente Novamente.");
-                return View();
+                ModelState.AddModelError(String.Empty, "Ocorreu um erro inesperado. Tente Novamente.");
+                return View(pessoaViewModel);
             }
         }
         private void SelectListRestaurante()

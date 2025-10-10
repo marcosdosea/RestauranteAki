@@ -1,108 +1,74 @@
 ﻿@model RestauranteAkiWeb.Models.PessoaViewModel
-
 @{
-    ViewData["Title"] = "Details";
+    ViewData["SubTitle"] = "Detalhes da Pessoa";
+
+    var indexAction = Model.TipoPessoa == "G" ? "IndexGestor" : "IndexGarcom";
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>PessoaViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeCompleto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NomeCompleto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cpf)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cpf)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Logradouro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Logradouro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Bairro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Bairro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Complemento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Complemento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdRestaurante)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdRestaurante)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoPessoa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoPessoa)
-        </dd>
-    </dl>
+@section Styles {
+    <link rel="stylesheet" href="~/css/restaurante-styles.css" />
+}
+<div class="container-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="glass-card" data-aos="fade-up">
+                <div class="card-header-custom">
+                    <div class="logo-box">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="header-title">@ViewData["SubTitle"]</span>
+                </div>
+                <div class="card-body card-body-custom">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mb-0">@Model.NomeCompleto</h4>
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-orange btn-animated">
+                                <i class="fas fa-pencil-alt me-2"></i>Editar
+                            </a>
+                            <a asp-action="@indexAction" class="btn btn-secondary btn-animated">
+                                <i class="fas fa-arrow-left me-2"></i>Voltar para a Lista
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                    <dl class="row details-list mt-4">
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Id)</dt>
+                        <dd class="col-sm-9">@Model.Id</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.NomeCompleto)</dt>
+                        <dd class="col-sm-9">@Model.NomeCompleto</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Cpf)</dt>
+                        <dd class="col-sm-9">@Model.Cpf</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Email)</dt>
+                        <dd class="col-sm-9">@Model.Email</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Telefone)</dt>
+                        <dd class="col-sm-9">@Model.Telefone</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.DataNascimento)</dt>
+                        <dd class="col-sm-9">@Model.DataNascimento</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Cep)</dt>
+                        <dd class="col-sm-9">@Model.Cep</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Logradouro)</dt>
+                        <dd class="col-sm-9">@Model.Logradouro</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Bairro)</dt>
+                        <dd class="col-sm-9">@Model.Bairro</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Cidade)</dt>
+                        <dd class="col-sm-9">@Model.Cidade</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Estado)</dt>
+                        <dd class="col-sm-9">@Model.Estado</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Complemento)</dt>
+                        <dd class="col-sm-9">@Model.Complemento</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Foto)</dt>
+                        <dd class="col-sm-9">@Model.Foto</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.IdRestaurante)</dt>
+                        <dd class="col-sm-9">@Model.IdRestaurante</dd>
+                        <dt class="col-sm-3">@Html.DisplayNameFor(m => m.TipoPessoa)</dt>
+                        <dd class="col-sm-9">@Model.TipoPessoa</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    <script>
+        document.body.classList.add('bg-animated');
+    </script>
+}

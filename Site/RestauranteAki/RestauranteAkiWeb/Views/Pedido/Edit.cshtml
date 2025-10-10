@@ -1,72 +1,89 @@
 ﻿@model RestauranteAkiWeb.Models.PedidoViewModel
 
 @{
-    ViewData["Title"] = "Editar Pedido";
+    ViewData["SubTitle"] = "Editar Pedido";
 }
 
-<div>
-    <div class="view-header">
-        <div class="view-actions">
-            @* <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
-                <button type="submit" class="btn btn-danger">Excluir</button>
-            </form> *@
-            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
-        </div>
-    </div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/auth-styles.css" />
+}
 
-    <section class="card-list-section">
-        <div class="card-list-header">Pedido</div>
-        <div class="row">
-            <div class="col-12">
-                <div class="item-card-form">
-                    <form asp-action="Edit" method="post">
-                        <div class="form-group">
-                            <label asp-for="Status"></label>
-                            <select asp-for="Status" class="form-control">
-                                <option value="">Selecione um status</option>
-                                <option value="S">Solicitado</option>
-                                <option value="P">Pronto</option>
-                                <option value="E">Entregue</option>
-                            </select>
-                            <span asp-validation-for="Status" class="text-danger"></span>
-                        </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass-card" data-aos="fade-up">
+                <div class="card-header-custom">
+                    <div class="logo-box">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <span class="header-title">@ViewData["SubTitle"] #@Model.Id</span>
+                </div>
+                <div class="card-body card-body-custom">
 
-                        <div class="form-group">
-                            <label asp-for="IdConta"></label>
-                            <input asp-for="IdConta" class="form-control" />
-                            <span asp-validation-for="IdConta" class="text-danger"></span>
-                        </div>
+                    <h4>Editando o Pedido</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form asp-action="Edit" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
 
-                        <div class="form-group">
-                            <label asp-for="IdMesa"></label>
-                            <input asp-for="IdMesa" class="form-control" />
-                            <span asp-validation-for="IdMesa" class="text-danger"></span>
-                        </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Status" class="control-label mb-2"></label>
+                                    <select asp-for="Status" class="form-select form-select-lg">
+                                        <option value="">Selecione um status</option>
+                                        <option value="S">Solicitado</option>
+                                        <option value="P">Pronto</option>
+                                        <option value="E">Entregue</option>
+                                    </select>
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
 
-                        <div class="form-group">
-                            <label asp-for="IdPersonagem"></label>
-                            <input asp-for="IdPersonagem" class="form-control" />
-                            <span asp-validation-for="IdPersonagem" class="text-danger"></span>
-                        </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="IdConta" class="control-label mb-2"></label>
+                                    <input asp-for="IdConta" class="form-control" />
+                                    <span asp-validation-for="IdConta" class="text-danger"></span>
+                                </div>
 
-                        <div class="form-group">
-                            <label asp-for="IdPessoa"></label>
-                            <input asp-for="IdPessoa" class="form-control" />
-                            <span asp-validation-for="IdPessoa" class="text-danger"></span>
-                        </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="IdMesa" class="control-label mb-2"></label>
+                                    <input asp-for="IdMesa" class="form-control" />
+                                    <span asp-validation-for="IdMesa" class="text-danger"></span>
+                                </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Salvar</button>
-                            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                                <div class="form-group mb-3">
+                                    <label asp-for="IdPersonagem" class="control-label mb-2"></label>
+                                    <input asp-for="IdPersonagem" class="form-control" />
+                                    <span asp-validation-for="IdPersonagem" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="IdPessoa" class="control-label mb-2"></label>
+                                    <input asp-for="IdPessoa" class="form-control" />
+                                    <span asp-validation-for="IdPessoa" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mt-4 d-flex gap-2">
+                                    <button type="submit" class="btn btn-green btn-animated">
+                                        <i class="fas fa-save me-2"></i>Salvar
+                                    </button>
+                                    <a asp-action="Index" class="btn btn-secondary btn-animated">Cancelar</a>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
 @section Scripts {
+    <script>
+        
+        document.body.classList.add('bg-animated');
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
