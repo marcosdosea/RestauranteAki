@@ -3,9 +3,7 @@ using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteAkiWeb.Models;
-using Service;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 
 namespace RestauranteAkiWeb.Controllers
 {
@@ -157,9 +155,15 @@ namespace RestauranteAkiWeb.Controllers
         // POST: ItemCardapioController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, ItemcardapioViewModel itemcardapioViewModel)
+        public ActionResult DeleteConfirmed(int id)
         {
+            var itemcardapio = itemcardapioService.Get(id);
+            if (itemcardapio == null)
+            {
+                return NotFound();
+            }
             itemcardapioService.Delete(id);
+
             return RedirectToAction(nameof(Index));
         }
 
