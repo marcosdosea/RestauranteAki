@@ -1,108 +1,81 @@
 ﻿@model RestauranteAkiWeb.Models.PessoaViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = ViewBag.Title;
 }
 
-<h1>Details</h1>
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a></div>
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
 
-<div>
-    <h4>PessoaViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeCompleto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NomeCompleto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cpf)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cpf)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Logradouro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Logradouro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Bairro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Bairro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Complemento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Complemento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdRestaurante)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdRestaurante)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoPessoa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoPessoa)
-        </dd>
-    </dl>
+    <section class="card-list-section">
+        <div class="card-list-header">@ViewBag.HeaderText</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card">
+                    @if (Model.Foto != null)
+                    {
+                        <div class="item-image me-md-4 mb-3 mb-md-0">
+                            @{
+                                // var base64 = Convert.ToBase64String(Model.Foto);
+                                // var imgSrc = $"data:image/jpeg;base64,{base64}";
+                                var imgSrc = "/avatar-default.jpg";
+                            }
+                            <img src="@imgSrc" alt="Foto de @Model.NomeCompleto" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;" />
+                        </div>
+                    }
+
+                    <div class="item-info">
+                        <div class="w-100">
+                            <h4>Dados Pessoais</h4>
+                            <hr />
+                            <div class="item-detail"><strong>Nome Completo:</strong> @Model.NomeCompleto</div>
+                            <div class="item-detail"><strong>CPF:</strong> @Model.Cpf</div>
+                            <div class="item-detail"><strong>Data de Nascimento:</strong> @Model.DataNascimento.ToString("dd/MM/yyyy")</div>
+                            <div class="item-detail"><strong>Telefone:</strong> @Model.Telefone</div>
+                            <div class="item-detail"><strong>Email:</strong> @(Model.Email ?? "Não informado")</div>
+                        </div>
+
+                        <div class="w-100 mt-4">
+                            <h4>Endereço</h4>
+                            <hr />
+                            <div class="item-detail"><strong>CEP:</strong> @Model.Cep</div>
+                            <div class="item-detail"><strong>Endereço:</strong> @Model.Logradouro - @Model.Bairro</div>
+                            <div class="item-detail"><strong>Cidade/Estado:</strong> @Model.Cidade / @Model.Estado</div>
+
+                            <hr />
+                            <div class="item-detail">
+                                <strong>Restaurante:</strong>
+                                @ViewBag.NomeRestaurante
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<style>
+    .item-detail {
+        padding-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .item-info {
+        gap: 0;
+    }
+
+    @@media (min-width: 768px) {
+        .item-info {
+            flex-direction: column;
+            align-items: flex-start;
+            /* margin-left: 2rem; */
+        }
+    }
+</style>
