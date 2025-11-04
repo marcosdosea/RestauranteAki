@@ -1,0 +1,6 @@
+@RestauranteAkiAPI_HostAddress = http://localhost:5185
+
+GET {{RestauranteAkiAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
