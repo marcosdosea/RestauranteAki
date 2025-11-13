@@ -1,239 +1,148 @@
 ﻿@model RestauranteAkiWeb.Models.ItemcardapioViewModel
 
 @{
-    ViewData["Title"] = "Adicionar Cardápio";
+    ViewData["Title"] = "Adicionar Item do Cardápio";
 }
 
-<div class="main-content">
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Cardápio</div>
-        <div class="card-body">
-            <form asp-action="Create" enctype="multipart/form-data" method="post" class="form-cardapio">
-                <div class="form-row">
-                    <div class="flex-two">
-                        <div class="form-group">
-                            <label asp-for="Nome" class="form-label">Nome do Prato*</label>
-                            <input asp-for="Nome" class="form-control" autocomplete="off" required />
-                            <span asp-validation-for="Nome" class="text-danger"></span>
-                        </div>
+        <div class="card-list-header">Novo Item do Cardápio</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card-form">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group margin-top">
-                            <label asp-for="Categoria" class="form-label">Categoria *</label>
-                            <select asp-for="Categoria" class="form-control" required>
-                                <option value="">Selecione</option>
-                                <option value="1">Hamburger</option>
-                                <option value="2">Pizza</option>
-                                <option value="3">Bebida</option>
-                                <option value="4">Sobremesa</option>
-                            </select>
-                            <span asp-validation-for="Categoria" class="text-danger"></span>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="Nome" class="control-label"></label>
+                                    <input asp-for="Nome" class="form-control" />
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
 
-                        <div class="form-row margin-top">
-                            <div class="form-group flex-one">
-                                <label asp-for="PrecoUnitario" class="form-label">Preço</label>
-                                <input asp-for="PrecoUnitario" class="form-control" placeholder="R$ 0,00" type="number" step="0.01" min="0" required />
-                                <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
-                            </div>
-                            <div class="form-group flex-one">
-                                <label class="form-label">Disponível</label>
-                                <label class="switch-toggle">
-                                    <input asp-for="Status" type="checkbox" />
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label asp-for="Categoria" class="control-label"></label>
+                                    <select asp-for="Categoria" class="form-select">
+                                        <option value="">Selecione</option>
+                                        <option value="1">Hamburger</option>
+                                        <option value="2">Pizza</option>
+                                        <option value="3">Bebida</option>
+                                        <option value="4">Sobremesa</option>
+                                    </select>
+                                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                                </div>
 
-                        <div class="form-group margin-top">
-                            <label class="form-label">Dia da semana</label>
-                            <div class="dias-semana">
-                                @{
-                                    var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
-                                    var nomes = new[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" };
-                                    for (int i = 0; i < dias.Length; i++)
-                                    {
-                                        <label class="dia-checkbox">
-                                            <input type="checkbox" name="DiasSemana" value="@nomes[i]" />
-                                            <span>@dias[i]</span>
-                                        </label>
-                                    }
-                                }
-                            </div>
-                        </div>
-
-                        <div class="form-group margin-top">
-                            <label asp-for="Porcao" class="form-label">Porção *</label>
-                            <input asp-for="Porcao" class="form-control" type="number" min="1" required />
-                            <span asp-validation-for="Porcao" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group margin-top">
-                            <button type="button" class="btn btn-primary btn-ingredientes" data-bs-toggle="modal" data-bs-target="#ingredientesModal">
-                                Ingredientes
-                            </button>
-                        </div>
-
-                        <div class="modal fade" id="ingredientesModal" tabindex="-1" aria-labelledby="ingredientesModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ingredientesModalLabel">Selecionar Ingredientes</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label asp-for="PrecoUnitario" class="control-label">Preço</label>
+                                        <input asp-for="PrecoUnitario" class="form-control" placeholder="R$ 0,00" type="number" step="0.01" min="0" />
+                                        <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
                                     </div>
-                                    <div class="modal-body">
-                                        <ul id="lista-modal" class="list-group mb-3"></ul>
-                                        <div class="input-group">
-                                            <input type="text" id="novo-ingrediente-modal" class="form-control" placeholder="Adicionar novo ingrediente">
-                                            <button type="button" id="btn-adicionar-modal" class="btn btn-success">+</button>
+                                    <div class="form-group col-12">
+                                        <label asp-for="Porcao" class="control-label"></label>
+                                        <input asp-for="Porcao" class="form-control" type="number" min="1" />
+                                        <span asp-validation-for="Porcao" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label d-block">Disponível</label>
+                                    <label class="switch">
+                                        <input asp-for="Status" type="checkbox" checked/>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">Dias da semana</label>
+                                    <div class="dias-semana">
+                                        @{
+                                            var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
+                                            var nomes = new[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" };
+                                            for (int i = 0; i < dias.Length; i++)
+                                            {
+                                                <label class="dia-checkbox">
+                                                    <input type="checkbox" name="DiasSemana" value="@nomes[i]" />
+                                                    <span>@dias[i]</span>
+                                                </label>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ingredientesModal">
+                                        Adicionar/Editar Ingredientes
+                                    </button>
+                                </div>
+
+                                <div class="modal fade" id="ingredientesModal" tabindex="-1" 
+                                     data-api-url="@Url.Action("GetIngredientesUnicos", "Itemcardapio")"
+                                     aria-labelledby="ingredientesModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ingredientesModalLabel">Selecionar Ingredientes</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul id="lista-modal" class="list-group mb-3"></ul>
+                                                <div class="input-group">
+                                                    <input type="text" id="novo-ingrediente-modal" class="form-control" placeholder="Adicionar novo ingrediente">
+                                                    <button type="button" id="btn-adicionar-modal" class="btn btn-success">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary" id="btn-salvar-modal">Salvar Ingredientes</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary" id="btn-salvar-modal">Salvar Ingredientes</button>
+                                </div>
+                                <input type="hidden" id="descricao" asp-for="Descricao" />
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ImagemUpload" class="control-label">Imagem</label>
+                                    <div class="foto-upload">
+                                        <input asp-for="ImagemUpload" type="file" accept="image/*" class="form-control-file" id="ImagemUpload" style="display: none;" />
+                                        <label for="ImagemUpload" class="foto-dropzone">
+                                            <span>Drag and drop<br />ou clique aqui<br />para selecionar imagem</span>
+                                        </label>
                                     </div>
+                                    <span asp-validation-for="ImagemUpload" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" id="descricao" asp-for="Descricao" />
-                    </div>
 
-                    <div class="flex-one-min">
-                        <div class="form-group">
-                            <label asp-for="Imagem" class="form-label">Foto *</label>
-                            <div class="foto-upload">
-                                <input asp-for="Imagem" type="file" accept="image/*" class="form-control-file" id="fotoInput" style="display: none;" />
-                                <label for="fotoInput" class="foto-dropzone">
-                                    <span>Drag and drop<br />ou clique aqui<br />para selecionar</span>
-                                </label>
-                            </div>
-                            <span asp-validation-for="Imagem" class="text-danger"></span>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
                         </div>
-                    </div>
+                    </form>
                 </div>
-
-                <div class="form-actions">
-                    <a asp-action="Index" class="btn btn-secondary btn-rounded">Voltar</a>
-                    <button type="submit" class="btn btn-primary btn-rounded">Salvar</button>
-                </div>
-            </form>
+            </div>
         </div>
     </section>
 </div>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/cardapio-form.css" />
+    <link rel="stylesheet" href="~/css/itemcardapio.css" />
 }
 
 @section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modalEl = document.getElementById('ingredientesModal');
-            const listaModalUl = document.getElementById('lista-modal');
-            const novoIngredienteInput = document.getElementById('novo-ingrediente-modal');
-            const btnAdicionar = document.getElementById('btn-adicionar-modal');
-            const btnSalvar = document.getElementById('btn-salvar-modal');
-            const descricaoInput = document.getElementById('descricao');
-            const apiUrl = '@Url.Action("GetIngredientesUnicos", "Itemcardapio")';
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
-            function criarItemHtml(nome, isChecked) {
-                const idSeguro = `ing-${nome.replace(/[^a-zA-Z0-9]/g, '-')}`;
-                return `
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="${nome}" id="${idSeguro}" ${isChecked ? 'checked' : ''}>
-                            <label class="form-check-label" for="${idSeguro}">${nome}</label>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-sm btn-outline-primary btn-editar me-1" title="Editar nome">✏️</button>
-                            <button type="button" class="btn btn-sm btn-outline-danger btn-remover" title="Remover item">🗑️</button>
-                        </div>
-                    </li>
-                `;
-            }
-
-            function renderizarLista(ingredientesDisponiveis, ingredientesJaSelecionados) {
-                listaModalUl.innerHTML = '';
-                const todosOsIngredientes = [...new Set([...ingredientesDisponiveis, ...ingredientesJaSelecionados])].sort();
-
-                todosOsIngredientes.forEach(nome => {
-                    if (!nome) return;
-                    const isChecked = ingredientesJaSelecionados.some(sel => sel.toLowerCase() === nome.toLowerCase());
-                    listaModalUl.insertAdjacentHTML('beforeend', criarItemHtml(nome, isChecked));
-                });
-            }
-
-            function adicionarNovoItemNaLista(nome) {
-                const nomeNormalizado = nome.toLowerCase();
-                for (let input of listaModalUl.querySelectorAll('input[type="checkbox"]')) {
-                    if (input.value.toLowerCase() === nomeNormalizado) {
-                        input.checked = true;
-                        return;
-                    }
-                }
-                listaModalUl.insertAdjacentHTML('beforeend', criarItemHtml(nome, true));
-            }
-
-            // --- CORREÇÃO NA LÓGICA DOS BOTÕES ---
-            listaModalUl.addEventListener('click', (e) => {
-                const itemLi = e.target.closest('.list-group-item');
-                if (!itemLi) return;
-
-                // Procura pelo botão de remover de forma mais robusta
-                const removerBtn = e.target.closest('.btn-remover');
-                if (removerBtn) {
-                    itemLi.remove(); // Remove o item da lista visual
-                    return; // Para a execução para não continuar
-                }
-
-                // Procura pelo botão de editar de forma mais robusta
-                const editarBtn = e.target.closest('.btn-editar');
-                if (editarBtn) {
-                    const checkbox = itemLi.querySelector('.form-check-input');
-                    const label = itemLi.querySelector('.form-check-label');
-                    const nomeAntigo = checkbox.value;
-
-                    const novoNome = prompt("Editar ingrediente:", nomeAntigo);
-
-                    if (novoNome && novoNome.trim() !== "" && novoNome.trim() !== nomeAntigo) {
-                        const nomeFinal = novoNome.trim();
-                        checkbox.value = nomeFinal;
-                        label.textContent = nomeFinal;
-                    }
-                }
-            });
-
-            modalEl.addEventListener('show.bs.modal', async () => {
-                try {
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) throw new Error(`Falha na API: ${response.status}`);
-
-                    const ingredientesDisponiveis = await response.json();
-                    const ingredientesJaSelecionados = descricaoInput.value ? descricaoInput.value.split(',').map(i => i.trim()) : [];
-                    renderizarLista(ingredientesDisponiveis, ingredientesJaSelecionados);
-                } catch (error) {
-                    console.error('Erro ao carregar ingredientes:', error);
-                    listaModalUl.innerHTML = `<li class="list-group-item text-danger"><b>Erro:</b> Não foi possível carregar os ingredientes.</li>`;
-                }
-            });
-
-            btnAdicionar.addEventListener('click', () => {
-                const nome = novoIngredienteInput.value.trim();
-                if (nome) {
-                    adicionarNovoItemNaLista(nome);
-                    novoIngredienteInput.value = "";
-                }
-            });
-
-            btnSalvar.addEventListener('click', () => {
-                const checkboxesMarcados = listaModalUl.querySelectorAll('input[type="checkbox"]:checked');
-                const nomesSelecionados = Array.from(checkboxesMarcados).map(cb => cb.value.trim());
-                descricaoInput.value = nomesSelecionados.join(',');
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                modal.hide();
-            });
-        });
-    </script>
-}
-}
+    <script src="~/js/itemcardapio.js"></script>
 }

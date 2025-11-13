@@ -1,50 +1,43 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core;
 
 namespace RestauranteAkiWeb.Models
 {
     public class ItemcardapioViewModel
     {
-        [Display(Name = "Código")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int Id { get; set; }
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? Nome { get; set; }
+        [StringLength(50)]
+        public string Nome { get; set; } = string.Empty;
 
-        [Display(Name = "Descrição")]
+        [Display(Name = "Ingredientes (Descrição)")]
         public string? Descricao { get; set; }
 
-        [Display(Name = "Preço Unitário")]
+        [Display(Name = "Preço")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        [DataType(DataType.Currency)]
         public float PrecoUnitario { get; set; }
 
-        [Display(Name = "Porção")]
+        [Display(Name = "Serve (nº de pessoas)")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O campo {0} deve ser no mínimo 1.")]
         public int Porcao { get; set; }
 
-        [Display(Name = "Dia da Semana")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string? DiaSemana { get; set; }
-
-        [Display(Name = "Status")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        [Display(Name = "Disponível")]
         public bool Status { get; set; }
-
-        [Display(Name = "Imagem")]
-
-        public byte[]? Imagem { get; set; }
 
         [Display(Name = "Categoria")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public int Categoria { get; set; }
+        public string Categoria { get; set; } = string.Empty;
 
-        [Display(Name = "Ingredientes")]
-        public string? Ingredientes { get; set; }
+        [Display(Name = "Dias da Semana Disponíveis")]
+        public List<string> DiasSemana { get; set; } = new List<string>();
 
-        public ICollection<PedidoItemcardapio> PedidoItemcardapios { get; set; } = new List<PedidoItemcardapio>();
+        [Display(Name = "Alterar Foto")]
+        public IFormFile? ImagemUpload { get; set; }
 
-        public ICollection<Cardapio> IdCardapios { get; set; } = new List<Cardapio>();
+        [Display(Name = "Foto Atual")]
+        public string? ImagemAtual { get; set; }
     }
 }

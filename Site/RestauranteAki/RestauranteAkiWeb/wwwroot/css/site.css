@@ -149,6 +149,10 @@ body.home-page .container-fluid {
 /* ==========================================================================
    3. Componentes Reutilizáveis (Botões, Cards, Listas)
    ========================================================================== */
+.badge {
+    font-size: 0.9em;
+}
+
 .btn {
     border-radius: 5px;
     font-size: inherit;
@@ -387,7 +391,6 @@ body.home-page .container-fluid {
     background-color: #f8d7da;
     color: #721c24;
     text-align: center;
-    font-size: 1.1rem;
 }
 
 .form-group {
@@ -410,6 +413,15 @@ body.home-page .container-fluid {
     .form-actions .btn {
         width: 100%;
     }
+
+.control-label {
+    font-weight: 600;
+}
+
+.img-thumbnail {
+    max-width: 200px;
+    height: auto;
+}
 
 @media (min-width: 768px) {
     .card-list-header {

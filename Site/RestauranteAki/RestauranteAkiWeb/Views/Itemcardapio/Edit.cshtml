@@ -1,214 +1,159 @@
 ﻿@model RestauranteAkiWeb.Models.ItemcardapioViewModel
 
 @{
-    ViewData["Title"] = "Editar Cardápio";
-    var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
-    var nomes = new[] { "Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom" };
-    var diasSelecionados = (Model.DiaSemana ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries);
+    ViewData["Title"] = "Editar Item do Cardápio";
 }
 
-<div class="main-content">
-
+<div>
+    <div class="view-header">
+        <div class="view-actions">
+            <div><a class="btn btn-secondary" onclick="history.back();">Voltar</a></div>
+        </div>
+    </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Item do Cardápio</div>
-        <div class="card-body">
-            <form asp-action="Edit" asp-route-id="@Model.Id" enctype="multipart/form-data" method="post" class="form-cardapio">
-                <div class="form-row">
-                    <div class="flex-two">
-                        <div class="form-group">
-                            <label for="Nome" class="form-label">Nome do Prato*</label>
-                            <input asp-for="Nome" class="form-control" autocomplete="off" required />
-                            <span asp-validation-for="Nome" class="text-danger"></span>
-                        </div>
-                        <div class="form-group margin-top">
-                            <label for="Categoria" class="form-label">Categoria *</label>
-                            <select asp-for="Categoria" class="form-control" required>
-                                <option value="">Selecione</option>
-                                <option value="1">Hamburger</option>
-                                <option value="2">Pizza</option>
-                                <option value="3">Bebida</option>
-                                <option value="4">Sobremesa</option>
-                            </select>
-                            <span asp-validation-for="Categoria" class="text-danger"></span>
-                        </div>
-                        <div class="form-row margin-top">
-                            <div class="form-group flex-one">
-                                <label for="Preco" class="form-label">Preço</label>
-                                <input asp-for="PrecoUnitario" class="form-control" placeholder="R$ 0,00" type="number" step="0.01" min="0" required />
-                                <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
-                            </div>
-                            <div class="form-group flex-one">
-                                <label class="form-label">Disponível</label>
-                                <div class="switch-container">
-                                    <input asp-for="Status" type="checkbox" class="toggle-switch" />
+        <div class="card-list-header">Editar Item do Cardápio</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="item-card-form">
+                    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="ImagemAtual" />
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label asp-for="Nome" class="control-label"></label>
+                                    <input asp-for="Nome" class="form-control" />
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group margin-top">
-                            <label class="form-label">Dia da semana</label>
-                            <div class="dias-semana">
-                                @for (int i = 0; i < dias.Length; i++)
-                                {
-                                    <label class="dia-checkbox">
-                                        <input type="checkbox" name="DiaSemana" value="@nomes[i]" @(diasSelecionados.Contains(nomes[i]) ? "checked" : "") />
-                                        <span>@dias[i]</span>
+
+                                <div class="form-group">
+                                    <label asp-for="Categoria" class="control-label"></label>
+                                    <select asp-for="Categoria" class="form-select">
+                                        <option value="">Selecione</option>
+                                        <option value="1">Hamburger</option>
+                                        <option value="2">Pizza</option>
+                                        <option value="3">Bebida</option>
+                                        <option value="4">Sobremesa</option>
+                                    </select>
+                                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label asp-for="PrecoUnitario" class="control-label"></label>
+                                        <input asp-for="PrecoUnitario" class="form-control" placeholder="R$ 0,00" type="number" step="0.01" min="0" />
+                                        <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label asp-for="Porcao" class="control-label"></label>
+                                        <input asp-for="Porcao" class="form-control" type="number" min="1" />
+                                        <span asp-validation-for="Porcao" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label d-block">Disponível</label>
+                                    <label class="switch">
+                                        <input asp-for="Status" type="checkbox" />
+                                        <span class="slider"></span>
                                     </label>
-                                }
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">Dias da semana</label>
+                                    <div class="dias-semana">
+                                        @{
+                                            var dias = new[] { "S", "T", "Q", "Q", "S", "S", "D" };
+                                            var nomes = new[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" };
+                                            var diasSelecionados = Model.DiasSemana ?? new List<string>();
+
+                                            for (int i = 0; i < dias.Length; i++)
+                                            {
+                                                <label class="dia-checkbox">
+                                                    <input type="checkbox" name="DiasSemana" value="@nomes[i]" @(diasSelecionados.Contains(nomes[i]) ? "checked" : "") />
+                                                    <span>@dias[i]</span>
+                                                </label>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ingredientesModal">
+                                        Adicionar/Editar Ingredientes
+                                    </button>
+                                </div>
+
+                                <div class="modal fade" id="ingredientesModal" tabindex="-1"
+                                     data-api-url="@Url.Action("GetIngredientesUnicos", "Itemcardapio")"
+                                     aria-labelledby="ingredientesModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ingredientesModalLabel">Selecionar Ingredientes</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul id="lista-modal" class="list-group mb-3"></ul>
+                                                <div class="input-group">
+                                                    <input type="text" id="novo-ingrediente-modal" class="form-control" placeholder="Adicionar novo ingrediente">
+                                                    <button type="button" id="btn-adicionar-modal" class="btn btn-success">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary" id="btn-salvar-modal">Salvar Ingredientes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="descricao" asp-for="Descricao" />
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+
                             </div>
-                            <span asp-validation-for="DiaSemana" class="text-danger"></span>
-                        </div>
-                        <div class="form-group margin-top">
-                            <label for="Porcao" class="form-label">Porção *</label>
-                            <input asp-for="Porcao" class="form-control" type="number" min="1" required />
-                            <span asp-validation-for="Porcao" class="text-danger"></span>
-                        </div>
-                        <div class="form-group margin-top">
-                            <label for="Descricao" class="form-label">Descrição</label>
-                            <textarea asp-for="Descricao" class="form-control" rows="2"></textarea>
-                            <span asp-validation-for="Descricao" class="text-danger"></span>
-                        </div>
-                        <div class="form-group margin-top">
-                            <button type="button" class="btn btn-primary btn-ingredientes" data-bs-toggle="modal" data-bs-target="#ingredientesModal">
-                                Ingredientes
-                            </button>
-                        </div>
-                        <!-- Modal Bootstrap -->
-                        <div class="modal fade" id="ingredientesModal" tabindex="-1" aria-labelledby="ingredientesModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ingredientesModalLabel">Ingredientes</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <span class="control-label">Imagem atual</span>
+                                    @if (!string.IsNullOrEmpty(Model.ImagemAtual))
+                                    {
+                                        var imgSrc = $"data:image/jpeg;base64,{Model.ImagemAtual}";
+                                        <img src="@imgSrc" class="img-thumbnail mb-2" alt="Imagem Atual" />
+                                    }
+                                    <div class="foto-upload">
+                                        <input asp-for="ImagemUpload" type="file" accept="image/*" class="form-control-file" id="ImagemUpload" style="display: none;" />
+                                        <label asp-for="ImagemUpload" class="control-label">Nova imagem</label>
+                                        <label for="ImagemUpload" class="foto-dropzone">
+                                            <span>Drag and drop<br />ou clique aqui<br />para selecionar nova imagem</span>
+                                        </label>
                                     </div>
-                                    <div class="modal-body">
-                                        <textarea asp-for="Ingredientes" class="form-control" rows="5"></textarea>
-                                        <span asp-validation-for="Ingredientes" class="text-danger"></span>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                    </div>
+                                    <span asp-validation-for="ImagemUpload" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex-one-min">
-                        <div class="form-group">
-                            <label class="form-label">Foto *</label>
-                            <div class="foto-upload">
-                                <input asp-for="Imagem" type="file" accept="image/*" class="form-control-file" id="fotoInput" style="display: none;" />
-                                <label for="fotoInput" class="foto-dropzone">
-                                    <span>Drag and drop<br />ou clique aqui<br />para selecionar</span>
-                                </label>
-                                @if (Model.Imagem != null && Model.Imagem.Length > 0)
-                                {
-                                    var base64 = Convert.ToBase64String(Model.Imagem);
-                                    <img src="data:image/png;base64,@base64" style="max-width:150px;max-height:150px; margin-top:10px;" />
-                                }
-                            </div>
-                            <span asp-validation-for="Imagem" class="text-danger"></span>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar Alterações</button>
+                            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary btn-rounded">Salvar</button>
-                    <a asp-action="Index" class="btn btn-secondary btn-rounded">Voltar</a>
-                </div>
-            </form>
+            </div>
         </div>
     </section>
 </div>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
-    <style>
-        .form-label {
-            font-weight: 600;
-            color: #2d2d7f;
-        }
+    <link rel="stylesheet" href="~/css/itemcardapio.css" />
+}
 
-        .dias-semana {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
-        .dia-checkbox input {
-            display: none;
-        }
-
-        .dia-checkbox span {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: #ff6c00;
-            color: #fff;
-            text-align: center;
-            line-height: 32px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .dia-checkbox input:checked + span {
-            background: #2d2d7f;
-            color: #fff;
-        }
-
-        .foto-upload {
-            margin-top: 8px;
-        }
-
-        .foto-dropzone {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #bdbdbd;
-            border-radius: 12px;
-            width: 160px;
-            height: 160px;
-            cursor: pointer;
-            color: #888;
-            text-align: center;
-            font-size: 0.95rem;
-            background: #fafaff;
-            transition: border 0.2s;
-        }
-
-            .foto-dropzone:hover {
-                border-color: #ff6c00;
-            }
-
-        .toggle-switch {
-            width: 40px;
-            height: 22px;
-            appearance: none;
-            background: #ff6c00;
-            outline: none;
-            border-radius: 20px;
-            position: relative;
-            transition: background 0.2s;
-        }
-
-            .toggle-switch:checked {
-                background: #2d2d7f;
-            }
-
-            .toggle-switch::before {
-                content: '';
-                position: absolute;
-                left: 4px;
-                top: 4px;
-                width: 14px;
-                height: 14px;
-                background: #fff;
-                border-radius: 50%;
-                transition: left 0.2s;
-            }
-
-            .toggle-switch:checked::before {
-                left: 22px;
-            }
-    </style>
+    <script src="~/js/itemcardapio.js"></script>
 }
