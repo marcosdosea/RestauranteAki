@@ -1,4 +1,7 @@
-﻿namespace Core;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Core;
 
 public partial class Cardapio
 {
@@ -17,6 +20,4 @@ public partial class Cardapio
     public virtual Restaurante IdRestauranteNavigation { get; set; } = null!;
 
     public virtual ICollection<Itemcardapio> IdItemCardapios { get; set; } = new List<Itemcardapio>();
-
-
 }
