@@ -1,4 +1,7 @@
-﻿namespace Core;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Core;
 
 public partial class Contum
 {
@@ -20,5 +23,5 @@ public partial class Contum
 
     public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
 
-
+    public virtual ICollection<Personagem> Personagems { get; set; } = new List<Personagem>();
 }

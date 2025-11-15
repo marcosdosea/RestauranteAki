@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core;
 
 public partial class RestauranteAkiContext : DbContext
 {
-    public RestauranteAkiContext()
-    {
-    }
-
     public RestauranteAkiContext(DbContextOptions<RestauranteAkiContext> options)
         : base(options)
     {
@@ -16,8 +14,6 @@ public partial class RestauranteAkiContext : DbContext
     public virtual DbSet<Cardapio> Cardapios { get; set; }
 
     public virtual DbSet<Contum> Conta { get; set; }
-
-    public virtual DbSet<Garcom> Garcoms { get; set; }
 
     public virtual DbSet<Itemcardapio> Itemcardapios { get; set; }
 
@@ -112,15 +108,6 @@ public partial class RestauranteAkiContext : DbContext
                 .HasForeignKey(d => d.IdMesa)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_conta_mesa1");
-        });
-
-        modelBuilder.Entity<Garcom>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("garcom");
-
-            entity.Property(e => e.Id).HasColumnName("id");
         });
 
         modelBuilder.Entity<Itemcardapio>(entity =>
@@ -265,6 +252,8 @@ public partial class RestauranteAkiContext : DbContext
 
             entity.ToTable("personagem");
 
+            entity.HasIndex(e => e.IdConta, "fk_personagem_conta");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.DataAtualizacao)
                 .HasColumnType("datetime")
@@ -272,9 +261,15 @@ public partial class RestauranteAkiContext : DbContext
             entity.Property(e => e.DataCriacao)
                 .HasColumnType("datetime")
                 .HasColumnName("dataCriacao");
+            entity.Property(e => e.IdConta).HasColumnName("idConta");
             entity.Property(e => e.IdentificadorCor)
                 .HasMaxLength(50)
                 .HasColumnName("identificadorCor");
+
+            entity.HasOne(d => d.IdContaNavigation).WithMany(p => p.Personagems)
+                .HasForeignKey(d => d.IdConta)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_personagem_conta");
         });
 
         modelBuilder.Entity<Pessoa>(entity =>
@@ -370,8 +365,6 @@ public partial class RestauranteAkiContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-
-
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
