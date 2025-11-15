@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace Core.Service
+﻿namespace Core.Service
 {
     public interface IContumService
     {
