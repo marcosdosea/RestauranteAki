@@ -32,6 +32,7 @@ namespace RestauranteAkiWeb.Models
         public MesaViewModel? Mesa { get; set; }
         public List<PagamentoViewModel> Pagamentos { get; set; } = new();
         public List<PedidoViewModel> Pedidos { get; set; } = new();
+        public List<PersonagemViewModel> Personagems { get; set; } = new();
     }
 }
 

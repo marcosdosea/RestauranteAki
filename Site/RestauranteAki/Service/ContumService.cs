@@ -71,5 +71,66 @@ namespace Service
         {
             return context.Conta.AsNoTracking();
         }
+
+        /// <summary>
+        /// Buscar ou criar uma conta ativa para a mesa informada
+        /// </summary>
+        /// <param name="idMesa"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Contum> GetOrCreateContaAtiva(int idMesa)
+        {
+            var contaAtiva = context.Conta
+                .Include(c => c.Personagems)
+                .FirstOrDefault(c => c.IdMesa == idMesa && c.Status == "A");
+            if (contaAtiva != null)
+            {
+                return contaAtiva;
+            }
+
+            await using var transaction = await context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var novaConta = new Contum
+                {
+                    IdMesa = idMesa,
+                    Status = "A",
+                    Valor = 0,
+                    FormaPagamento = ""
+                };
+                context.Conta.Add(novaConta);
+
+                var horaAtual = DateTime.Now;
+
+                var personagem1 = new Personagem
+                {
+                    IdentificadorCor = $"#{new Random().Next(0x1000000):X6}",
+                    DataCriacao = horaAtual,
+                    DataAtualizacao = horaAtual,
+                    IdContaNavigation = novaConta
+                };
+
+                var personagem2 = new Personagem
+                {
+                    IdentificadorCor = $"#{new Random().Next(0x1000000):X6}",
+                    DataCriacao = horaAtual,
+                    DataAtualizacao = horaAtual,
+                    IdContaNavigation = novaConta
+                };
+
+                context.Personagems.AddRange(personagem1, personagem2);
+
+                await context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return novaConta;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("Não foi possível criar ou obter nova conta.", ex);
+            }
+        }
     }
 }

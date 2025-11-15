@@ -7,5 +7,6 @@
         void Delete(int id);
         Contum? Get(int id);
         IEnumerable<Contum> GetAll();
+        Task<Contum> GetOrCreateContaAtiva(int id);
     }
 }

@@ -28,22 +28,10 @@ namespace RestauranteAkiWeb.Controllers.Api
             return Ok(mapper.Map<IEnumerable<PersonagemViewModel>>(personagens));
         }
 
-        [HttpPost("mesas/{idMesa}/personagens")]
-        public async Task<ActionResult<PersonagemViewModel>> AddPersonagem(int idMesa)
+        [HttpPost("contas/{idConta}/personagens")]
+        public async Task<ActionResult<PersonagemViewModel>> AddPersonagem(int idConta)
         {
-            var novoPersonagem = await personagemService.AddPersonagemAsync();
-
-            //// Criar um pedido inicial para vincular o personagem à mesa
-            var pedido = new Pedido
-            {
-                IdMesa = idMesa,
-                IdPersonagem = novoPersonagem.Id,
-                IdConta = 1, // Conta padrão (por enquanto)
-                IdPessoa = 2, // Pessoa padrão (por enquanto)
-                Status = "S" // Status inicial
-            };
-
-            pedidoService.Create(pedido);
+            var novoPersonagem = await personagemService.AddPersonagemAsync(idConta);
 
             var personagemViewModel = mapper.Map<PersonagemViewModel>(novoPersonagem);
 
