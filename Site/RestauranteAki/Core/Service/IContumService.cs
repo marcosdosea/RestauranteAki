@@ -1,4 +1,6 @@
-﻿namespace Core.Service
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace Core.Service
 {
     public interface IContumService
     {
@@ -7,5 +9,6 @@
         void Delete(int id);
         Contum? Get(int id);
         IEnumerable<Contum> GetAll();
+        Task<Contum> GetOrCreateContaAtiva(int id);
     }
 }

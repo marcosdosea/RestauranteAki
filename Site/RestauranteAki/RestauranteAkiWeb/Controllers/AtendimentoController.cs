@@ -8,11 +8,13 @@ namespace RestauranteAkiWeb.Controllers
     public class AtendimentoController : Controller
     {
         private readonly IMesaService mesaService;
+        private readonly IContumService contaService;
         private readonly IMapper mapper;
 
-        public AtendimentoController(IMesaService mesaService, IMapper mapper)
+        public AtendimentoController(IMesaService mesaService, IContumService contaService,IMapper mapper)
         {
             this.mesaService = mesaService;
+            this.contaService = contaService;
             this.mapper = mapper;
         }
 
@@ -25,9 +27,20 @@ namespace RestauranteAkiWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult Mesa(int id)
+        public async Task<IActionResult> Mesa(int id)
         {
-            return View(id);
+            try
+            {
+                var conta = await contaService.GetOrCreateContaAtiva(id);
+                var viewModel = mapper.Map<ContumViewModel>(conta);
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["Erro"] = $"Erro ao carregar mesa: {ex.Message}";
+                return RedirectToAction("Index");
+            }
         }
     }
 }

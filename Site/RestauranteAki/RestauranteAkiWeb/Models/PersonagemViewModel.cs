@@ -20,5 +20,9 @@ namespace RestauranteAkiWeb.Models
         [Display(Name = "Data de Atualização")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public DateTime DataAtualizacao { get; set; }
+
+        [Display(Name = "Conta")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public int IdConta { get; set; }
     }
 }

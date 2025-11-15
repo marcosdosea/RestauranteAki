@@ -1,4 +1,4 @@
-@model int
+@model RestauranteAkiWeb.Models.ContumViewModel
 
 @{
     ViewData["Title"] = "Atendimento Mesa";
@@ -13,9 +13,25 @@
     </div>
 
     <section class="card-list-section">
-        <div class="card-list-header">Clientes da Mesa @Model</div>
+        <div class="card-list-header">Clientes da Mesa @Model.IdMesa</div>
         <div id="personagensContainer" class="personagem-grid">
-            
+            @if (Model.Personagems.Any())
+            {
+                @foreach (var p in Model.Personagems)
+                {
+                    <div class="personagem-card" id="personagem-@p.Id">
+                        <div class="personagem-circle" style="background-color: @p.IdentificadorCor"></div>
+                        <div class="personagem-actions">
+                            <a href="/Pedido/Create?personagemId=@p.Id" class="btn btn-primary">Novo Pedido</a>
+                            <button onclick="removerPersonagem(@p.Id)" class="btn btn-danger">Remover Cliente</button>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-data">Nenhum personagem nesta mesa.</div>
+            }
         </div>
     </section>
 </div>
@@ -61,52 +77,18 @@
 
 @section Scripts {
     <script>
-        const idMesa = @Model;
-        let isInitializing = true;
-
-        async function carregarPersonagens() {
-            try {
-                const response = await fetch(`/api/AtendimentoApi/mesas/${idMesa}/personagens`);
-                const personagens = await response.json();
-
-                if (personagens.length === 0 && isInitializing) {
-                    isInitializing = false; // Previne múltiplas inicializações
-                    console.log('Criando personagens iniciais...');
-                    await criarPersonagensIniciais();
-                    return;
-                }
-
-                renderizarPersonagens(personagens);
-            } catch (error) {
-                console.error('Erro ao carregar personagens:', error);
-            }
-        }
-
-        async function criarPersonagensIniciais() {
-            try {
-                await Promise.all([
-                    adicionarPersonagem(),
-                    adicionarPersonagem()
-                ]);
-                await carregarPersonagens();
-            } catch (error) {
-                console.error('Erro ao criar personagens iniciais:', error);
-                isInitializing = true; // Permite nova tentativa se falhar
-            }
-        }
+        const idConta = @Model.Id;
 
         async function adicionarPersonagem() {
             try {
-                const response = await fetch(`/api/AtendimentoApi/mesas/${idMesa}/personagens`, {
+                const response = await fetch(`/api/AtendimentoApi/contas/${idConta}/personagens`, {
                     method: 'POST'
                 });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
 
-                const result = await response.json();
-                await carregarPersonagens(); // Recarrega a lista após adicionar
-                return result;
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const novoPersonagem = await response.json();
+                renderizarNovoPersonagem(novoPersonagem);
             } catch (error) {
                 console.error('Erro ao adicionar personagem:', error);
             }
@@ -119,37 +101,33 @@
                 const response = await fetch(`/api/AtendimentoApi/personagens/${id}`, {
                     method: 'DELETE'
                 });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
 
-                await carregarPersonagens();
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                document.getElementById(`personagem-${id}`).remove();
             } catch (error) {
                 console.error('Erro ao remover personagem:', error);
             }
         }
 
-        function renderizarPersonagens(personagens) {
+        function renderizarNovoPersonagem(p) {
             const container = document.getElementById('personagensContainer');
-            if (personagens.length === 0) {
-                container.innerHTML = '<div class="no-data">Nenhum personagem nesta mesa.</div>';
-                return;
-            }
 
-            container.innerHTML = personagens.map(p => `
-                <div class="personagem-card">
+            const noData = container.querySelector('.no-data');
+            if (noData) noData.remove();
+
+            const cardHtml = `
+                <div class="personagem-card" id="personagem-${p.id}">
                     <div class="personagem-circle" style="background-color: ${p.identificadorCor}"></div>
                     <div class="personagem-actions">
                         <a href="/Pedido/Create?personagemId=${p.id}" class="btn btn-primary">Novo Pedido</a>
                         <button onclick="removerPersonagem(${p.id})" class="btn btn-danger">Remover Cliente</button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            container.insertAdjacentHTML('beforeend', cardHtml);
         }
 
         document.getElementById('btnAddPersonagem').addEventListener('click', adicionarPersonagem);
-        
-        // Carregar personagens ao iniciar a página
-        carregarPersonagens();
     </script>
 }
