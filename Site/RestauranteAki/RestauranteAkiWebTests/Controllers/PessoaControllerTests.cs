@@ -33,7 +33,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
             mockService.Setup(service => service.Delete(It.IsAny<int>()))
                 .Verifiable();
 
-            controller = new PessoaController(mapper, mockService.Object);
+            controller = new PessoaController(mockService.Object, null, mapper);
         }
 
         [TestMethod()]
@@ -63,14 +63,14 @@ namespace RestauranteAkiWeb.Controllers.Tests
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(PessoaViewModel));
             PessoaViewModel pessoaModel = (PessoaViewModel)viewResult.ViewData.Model;
             Assert.AreEqual("João Silva", pessoaModel.NomeCompleto);
-            Assert.AreEqual("G", pessoaModel.TipoPessoa);
+            Assert.AreEqual(TipoPessoa.Gestor, pessoaModel.TipoPessoa);
         }
 
         [TestMethod()]
         public void CreateTest_Get_Valido()
         {
             // Act
-            var result = controller.Create("G");
+            var result = controller.Create(new PessoaViewModel { });
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -115,7 +115,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(PessoaViewModel));
             PessoaViewModel pessoaModel = (PessoaViewModel)viewResult.ViewData.Model;
             Assert.AreEqual("João Silva", pessoaModel.NomeCompleto);
-            Assert.AreEqual("G", pessoaModel.TipoPessoa);
+            Assert.AreEqual(TipoPessoa.Gestor, pessoaModel.TipoPessoa);
         }
 
         [TestMethod()]
@@ -162,7 +162,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
         public void DeleteTest_Post_Valido()
         {
             // Act
-            var result = controller.Delete(GetTargetPessoaModel().Id, GetTargetPessoaModel());
+            var result = controller.Delete(GetTargetPessoaModel().Id);
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
@@ -179,7 +179,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
             {
                 Id = 4,
                 NomeCompleto = "Carlos Pereira",
-                TipoPessoa = "G",
+                TipoPessoa = TipoPessoa.Gestor,
                 IdRestaurante = 1
             };
         }
@@ -201,7 +201,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
             {
                 Id = 1,
                 NomeCompleto = "João Silva",
-                TipoPessoa = "G",
+                TipoPessoa = TipoPessoa.Gestor,
                 IdRestaurante = 1
             };
         }

@@ -25,7 +25,7 @@ namespace RestauranteAkiWebTests.Controllers
         {
             mockContumService = new Mock<IContumService>();
             mockMapper = new Mock<IMapper>();
-            controller = new ContaController(mockContumService.Object, mockMapper.Object);
+            controller = new ContaController(mockContumService.Object, null, mockMapper.Object);
 
             testContas = GerarContas();
             testContasModel = GerarContasViewModel();
