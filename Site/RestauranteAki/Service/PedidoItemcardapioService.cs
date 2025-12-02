@@ -21,9 +21,9 @@ namespace Service
 
         public void Delete(int id)
         {
-            var pedidoitemcardapio = context.PedidoItemcardapios.Find(id);
+            var pedidoitemcardapio = context.PedidoItemcardapios.FirstOrDefault(p => p.IdItemCardapio == id);
 
-            if(pedidoitemcardapio != null) 
+            if (pedidoitemcardapio != null) 
             {
                 context.Remove(pedidoitemcardapio);
                 context.SaveChanges();
@@ -38,7 +38,7 @@ namespace Service
 
         public PedidoItemcardapio? Get(int id)
         {
-            return context.PedidoItemcardapios.Find(id);
+            return context.PedidoItemcardapios.FirstOrDefault(x => x.IdItemCardapio == id);
         }
 
         public IEnumerable<PedidoItemcardapio> GetAll()

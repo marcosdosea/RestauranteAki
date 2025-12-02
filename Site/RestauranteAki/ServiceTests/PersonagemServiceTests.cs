@@ -67,7 +67,7 @@ namespace ServiceTests
         public async Task AddPersonagemAsync_DeveGerarNovoPersonagemComCorAleatoria()
         {
             // Act
-            var novoPersonagem = await personagemService.AddPersonagemAsync();
+            var novoPersonagem = await personagemService.AddPersonagemAsync(1);
 
             // Assert
             Assert.IsNotNull(novoPersonagem);
@@ -138,7 +138,7 @@ namespace ServiceTests
         public async Task DeleteAsync_DeveRemoverPersonagemRecemCriado()
         {
             // Arrange
-            var novoPersonagem = await personagemService.AddPersonagemAsync();
+            var novoPersonagem = await personagemService.AddPersonagemAsync(1);
 
             // Act
             await personagemService.DeleteAsync(novoPersonagem.Id);
