@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Core;
 using Microsoft.EntityFrameworkCore;
 using Service;
 using Xunit;
