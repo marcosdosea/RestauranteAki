@@ -37,7 +37,7 @@ namespace RestauranteAkiWeb.Controllers.Tests
             mockService.Setup(service => service.Delete(It.IsAny<int>()))
                 .Verifiable();
 
-            controller = new CardapioController(mapper, mockService.Object);
+            controller = new CardapioController(mockService.Object, null, mapper);
         }
 
         [TestMethod()]
