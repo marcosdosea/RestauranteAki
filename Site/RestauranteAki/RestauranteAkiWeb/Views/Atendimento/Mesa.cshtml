@@ -1,133 +1,318 @@
-@model RestauranteAkiWeb.Models.ContumViewModel
+﻿@model RestauranteAkiWeb.Models.MesaHubViewModel
 
 @{
-    ViewData["Title"] = "Atendimento Mesa";
+    ViewData["Title"] = Model.NomeMesa;
 }
 
-<div>
-    <div class="view-header">
-        <div class="view-actions">
-            <button id="btnAddPersonagem" class="btn btn-primary">Adicionar Cliente</button>
-            <div><a asp-action="Index" class="btn btn-secondary">Voltar</a></div>
+@section HeaderLeft {
+    <a onclick="history.back();" class="btn btn-link text-dark fs-2 p-0 pt-1">
+        <i class="fa-solid fa-angle-left"></i>
+    </a>
+}
+
+<style>
+    .container {
+        padding-bottom: 100px;
+    }
+
+    /* PALETA DE CORES */
+    :root {
+        --primary-orange: #F27022;
+        --light-bg-card: #FFF5F5; /* Fundo rosado claro do card financeiro */
+        --border-card: #EAD6D6;
+        --text-dark: #222;
+        /* Cores de Status */
+        --status-green: #4CAF50;
+        --status-orange: #FF9800;
+        --status-purple: #D500F9;
+    }
+
+    /* CLASSES UTILITÁRIAS DE COR */
+    .color-green {
+        color: var(--status-green);
+        font-weight: 700;
+    }
+
+    .color-orange {
+        color: var(--status-orange);
+        font-weight: 700;
+    }
+
+    .color-purple {
+        color: var(--status-purple);
+        font-weight: 700;
+    }
+
+    /* HEADER */
+    .hub-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5px;
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #000;
+        margin: 0;
+    }
+
+    .btn-menu-hamburger {
+        background-color: var(--primary-orange);
+        color: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    /* CARD FINANCEIRO */
+    .finance-card {
+        background-color: var(--light-bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .finance-left label {
+        font-size: 0.9rem;
+        color: #444;
+        display: block;
+    }
+
+    .finance-left span {
+        color: var(--primary-orange);
+        font-size: 1.6rem;
+        font-weight: 800;
+    }
+
+    .finance-right {
+        text-align: right;
+        font-size: 0.85rem;
+        color: #333;
+    }
+
+        .finance-right div {
+            margin-bottom: 4px;
+        }
+
+    /* ACCORDION (LISTA) */
+    .custom-accordion {
+        border: 1px solid var(--border-card);
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .custom-accordion .accordion-item {
+        border: 1px solid #000;
+        border-radius: 10px !important;
+        margin-bottom: 15px;
+        overflow: hidden;
+        background: white;
+    }
+
+    .custom-accordion .accordion-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .custom-accordion .accordion-button {
+        background-color: white;
+        color: #000;
+        font-weight: 700;
+        padding: 20px;
+        font-size: 1rem;
+        box-shadow: none !important; /* Remove o glow azul padrão */
+    }
+
+        .custom-accordion .accordion-button:not(.collapsed) {
+            background-color: white; /* Mantém branco ao abrir */
+            color: #000;
+            border-bottom: 1px solid #eee; /* Linha separadora suave */
+        }
+
+        .custom-accordion .accordion-button::after {
+            /* Ícone da seta padrão do bootstrap é suficiente, ou pode customizar */
+            background-size: 1.25rem;
+        }
+
+    .icon-user {
+        margin-right: 12px;
+        font-size: 1.4rem;
+    }
+
+    /* ITENS DENTRO DO ACCORDION */
+    .accordion-body {
+        background-color: #f2f2f2; /* Fundo cinza claro da lista interna */
+        padding: 10px;
+    }
+
+    .item-row {
+        background-color: transparent;
+        padding: 8px 5px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        font-size: 0.95rem;
+    }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+    .item-content {
+        flex-grow: 1;
+        padding-right: 10px;
+    }
+
+    .item-name {
+        font-weight: 600;
+        color: #000;
+    }
+
+    .item-status-arrow {
+        margin: 0 4px;
+        color: #666;
+    }
+
+    .btn-item-options {
+        background: none;
+        border: none;
+        color: #000;
+        padding: 0 5px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    /* FOOTER FIXO */
+    .fixed-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        padding: 15px 20px;
+        display: flex;
+        gap: 15px;
+        z-index: 1000;
+        /* Sombra leve para separar do conteúdo */
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+    }
+
+    .btn-footer {
+        flex: 1; /* Ocupam o mesmo espaço */
+        height: 50px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .btn-primary-orange {
+        background-color: var(--primary-orange);
+        color: white;
+        border: none;
+    }
+
+        .btn-primary-orange:hover {
+            color: white;
+            opacity: 0.9;
+        }
+
+    .btn-outline-orange {
+        background-color: white;
+        color: var(--primary-orange);
+        border: 2px solid var(--primary-orange); /* Borda mais grossa conforme imagem */
+    }
+
+        .btn-outline-orange:hover {
+            background-color: #fff5f0;
+        }
+</style>
+
+<div class="container">
+    <div class="finance-card">
+        <div class="finance-left">
+            <label>Total Atual</label>
+            <span>@Model.TotalAtual.ToString("C")</span>
+        </div>
+        <div class="finance-right">
+            <div>Subtotal: @Model.Subtotal.ToString("C")</div>
+            <div>Serviço: @Model.Servico.ToString("C")</div>
         </div>
     </div>
 
-    <section class="card-list-section">
-        <div class="card-list-header">Clientes da Mesa @Model.IdMesa</div>
-        <div id="personagensContainer" class="personagem-grid">
-            @if (Model.Personagems.Any())
-            {
-                @foreach (var p in Model.Personagems)
-                {
-                    <div class="personagem-card" id="personagem-@p.Id">
-                        <div class="personagem-circle" style="background-color: @p.IdentificadorCor"></div>
-                        <div class="personagem-actions">
-                            <a href="/Pedido/Create?personagemId=@p.Id" class="btn btn-primary">Novo Pedido</a>
-                            <button onclick="removerPersonagem(@p.Id)" class="btn btn-danger">Remover Cliente</button>
-                        </div>
+    <div class="accordion custom-accordion" id="accordionMesa">
+
+        @foreach (var grupo in Model.GruposPedidos)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-@grupo.AccordionId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@grupo.AccordionId">
+                        <i class="fa-regular fa-user icon-user"></i>
+                        @grupo.Titulo
+                    </button>
+                </h2>
+                <div id="collapse-@grupo.AccordionId" class="accordion-collapse collapse" data-bs-parent="#accordionMesa">
+                    <div class="accordion-body">
+                        @if (grupo.Itens.Any())
+                        {
+                            @foreach (var item in grupo.Itens)
+                            {
+                                <div class="item-row">
+                                    <div class="item-content">
+                                        <span class="item-name">@item.Quantidade x @item.NomeItem</span>
+                                        <span class="item-status-arrow">➝</span>
+                                        <span class="@item.StatusCorCss">@item.StatusTexto</span>
+                                    </div>
+                                    <button class="btn-item-options">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center text-muted small py-2">
+                                Nenhum item pedido.
+                            </div>
+                        }
                     </div>
-                }
-            }
-            else
-            {
-                <div class="no-data">Nenhum personagem nesta mesa.</div>
-            }
-        </div>
-    </section>
+                </div>
+            </div>
+        }
+
+    </div>
 </div>
+<div class="fixed-footer">
+    <button class="btn-footer btn-primary-orange" onclick="abrirNovoPedido(@Model.IdConta)">
+        <i class="fa-solid fa-circle-plus me-2"></i> Novo Pedido
+    </button>
 
-<style>
-    .personagem-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 2rem;
-        padding: 2rem;
-    }
-
-    .personagem-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1.5rem;
-        border: 1px solid var(--bs-primary);
-        border-radius: 0.5rem;
-        background: #fff;
-        transition: transform 0.2s;
-    }
-
-    .personagem-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .personagem-circle {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        margin-bottom: 1rem;
-    }
-
-    .personagem-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-</style>
+    <a href="@Url.Action("FecharConta", new { id = Model.IdMesa })" class="btn-footer btn-outline-orange">
+        Fechar Conta
+    </a>
+</div>
 
 @section Scripts {
     <script>
-        const idConta = @Model.Id;
-
-        async function adicionarPersonagem() {
-            try {
-                const response = await fetch(`/api/AtendimentoApi/contas/${idConta}/personagens`, {
-                    method: 'POST'
-                });
-
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-                const novoPersonagem = await response.json();
-                renderizarNovoPersonagem(novoPersonagem);
-            } catch (error) {
-                console.error('Erro ao adicionar personagem:', error);
-            }
+        function abrirNovoPedido(idConta) {
+            // Aqui iremos redirecionar ou abrir o modal da Tela 3
+            // Por enquanto, apenas um log ou redirecionamento simples
+            window.location.href = '/Pedido/Create?idConta=' + idConta;
         }
-
-        async function removerPersonagem(id) {
-            if (!confirm('Deseja realmente remover este personagem?')) return;
-
-            try {
-                const response = await fetch(`/api/AtendimentoApi/personagens/${id}`, {
-                    method: 'DELETE'
-                });
-
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-                document.getElementById(`personagem-${id}`).remove();
-            } catch (error) {
-                console.error('Erro ao remover personagem:', error);
-            }
-        }
-
-        function renderizarNovoPersonagem(p) {
-            const container = document.getElementById('personagensContainer');
-
-            const noData = container.querySelector('.no-data');
-            if (noData) noData.remove();
-
-            const cardHtml = `
-                <div class="personagem-card" id="personagem-${p.id}">
-                    <div class="personagem-circle" style="background-color: ${p.identificadorCor}"></div>
-                    <div class="personagem-actions">
-                        <a href="/Pedido/Create?personagemId=${p.id}" class="btn btn-primary">Novo Pedido</a>
-                        <button onclick="removerPersonagem(${p.id})" class="btn btn-danger">Remover Cliente</button>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', cardHtml);
-        }
-
-        document.getElementById('btnAddPersonagem').addEventListener('click', adicionarPersonagem);
     </script>
 }

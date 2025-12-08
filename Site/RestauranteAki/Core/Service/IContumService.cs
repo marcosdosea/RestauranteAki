@@ -8,5 +8,6 @@
         Contum? Get(int id);
         IEnumerable<Contum> GetAll();
         Task<Contum> GetOrCreateContaAtiva(int id);
+        Task<Contum?> GetContaCompletaPorMesaAsync(int idMesa);
     }
 }
