@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestauranteAkiWebTests", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTests", "ServiceTests\ServiceTests.csproj", "{703ED06B-38EC-489E-B181-24CE4F89E86A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestauranteAkiAPI", "RestauranteAkiAPI\RestauranteAkiAPI.csproj", "{710CDDA3-A96A-4506-A152-A29FB90B2631}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C64A8A7D-5160-47E4-92F0-B3C89524473F} = {C64A8A7D-5160-47E4-92F0-B3C89524473F}
+		{EDFCD62C-DD8A-4530-9000-74BF8817CD02} = {EDFCD62C-DD8A-4530-9000-74BF8817CD02}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +45,10 @@ Global
 		{703ED06B-38EC-489E-B181-24CE4F89E86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{703ED06B-38EC-489E-B181-24CE4F89E86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{703ED06B-38EC-489E-B181-24CE4F89E86A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710CDDA3-A96A-4506-A152-A29FB90B2631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710CDDA3-A96A-4506-A152-A29FB90B2631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710CDDA3-A96A-4506-A152-A29FB90B2631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710CDDA3-A96A-4506-A152-A29FB90B2631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
