@@ -6,5 +6,6 @@
         Task<Personagem?> GetPersonagemAsync(int id);
         Task<IEnumerable<Personagem>> GetPersonagensByMesaAsync(int idMesa);
         Task DeleteAsync(int id);
+        Task<IEnumerable<Personagem>> GetByContaAsync(int idConta);
     }
 }

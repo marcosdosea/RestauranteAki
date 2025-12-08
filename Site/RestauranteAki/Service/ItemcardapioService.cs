@@ -78,6 +78,11 @@ namespace Service
             return context.Itemcardapios.AsNoTracking();
         }
 
+        public async Task<IEnumerable<Itemcardapio>> GetAllAsync()
+        {
+            return await context.Itemcardapios.AsNoTracking().ToListAsync();
+        }
+
         public IEnumerable<string> GetAllIngredientes()
         {
             var todosIngredientes = context.Itemcardapios.AsNoTracking()// puxa tudo do campo descrição.

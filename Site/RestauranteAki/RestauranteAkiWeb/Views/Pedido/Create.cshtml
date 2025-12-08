@@ -1,399 +1,639 @@
-﻿@model RestauranteAkiWeb.Models.NovoPedidoViewModel
-
+﻿@model RestauranteAkiWeb.Models.PedidoCreateViewModel
 @{
-    ViewData["Title"] = "Novo Pedido";
-    var mesas = ViewBag.Mesas as List<RestauranteAkiWeb.Models.MesaViewModel>;
-    var itensCardapio = ViewBag.ItensCardapio as List<RestauranteAkiWeb.Models.ItemcardapioViewModel>;
+    Layout = null; // Sem layout para garantir tela cheia total
 }
 
-<style>
-    body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-    }
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Novo Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    .main-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border: none;
-        border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    }
-
-    .item-card {
-        background: white;
-        border: 2px solid #e9ecef;
-        border-radius: 15px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        height: 100%;
-    }
-
-        .item-card:hover {
-            border-color: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+    <style>
+        :root {
+            --primary-orange: #F27022;
         }
 
-        .item-card.selected {
-            border-color: #667eea;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+        body {
+            background-color: #f8f9fa;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-            .item-card.selected .card-text {
-                color: rgba(255, 255, 255, 0.9);
+        /* MODAL FULL SCREEN (Base para as telas) */
+        .fs-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            overflow-y: auto;
+            display: none; /* Escondido por padrão */
+            flex-direction: column;
+        }
+
+            .fs-modal.active {
+                display: flex;
             }
 
-    .quantity-controls {
-        display: none;
-        align-items: center;
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    .item-card.selected .quantity-controls {
-        display: flex;
-    }
-
-    .quantity-btn {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        border: 2px solid white;
-        background: transparent;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        transition: all 0.2s ease;
-    }
-
-        .quantity-btn:hover {
+        /* HEADER */
+        .modal-header-custom {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: white;
-            color: #667eea;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-    .quantity-display {
-        background: white;
-        color: #667eea;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-weight: bold;
-        min-width: 60px;
-        text-align: center;
-    }
-
-    .mesa-select {
-        background: white;
-        border: 2px solid #e9ecef;
-        border-radius: 15px;
-        padding: 15px;
-        font-size: 16px;
-        transition: border-color 0.3s ease;
-    }
-
-        .mesa-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        .header-title {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 0;
         }
 
-    .btn-primary-custom {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        border: none;
-        padding: 12px 30px;
-        border-radius: 25px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
-    }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        /* GRID PERSONAGENS (TELA 1) */
+        .personagem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 20px;
         }
 
-    .item-image {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 10px;
-        margin-bottom: 15px;
-    }
+        .personagem-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .price-badge {
-        background: linear-gradient(45deg, #28a745, #20c997);
-        color: white;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 0.9rem;
-    }
+            .personagem-card:active {
+                background-color: #fff5f0;
+                border-color: var(--primary-orange);
+            }
 
-    .section-title {
-        color: white;
-        font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        margin-bottom: 30px;
-        text-align: center;
-    }
-</style>
+        .icon-trash {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #999;
+        }
 
-<div class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-xl-10">
-            <div class="card main-card">
-                <div class="card-header bg-transparent border-0 p-4">
-                    <h2 class="text-center mb-0" style="color: #667eea; font-weight: 700;">
-                        <i class="fas fa-utensils me-3"></i>Novo Pedido
-                    </h2>
+        .p-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .btn-add-client {
+            background-color: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+        }
+
+        /* CARDÁPIO (TELA 2) */
+        .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 15px;
+            gap: 10px;
+            background: white;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cat-pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #f0f0f0;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+            .cat-pill.active {
+                background: #333;
+                color: white;
+            }
+
+        .search-container {
+            padding: 10px 15px;
+            background: white;
+        }
+
+        .search-box {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 10px 20px;
+            width: 100%;
+            outline: none;
+        }
+
+        .menu-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+
+        .item-avatar {
+            width: 50px;
+            height: 50px;
+            background: #e0e0ff;
+            color: #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* CONTROLE DE QUANTIDADE */
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-plus-add {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--primary-orange);
+            color: var(--primary-orange);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .btn-minus {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            color: #ccc;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .qty-val {
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* FOOTER DE AÇÃO */
+        .action-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            z-index: 200;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-view-order {
+            flex: 1;
+            background: #5E5CE6;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .btn-send-order {
+            flex: 1;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .btn-disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* BOTTOM SHEET (MODAL DE BAIXO PRA CIMA) */
+        .bottom-sheet-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+            display: none;
+        }
+
+        .bottom-sheet {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            z-index: 301;
+            transition: bottom 0.3s ease-out;
+            max-height: 80%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sheet-active {
+            bottom: 0;
+        }
+
+        .sheet-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .sheet-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sheet-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="modal-select-client" class="fs-modal active">
+        <div class="modal-header-custom">
+            <button class="btn btn-link text-dark" onclick="voltarParaHub()"><i class="fa-solid fa-xmark fa-xl"></i></button>
+            <span class="header-title">Selecionar Cliente</span>
+            <div style="width: 24px;"></div>
+        </div>
+
+        <div class="text-center mt-3 mb-2">
+            <h5 class="fw-bold">Para quem é o pedido?</h5>
+        </div>
+
+        <div class="personagem-grid" id="gridPersonagens">
+            @foreach (var p in Model.Personagens)
+            {
+                <div class="personagem-card" id="personagem-@p.Id" onclick="selecionarPersonagem(@p.Id, '@p.Nome')">
+                    <i class="fa-regular fa-trash-can icon-trash" onclick="event.stopPropagation(); removerPersonagem(@p.Id)"></i>
+                    <i class="fa-regular fa-user p-icon" style="color: @p.IdentificadorCor"></i>
+                    <div class="fw-bold text-center">@p.Nome</div>
                 </div>
+            }
+        </div>
 
-                <div class="card-body p-4">
-                    @using (Html.BeginForm("Create", "Pedido", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
-                    {
-                     //   @Html.AntiForgeryToken()
+        <div style="flex:1"></div> <button class="btn-add-client" onclick="adicionarNovoCliente()">
+            <i class="fa-solid fa-circle-plus me-2"></i> Adicionar Cliente
+        </button>
+    </div>
 
-                        <input type="hidden" asp-for="IdPersonagem"/>
-                        <!-- Seleção da Mesa -->
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <h4 style="color: #667eea; margin-bottom: 20px;">
-                                    <i class="fas fa-chair me-2"></i>Selecione a Mesa
-                                </h4>
-                                <div class="form-group">
-                                    <select asp-for="IdMesa" asp-items="ViewBag.Mesas" class="form-select">
-                                        <option value="">-- Selecione uma Mesa --</option>
-                                    </select>
-                                </div>
-                            </div>
+
+    <div id="modal-select-items" class="fs-modal">
+        <div class="modal-header-custom">
+            <button class="btn btn-link text-dark" onclick="fecharCardapio()"><i class="fa-solid fa-xmark fa-xl"></i></button>
+            <span class="header-title">Novo pedido</span>
+            <div style="width: 24px;"></div>
+        </div>
+
+        <div class="categories-scroll">
+            @foreach (var cat in Model.Categorias)
+            {
+                <div class="cat-pill">@cat.NomeCategoria</div>
+            }
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Buscar item por nome...">
+        </div>
+
+        <div class="menu-list">
+            @foreach (var cat in Model.Categorias)
+            {
+                <div class="px-3 py-2 bg-light fw-bold text-muted small">@cat.NomeCategoria.ToUpper()</div>
+                @foreach (var item in cat.Itens)
+                {
+                    <div class="menu-item" data-id="@item.Id" data-name="@item.Nome" data-price="@item.Preco">
+                        <div class="item-avatar"><i class="fa-solid fa-apple-whole"></i></div>
+                        <div class="item-info">
+                            <div class="item-name">@item.Nome</div>
+                            <div class="item-price">@item.Preco.ToString("C")</div>
                         </div>
 
-                        <hr style="border-color: #667eea; margin: 40px 0;">
-
-                        <!-- Itens do Cardápio -->
-                        <div class="row">
-                            <div class="col-12">
-                                <h4 style="color: #667eea; margin-bottom: 30px;">
-                                    <i class="fas fa-list me-2"></i>Selecione os Itens
-                                </h4>
-
-                                <div class="row g-4" id="itens-cardapio">
-                                    @if (itensCardapio != null && itensCardapio.Any())
-                                    {
-                                        @for (int i = 0; i < itensCardapio.Count; i++)
-                                        {
-                                            var item = itensCardapio[i];
-                                            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                                                <div class="card item-card" data-item-id="@item.Id" onclick="toggleItem(@item.Id)">
-                                                    <div class="card-body p-3">
-                                                        @if (item.ImagemAtual != null && item.ImagemAtual.Length > 0)
-                                                        {
-                                                            <img src="/avatar-default.jpg" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="item-image bg-light d-flex align-items-center justify-content-center">
-                                                                <i class="fas fa-utensils fa-3x text-muted"></i>
-                                                            </div>
-                                                        }
-
-                                                        <h6 class="card-title fw-bold mb-2">@item.Nome</h6>
-
-                                                        @if (!string.IsNullOrEmpty(item.Descricao))
-                                                        {
-                                                            <p class="card-text small mb-2">@item.Descricao</p>
-                                                        }
-
-                                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                                            <span class="price-badge">R$ @item.PrecoUnitario.ToString("F2")</span>
-                                                            <small class="text-muted">@item.Porcao porções</small>
-                                                        </div>
-
-                                                        <div class="quantity-controls">
-                                                            <button type="button" class="quantity-btn" onclick="decreaseQuantity(@item.Id, event)">
-                                                                <i class="fas fa-minus"></i>
-                                                            </button>
-                                                            <span class="quantity-display" id="quantity-@item.Id">1</span>
-                                                            <button type="button" class="quantity-btn" onclick="increaseQuantity(@item.Id, event)">
-                                                                <i class="fas fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Campos hidden para o form -->
-                                                <input type="hidden" name="ItensCardapios[@i].ItemCardapioId" value="@item.Id" class="item-id-input" />
-                                                <input type="hidden" name="ItensCardapios[@i].Quantidade" value="0" class="quantity-input" id="input-@item.Id" />
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <div class="col-12">
-                                            <div class="alert alert-info text-center">
-                                                <i class="fas fa-info-circle me-2"></i>
-                                                Nenhum item disponível no cardápio no momento.
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
+                        <div class="qty-control" id="ctrl-@item.Id">
+                            <div class="btn-plus-add" onclick="addItem(@item.Id)">
+                                <i class="fa-solid fa-plus"></i>
                             </div>
                         </div>
+                    </div>
+                }
+            }
+        </div>
 
-                        <hr style="border-color: #667eea; margin: 40px 0;">
-
-                        <!-- Resumo e Botões -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div id="resumo-pedido" class="mb-4" style="display: none;">
-                                    <h5 style="color: #667eea;">
-                                        <i class="fas fa-receipt me-2"></i>Resumo do Pedido
-                                    </h5>
-                                    <div class="bg-light p-3 rounded" id="itens-selecionados">
-                                        <!-- Será preenchido via JavaScript -->
-                                    </div>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary-custom btn-lg me-3" id="btn-confirmar" disabled>
-                                        <i class="fas fa-check me-2"></i>Confirmar Pedido
-                                    </button>
-                                    <a href="@Url.Action("Index", "Pedido")" class="btn btn-outline-secondary btn-lg">
-                                        <i class="fas fa-times me-2"></i>Cancelar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+        <div class="action-footer" id="menu-footer" style="display:none">
+            <button class="btn-view-order" onclick="abrirResumoParcial()">
+                Ver Pedido (<span id="lbl-total-items">0</span> itens)
+            </button>
+            <button class="btn-send-order" onclick="abrirConfirmacaoEnvio()">
+                Enviar Pedido (<span id="lbl-total-price">R$ 0,00</span>)
+            </button>
         </div>
     </div>
-</div>
 
-<script>
-    let selectedItems = {};
-    let itemIndex = 0;
 
-    function toggleItem(itemId) {
-        const card = document.querySelector(`[data-item-id="${itemId}"]`);
-        const input = document.getElementById(`input-${itemId}`);
+    <div class="bottom-sheet-overlay" id="overlay-parcial" onclick="fecharResumoParcial()"></div>
+    <div class="bottom-sheet" id="sheet-parcial">
+        <div class="sheet-header">Resumo do Pedido</div>
+        <div class="sheet-body" id="lista-resumo-parcial">
+        </div>
+        <div class="sheet-footer">
+            <button class="btn btn-secondary w-100 py-3 rounded-3 fw-bold" onclick="fecharResumoParcial()">Continuar Pedindo</button>
+        </div>
+    </div>
 
-        if (selectedItems[itemId]) {
-            // Desselecionar item
-            delete selectedItems[itemId];
-            card.classList.remove('selected');
-            input.disabled = true;
-            input.value = 0;
-            document.getElementById(`quantity-${itemId}`).textContent = '1';
-        } else {
-            // Selecionar item
-            selectedItems[itemId] = 1;
-            card.classList.add('selected');
-            input.disabled = false;
-            input.value = 1;
-        }
-
-        updateForm();
-        updateResumo();
-    }
-
-    function increaseQuantity(itemId, event) {
-        event.stopPropagation();
-        if (selectedItems[itemId]) {
-            selectedItems[itemId]++;
-            document.getElementById(`quantity-${itemId}`).textContent = selectedItems[itemId];
-            document.getElementById(`input-${itemId}`).value = selectedItems[itemId];
-            updateResumo();
-        }
-    }
-
-    function decreaseQuantity(itemId, event) {
-        event.stopPropagation();
-        if (selectedItems[itemId] && selectedItems[itemId] > 1) {
-            selectedItems[itemId]--;
-            document.getElementById(`quantity-${itemId}`).textContent = selectedItems[itemId];
-            document.getElementById(`input-${itemId}`).value = selectedItems[itemId];
-            updateResumo();
-        }
-    }
-
-    function updateForm() {
-        // Atualizar índices dos campos do form
-        const container = document.getElementById('itens-cardapio');
-        const items = container.querySelectorAll('.col-12');
-
-        let index = 0;
-        items.forEach((item, i) => {
-            const itemIdInput = item.querySelector('.item-id-input');
-            const quantityInput = item.querySelector('.quantity-input');
-
-            if (!quantityInput.disabled) {
-                itemIdInput.name = `ItensCardapios[${index}].ItemCardapioId`;
-                quantityInput.name = `ItensCardapios[${index}].Quantidade`;
-                index++;
-            }
-        });
-
-        // Habilitar/desabilitar botão de confirmação
-        const btnConfirmar = document.getElementById('btn-confirmar');
-        const mesaSelect = document.querySelector('select[name="IdMesa"]');
-        const hasItems = Object.keys(selectedItems).length > 0;
-        const hasMesa = mesaSelect.value !== '';
-
-        btnConfirmar.disabled = !(hasItems && hasMesa);
-    }
-
-    function updateResumo() {
-        const resumoDiv = document.getElementById('resumo-pedido');
-        const itensDiv = document.getElementById('itens-selecionados');
-
-        if (Object.keys(selectedItems).length === 0) {
-            resumoDiv.style.display = 'none';
-            return;
-        }
-
-        resumoDiv.style.display = 'block';
-        let html = '';
-        let total = 0;
-
-        for (const itemId in selectedItems) {
-            const quantity = selectedItems[itemId];
-            const card = document.querySelector(`[data-item-id="${itemId}"]`);
-            const name = card.querySelector('.card-title').textContent;
-            const priceText = card.querySelector('.price-badge').textContent;
-            const price = parseFloat(priceText.replace('R$ ', '').replace(',', '.'));
-            const subtotal = price * quantity;
-            total += subtotal;
-
-            html += `
-                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                    <div>
-                        <strong>${name}</strong><br>
-                        <small class="text-muted">R$ ${price.toFixed(2)} x ${quantity}</small>
-                    </div>
-                    <div class="text-end">
-                        <strong>R$ ${subtotal.toFixed(2)}</strong>
-                    </div>
-                </div>
-            `;
-        }
-
-        html += `
-            <div class="d-flex justify-content-between align-items-center py-3 mt-2">
-                <h6 class="mb-0">Total:</h6>
-                <h5 class="mb-0 text-primary">R$ ${total.toFixed(2)}</h5>
+    <div class="bottom-sheet-overlay" id="overlay-envio" onclick="fecharConfirmacaoEnvio()"></div>
+    <div class="bottom-sheet" id="sheet-envio">
+        <div class="sheet-header d-flex justify-content-between">
+            <span>Confirmar Envio</span>
+            <span id="lbl-total-confirmacao" class="text-primary">R$ 0,00</span>
+        </div>
+        <div class="sheet-body">
+            <p class="text-muted mb-3">O pedido será enviado para produção.</p>
+            <div id="lista-resumo-envio" class="mb-3">
             </div>
-        `;
+        </div>
+        <div class="sheet-footer d-flex gap-2">
+            <button class="btn btn-light flex-grow-1 py-3 fw-bold border" onclick="fecharConfirmacaoEnvio()">Cancelar</button>
+            <button class="btn btn-primary flex-grow-1 py-3 fw-bold" style="background:var(--primary-orange); border:none" onclick="enviarPedidoFinal()">
+                Confirmar
+            </button>
+        </div>
+    </div>
 
-        itensDiv.innerHTML = html;
-    }
 
-    // Event listener para mudança na seleção da mesa
-    document.querySelector('select[name="IdMesa"]').addEventListener('change', function() {
-        updateForm();
-    });
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- ESTADO DA APLICAÇÃO ---
+        const idConta = @Model.IdConta;
+        let selectedPersonagemId = null;
+        let selectedPersonagemNome = "";
+        let cart = {}; // Objeto: { idItem: { qtd, nome, preco } }
+
+        // --- NAVEGAÇÃO ---
+        function voltarParaHub() {
+            window.location.href = '/Atendimento/Mesa/@Model.IdMesa';
+        }
+
+        function selecionarPersonagem(id, nome) {
+            selectedPersonagemId = id;
+            selectedPersonagemNome = nome;
+
+            // Troca de tela
+            document.getElementById('modal-select-client').classList.remove('active');
+            document.getElementById('modal-select-items').classList.add('active');
+        }
+
+        function fecharCardapio() {
+            // Volta para seleção de cliente
+            document.getElementById('modal-select-items').classList.remove('active');
+            document.getElementById('modal-select-client').classList.add('active');
+            cart = {};
+            renderCartUI();
+        }
+
+        // --- LÓGICA DE CARRINHO (+ / -) ---
+        function addItem(id) {
+            // Busca dados do DOM
+            const el = document.querySelector(`.menu-item[data-id='${id}']`);
+            const nome = el.getAttribute('data-name');
+            const preco = parseFloat(el.getAttribute('data-price').replace(',', '.'));
+
+            if (!cart[id]) {
+                cart[id] = { qtd: 0, nome: nome, preco: preco };
+            }
+            cart[id].qtd++;
+            updateItemControlUI(id);
+            updateFooterUI();
+        }
+
+        function removeItem(id) {
+            if (cart[id]) {
+                cart[id].qtd--;
+                if (cart[id].qtd <= 0) {
+                    delete cart[id];
+                }
+            }
+            updateItemControlUI(id);
+            updateFooterUI();
+        }
+
+        function updateItemControlUI(id) {
+            const container = document.getElementById(`ctrl-${id}`);
+            const qtd = cart[id] ? cart[id].qtd : 0;
+
+            if (qtd === 0) {
+                container.innerHTML = `
+                    <div class="btn-plus-add" onclick="addItem(${id})">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="btn-minus" onclick="removeItem(${id})"><i class="fa-solid fa-minus"></i></div>
+                    <div class="qty-val">${qtd}</div>
+                    <div class="btn-plus-add" onclick="addItem(${id})"><i class="fa-solid fa-plus"></i></div>
+                `;
+            }
+        }
+
+        function renderCartUI() {
+             document.querySelectorAll('.menu-item').forEach(item => {
+                 updateItemControlUI(item.getAttribute('data-id'));
+             });
+             updateFooterUI();
+        }
+
+        function updateFooterUI() {
+            let totalQtd = 0;
+            let totalPrice = 0;
+
+            for (const id in cart) {
+                totalQtd += cart[id].qtd;
+                totalPrice += (cart[id].qtd * cart[id].preco);
+            }
+
+            const footer = document.getElementById('menu-footer');
+            if (totalQtd > 0) {
+                footer.style.display = 'flex';
+                document.getElementById('lbl-total-items').innerText = totalQtd;
+                document.getElementById('lbl-total-price').innerText = totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                document.getElementById('lbl-total-confirmacao').innerText = totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            } else {
+                footer.style.display = 'none';
+            }
+        }
+
+        // --- MODAIS INFERIORES (BOTTOM SHEETS) ---
+        function abrirResumoParcial() {
+            renderListaResumo('lista-resumo-parcial');
+            document.getElementById('overlay-parcial').style.display = 'block';
+            setTimeout(() => document.getElementById('sheet-parcial').classList.add('sheet-active'), 10);
+        }
+
+        function fecharResumoParcial() {
+            document.getElementById('sheet-parcial').classList.remove('sheet-active');
+            setTimeout(() => document.getElementById('overlay-parcial').style.display = 'none', 300);
+        }
+
+        function abrirConfirmacaoEnvio() {
+            renderListaResumo('lista-resumo-envio');
+            document.getElementById('overlay-envio').style.display = 'block';
+            setTimeout(() => document.getElementById('sheet-envio').classList.add('sheet-active'), 10);
+        }
+
+        function fecharConfirmacaoEnvio() {
+            document.getElementById('sheet-envio').classList.remove('sheet-active');
+            setTimeout(() => document.getElementById('overlay-envio').style.display = 'none', 300);
+        }
+
+        function renderListaResumo(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            for (const id in cart) {
+                const item = cart[id];
+                const totalItem = item.qtd * item.preco;
+                container.innerHTML += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <div><span class="fw-bold">${item.qtd}x</span> ${item.nome}</div>
+                        <div>${totalItem.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // --- Chamadas de API 
+        async function adicionarNovoCliente() {
+            try {
+                const response = await fetch(`/api/AtendimentoApi/contas/${idConta}/personagens`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                // const novoPersonagem = await response.json();
+                // renderizarNovoPersonagem(novoPersonagem);
+            } catch (error) {
+                console.error('Erro ao adicionar personagem:', error);
+            }
+            window.location.reload(); // Recarregar para atualizar a lista (por enquanto)
+        }
+
+        async function removerPersonagem(id) {
+             if (!confirm('Deseja realmente remover este personagem?')) return;
+
+             try {
+                const response = await fetch(`/api/AtendimentoApi/personagens/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                document.getElementById(`personagem-${id}`).remove();
+            } catch (error) {
+                console.error('Erro ao remover personagem:', error);
+            }
+        }
+
+        // Enviar Pedido Final
+        async function enviarPedidoFinal() {
+            const payload = {
+                idConta: idConta,
+                idPersonagem: selectedPersonagemId,
+                itens: []
+            };
+
+            for (const id in cart) {
+                payload.itens.push({ idItem: parseInt(id), quantidade: cart[id].qtd });
+            }
+
+            try {
+                const response = await fetch('/Pedido/SalvarPedido', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("Pedido enviado com sucesso!");
+                    voltarParaHub();
+                } else {
+                    alert("Erro ao enviar pedido.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Erro de conexão.");
+            }
+        }
+
+    </script>
+</body>
+</html>

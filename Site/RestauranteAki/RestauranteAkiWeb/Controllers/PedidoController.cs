@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RestauranteAkiWeb.Models;
+using Service;
 using System.Threading.Tasks;
 
 namespace RestauranteAkiWeb.Controllers
@@ -17,14 +18,16 @@ namespace RestauranteAkiWeb.Controllers
         private readonly IMesaService mesaService;
         private readonly IItemcardapioService itemcardapioService;
         private readonly IPersonagemService personagemService;
+        private readonly IContumService contaService;
         private readonly IMapper mapper;
 
-        public PedidoController(IPedidoService pedidoService, IMesaService mesaService, IItemcardapioService itemcardapioService, IPersonagemService personagemService, IMapper mapper)
+        public PedidoController(IPedidoService pedidoService, IMesaService mesaService, IItemcardapioService itemcardapioService, IPersonagemService personagemService, IContumService contaService, IMapper mapper)
         {
             this.pedidoService = pedidoService;
             this.mesaService = mesaService;
             this.itemcardapioService = itemcardapioService;
             this.personagemService = personagemService;
+            this.contaService = contaService;
             this.mapper = mapper;
         }
 
@@ -46,39 +49,89 @@ namespace RestauranteAkiWeb.Controllers
         }
 
         // GET: PedidoController/Create
+        //[HttpGet]
+        //public ActionResult Create([FromQuery] int personagemId)
+        //{
+        //    var mesas = mesaService.GetAll();
+        //    var itensCardapio = itemcardapioService.GetAll().ToList();
+
+        //    ViewBag.Mesas = mesas.Select(x => new SelectListItem
+        //    {
+        //        Text = "MESA " + x.Id.ToString(),
+        //        Value = x.Id.ToString()
+        //    }).ToList();
+        //    ViewBag.ItensCardapio = mapper.Map<List<ItemcardapioViewModel>>(itensCardapio);
+
+        //    return View(new NovoPedidoViewModel
+        //    {
+        //        IdPersonagem = personagemId,
+        //    });
+        //}
+
+        // GET: PedidoController/Create
         [HttpGet]
-        public ActionResult Create([FromQuery] int personagemId)
+        public async Task<IActionResult> Create(int idMesa)
         {
-            var mesas = mesaService.GetAll();
-            var itensCardapio = itemcardapioService.GetAll().ToList();
+            var conta = await contaService.GetOrCreateContaAtiva(idMesa);
+            var personagens = await personagemService.GetByContaAsync(conta.Id);
+            var itens = await itemcardapioService.GetAllAsync();
 
-            ViewBag.Mesas = mesas.Select(x => new SelectListItem
+            var viewModel = new PedidoCreateViewModel
             {
-                Text = "MESA " + x.Id.ToString(),
-                Value = x.Id.ToString()
-            }).ToList();
-            ViewBag.ItensCardapio = mapper.Map<List<ItemcardapioViewModel>>(itensCardapio);
+                IdConta = conta.Id,
+                IdMesa = conta.IdMesa,
+                Personagens = personagens
+                    .Select(p => new PersonagemSelectionViewModel
+                    {
+                        Id = p.Id,
+                        Nome = $"Cliente {p.Id}",
+                    })
+                    .ToList(),
+                Categorias = new List<CategoriaCardapioViewModel>
+                {
+                    new CategoriaCardapioViewModel
+                    {
+                        NomeCategoria = "Hambúrguer",
+                        Itens = itens
+                            .Where(i => i.Categoria == 1)
+                            .Select(i => new ItemCardapioSelectionViewModel
+                            {
+                                Id = i.Id,
+                                Nome = i.Nome,
+                                Preco = (decimal)i.PrecoUnitario,
+                                Descricao = i.Descricao
+                            })
+                            .ToList()
+                    },
 
-            return View(new NovoPedidoViewModel
-            {
-                IdPersonagem = personagemId,
-            });
+                    new CategoriaCardapioViewModel
+                    {
+                        NomeCategoria = "Pizza",
+                        Itens = itens
+                            .Where(i => i.Categoria == 3)
+                            .Select(i => new ItemCardapioSelectionViewModel
+                            {
+                                Id = i.Id,
+                                Nome = i.Nome,
+                                Preco = (decimal)i.PrecoUnitario,
+                                Descricao = i.Descricao
+                            })
+                            .ToList()
+                    },
+                }
+            };
+
+            return View(viewModel);
         }
 
-        // POST: PedidoController/Create
-        [Authorize]
-        [HttpPost, ActionName("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(NovoPedidoViewModel pedidoViewModel)
+        [HttpPost]
+        public async Task<IActionResult> SalvarPedido([FromBody] PedidoSubmissionDto dto)
         {
-            if (ModelState.IsValid)
-            {
-                var emailGarcom = User.Identity.Name;
-                var pedido = mapper.Map<NovoPedidoDto>(pedidoViewModel);
-                pedido.EmailPessoa = emailGarcom;
-                await pedidoService.IniciarPedido(pedido);
-            }
-            return RedirectToAction(nameof(Index));
+            var sucesso = await pedidoService.CriarPedidoAsync(dto);
+            if (sucesso)
+                return Ok(new { success = true, message = "Pedido enviado!" });
+
+            return BadRequest(new { success = false, message = "Erro ao processar pedido." });
         }
 
         // GET: PedidoController/Edit/1

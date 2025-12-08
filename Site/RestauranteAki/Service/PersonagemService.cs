@@ -61,5 +61,12 @@ namespace Service
 
             return personagens;
         }
+
+        public async Task<IEnumerable<Personagem>> GetByContaAsync(int idConta)
+        {
+            return await context.Personagems
+                .Where(p => p.IdConta == idConta)
+                .ToListAsync();
+        }
     }
 }

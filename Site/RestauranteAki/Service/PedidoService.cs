@@ -73,6 +73,65 @@ namespace Service
             return context.Pedidos.AsNoTracking();
         }
 
+        public async Task<bool> CriarPedidoAsync(PedidoSubmissionDto dto)
+        {
+            if (dto == null || dto.Itens == null || !dto.Itens.Any())
+                return false;
+
+            using var transaction = await context.Database.BeginTransactionAsync();
+            try
+            {
+                var conta = await context.Conta
+                    .FirstOrDefaultAsync(c => c.Id == dto.IdConta);
+
+                if (conta == null) return false;
+
+                // Criar o Cabeçalho do Pedido
+                var novoPedido = new Pedido
+                {
+                    IdConta = dto.IdConta,
+                    IdMesa = conta.IdMesa,
+                    IdPersonagem = dto.IdPersonagem,
+                    Status = "S",
+                    IdPessoa = 1
+                };
+
+                context.Pedidos.Add(novoPedido);
+                await context.SaveChangesAsync();
+
+                // Processar e Salvar os Itens
+                foreach (var itemInput in dto.Itens)
+                {
+                    var itemCardapio = await context.Itemcardapios
+                        .FirstOrDefaultAsync(i => i.Id == itemInput.IdItem);
+
+                    if (itemCardapio != null)
+                    {
+                        var novoItem = new PedidoItemcardapio
+                        {
+                            IdPedido = novoPedido.Id,
+                            IdItemCardapio = itemCardapio.Id,
+                            Quantidade = itemInput.Quantidade,
+                            // PrecoUnitario = itemCardapio.PrecoUnitario
+                        };
+
+                        context.PedidoItemcardapios.Add(novoItem);
+                    }
+                }
+
+                await context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao criar pedido: {ex.Message}");
+                await transaction.RollbackAsync();
+                return false;
+            }
+        }
+
         public async Task<int> IniciarPedido(NovoPedidoDto novoPedido)
         {
             var mesa = await context.Mesas.AnyAsync(m => m.Id == novoPedido.IdMesa);
