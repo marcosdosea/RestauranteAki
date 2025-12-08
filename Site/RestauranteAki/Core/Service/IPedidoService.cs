@@ -6,7 +6,6 @@ namespace Core.Service
     {
         int Create(Pedido pedido);
         Task<bool> CriarPedidoAsync(PedidoSubmissionDto dto);
-        Task<int> IniciarPedido(NovoPedidoDto novoPedido);
         void Edit(Pedido pedido);
         void Delete(int id);
         Pedido? Get(int id);

@@ -10,8 +10,6 @@ namespace RestauranteAkiWeb.Mappers
         public PedidoProfile()
         {
             CreateMap<PedidoViewModel, Pedido>().ReverseMap();
-            CreateMap<NovoPedidoViewModel, NovoPedidoDto>().ReverseMap();
-            CreateMap<ItemCardapioQuantidadeDto, ItemCardapioQuantidadeViewModel>().ReverseMap();
         }
     }
 }

@@ -27,20 +27,14 @@ namespace RestauranteAkiWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Mesa(int id) // ID da Mesa
+        public async Task<IActionResult> Mesa(int id)
         {
             var conta = await contaService.GetContaCompletaPorMesaAsync(id);
-
-            // MOCK PARA EXEMPLO (Substitua pelo retorno do seu service acima)
-            //var conta = new { Id = 100, IdMesa = id, Valor = 214.50m, Pedidos = new List<dynamic>(), Personagems = new List<dynamic>() };
-
             if (conta == null) return RedirectToAction("Index");
 
-            // 2. Mapeamento para o ViewModel
-            // Regra de negócio simples para dividir o valor (ajuste conforme sua regra real)
-            decimal total = (decimal)conta.Valor;
-            decimal subtotal = total / 1.1m;
-            decimal servico = total - subtotal;
+            decimal subtotal = (decimal)conta.Valor;
+            decimal servico = subtotal * 0.1m;
+            decimal total = subtotal + servico;
 
             var viewModel = new MesaHubViewModel
             {
@@ -51,7 +45,6 @@ namespace RestauranteAkiWeb.Controllers
                 Servico = servico
             };
 
-            // 3. Função auxiliar local para mapear status do banco para visual
             (string texto, string cor) ObterStatusVisual(string statusDb)
             {
                 return statusDb switch
@@ -63,8 +56,6 @@ namespace RestauranteAkiWeb.Controllers
                 };
             }
 
-            // 4. Agrupamento: Itens da Mesa (IdPersonagem NULL)
-            // Nota: Adapte "conta.Pedidos" para a estrutura real que seu service retorna
             // Busca todos os pedidos da mesa (IdPersonagem = -1)
             var pedidosMesa = conta.Pedidos
                 .Where(pedido => pedido.IdPersonagem == -1)
@@ -99,7 +90,7 @@ namespace RestauranteAkiWeb.Controllers
             }
 
 
-            // 5. Agrupamento: Itens por Cliente
+            // Busca pedidos associados a personagens
             var pedidosComItens = conta.Pedidos
                 .Where(p => conta.Personagems.Select(x => x.Id).Contains(p.IdPersonagem))
                 .Select(p => new
@@ -149,21 +140,6 @@ namespace RestauranteAkiWeb.Controllers
                     Itens = itensCliente
                 });
             }
-
-            // --- DADOS FAKE APENAS PARA VOCÊ VER A TELA FUNCIONANDO (Remova ao integrar o Service) ---
-            //viewModel.GruposPedidos.Add(new HubGrupoPedidoViewModel
-            //{
-            //    Titulo = "Itens da mesa",
-            //    IdPersonagem = null,
-            //    Itens = new List<HubItemExtratoViewModel> {
-            //    new HubItemExtratoViewModel { Quantidade = 1, NomeItem = "Chope Brahma", StatusTexto = "Entregue", StatusCorCss = "color-green" },
-            //    new HubItemExtratoViewModel { Quantidade = 1, NomeItem = "Picanha Fatiada", StatusTexto = "Em preparo", StatusCorCss = "color-orange" },
-            //    new HubItemExtratoViewModel { Quantidade = 1, NomeItem = "Caipirinha de morango com dose extra", StatusTexto = "Pronto", StatusCorCss = "color-purple" }
-            //}
-            //});
-            //viewModel.GruposPedidos.Add(new HubGrupoPedidoViewModel { Titulo = "Cliente 2", IdPersonagem = 2 });
-            //viewModel.GruposPedidos.Add(new HubGrupoPedidoViewModel { Titulo = "Cliente 3", IdPersonagem = 3 });
-            // -----------------------------------------------------------------------------------------
 
             return View(viewModel);
         }
