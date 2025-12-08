@@ -132,5 +132,15 @@ namespace Service
                 throw new Exception("Não foi possível criar ou obter nova conta.", ex);
             }
         }
+
+        public async Task<Contum?> GetContaCompletaPorMesaAsync(int idMesa)
+        {
+            return await context.Conta
+                .Include(c => c.Pedidos)
+                    .ThenInclude(p => p.PedidoItemcardapios)
+                        .ThenInclude(ip => ip.IdItemCardapioNavigation)
+                .Include(c => c.Personagems)
+                .FirstOrDefaultAsync(c => c.IdMesa == idMesa && c.Status == "A");
+        }
     }
 }
