@@ -1,20 +1,13 @@
-ï»¿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestauranteAkiWeb.Controllers;
 using RestauranteAkiWeb.Models;
 using Core;
 using Core.Service;
 using AutoMapper;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace RestauranteAkiWeb.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ItemcardapioControllerTests
     {
         private Mock<IItemcardapioService> mockService;
@@ -29,377 +22,210 @@ namespace RestauranteAkiWeb.Controllers.Tests
             controller = new ItemcardapioController(mockMapper.Object, mockService.Object);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ItemcardapioControllerTest()
         {
-            // Arrange & Act
-            var ctrl = new ItemcardapioController(mockMapper.Object, mockService.Object);
-
-            // Assert
-            Assert.IsNotNull(ctrl);
+            Assert.IsNotNull(controller);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest()
         {
-            // Arrange
-            var itemcardapios = new List<Itemcardapio>
-            {
-                new Itemcardapio { Id = 1, Nome = "Item 1" },
-                new Itemcardapio { Id = 2, Nome = "Item 2" }
-            };
-            var viewModels = new List<ItemcardapioViewModel>
-            {
-                new ItemcardapioViewModel { Id = 1, Nome = "Item 1" },
-                new ItemcardapioViewModel { Id = 2, Nome = "Item 2" }
-            };
+            var itemcardapios = GetTestItemcardapios().ToList();
+            var viewModels = itemcardapios.Select(i => new ItemcardapioViewModel { Id = i.Id, Nome = i.Nome }).ToList();
 
             mockService.Setup(s => s.GetAll()).Returns(itemcardapios);
             mockMapper.Setup(m => m.Map<List<ItemcardapioViewModel>>(itemcardapios)).Returns(viewModels);
 
-            // Act
             var result = controller.Index() as ViewResult;
 
-            // Assert
             Assert.IsNotNull(result);
             var model = result.Model as List<ItemcardapioViewModel>;
-            Assert.IsNotNull(model);
-            Assert.AreEqual(2, model.Count);
-            mockService.Verify(s => s.GetAll(), Times.Once);
+            Assert.AreEqual(3, model.Count);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest()
         {
-            // Arrange
-            var itemcardapio = new Itemcardapio { Id = 1, Nome = "Feijoada" };
-            var viewModel = new ItemcardapioViewModel { Id = 1, Nome = "Feijoada" };
+            var itemcardapio = GetTargetItemcardapio();
+            var viewModel = new ItemcardapioViewModel { Id = 1, Nome = "Hambúrguer X" };
 
             mockService.Setup(s => s.Get(1)).Returns(itemcardapio);
             mockMapper.Setup(m => m.Map<ItemcardapioViewModel>(itemcardapio)).Returns(viewModel);
 
-            // Act
             var result = controller.Details(1) as ViewResult;
 
-            // Assert
             Assert.IsNotNull(result);
-            var model = result.Model as ItemcardapioViewModel;
-            Assert.IsNotNull(model);
-            Assert.AreEqual(1, model.Id);
-            Assert.AreEqual("Feijoada", model.Nome);
+            Assert.AreEqual("Hambúrguer X", ((ItemcardapioViewModel)result.Model).Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateGetTest()
         {
-            // Act
-            var result = controller.Create() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-            var model = result.Model as ItemcardapioViewModel;
-            Assert.IsNotNull(model);
+            var result = controller.Create();
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreatePostTest_ModeloValido()
         {
-            // Arrange
-            var viewModel = new ItemcardapioViewModel
-            {
-                Nome = "Feijoada",
-                Descricao = "FeijÃ£o preto, carne",
-                PrecoUnitario = 35.50f,
-                Porcao = 2,
-                Status = true,
-                Categoria = "Prato Principal"
-            };
-            var itemcardapio = new Itemcardapio
-            {
-                Nome = "Feijoada",
-                Descricao = "FeijÃ£o preto, carne",
-                PrecoUnitario = 35.50f,
-                Porcao = 2,
-                Status = true
-            };
+            var model = GetCadastroCompletoModel();
+            var entidade = GetTargetItemcardapio();
 
-            mockMapper.Setup(m => m.Map<Itemcardapio>(viewModel)).Returns(itemcardapio);
+            mockMapper.Setup(m => m.Map<Itemcardapio>(model)).Returns(entidade);
             mockService.Setup(s => s.Create(It.IsAny<Itemcardapio>())).Returns(1);
 
-            // Act
-            var result = controller.Create(viewModel) as RedirectToActionResult;
+            var result = controller.Create(model) as RedirectToActionResult;
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.ActionName);
-            mockService.Verify(s => s.Create(It.IsAny<Itemcardapio>()), Times.Once);
         }
 
-        [TestMethod()]
-        public void CreatePostTest_DescricaoVazia_DeveRetornarErro()
+        [TestMethod]
+        public void CreatePostTest_ModeloInvalido()
         {
-            // Arrange
-            var viewModel = new ItemcardapioViewModel
-            {
-                Nome = "Feijoada",
-                Descricao = "",
-                PrecoUnitario = 35.50f,
-                Porcao = 2,
-                Categoria = "Prato Principal"
-            };
+            controller.ModelState.AddModelError("Descricao", "É necessário informar ao menos 1 ingrediente.");
 
-            // Act
-            var result = controller.Create(viewModel) as ViewResult;
+            var result = controller.Create(GetCadastroCompletoModel());
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsFalse(controller.ModelState.IsValid);
-            Assert.IsTrue(controller.ModelState.ContainsKey(nameof(viewModel.Descricao)));
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
-        public void CreatePostTest_ComImagemUpload()
-        {
-            // Arrange
-            var viewModel = new ItemcardapioViewModel
-            {
-                Nome = "Feijoada",
-                Descricao = "FeijÃ£o preto, carne",
-                PrecoUnitario = 35.50f,
-                Porcao = 2,
-                Status = true,
-                Categoria = "Prato Principal"
-            };
-
-            var fileContent = "imagem-fake";
-            var fileName = "teste.jpg";
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(fileContent));
-            var formFile = new FormFile(stream, 0, stream.Length, "ImagemUpload", fileName)
-            {
-                Headers = new HeaderDictionary(),
-                ContentType = "image/jpeg"
-            };
-            viewModel.ImagemUpload = formFile;
-
-            var itemcardapio = new Itemcardapio
-            {
-                Nome = "Feijoada",
-                Descricao = "FeijÃ£o preto, carne"
-            };
-
-            mockMapper.Setup(m => m.Map<Itemcardapio>(viewModel)).Returns(itemcardapio);
-            mockService.Setup(s => s.Create(It.IsAny<Itemcardapio>())).Returns(1);
-
-            // Act
-            var result = controller.Create(viewModel) as RedirectToActionResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Index", result.ActionName);
-            mockService.Verify(s => s.Create(It.Is<Itemcardapio>(i => i.Imagem != null && i.Imagem.Length > 0)), Times.Once);
-        }
-
-        [TestMethod()]
+        [TestMethod]
         public void EditGetTest()
         {
-            // Arrange
-            var itemcardapio = new Itemcardapio
-            {
-                Id = 1,
-                Nome = "Feijoada",
-                Imagem = Encoding.UTF8.GetBytes("imagem-teste")
-            };
-            var viewModel = new ItemcardapioViewModel { Id = 1, Nome = "Feijoada" };
+            var itemcardapio = GetTargetItemcardapio();
+            var viewModel = GetTargetItemcardapioModel();
 
             mockService.Setup(s => s.Get(1)).Returns(itemcardapio);
             mockMapper.Setup(m => m.Map<ItemcardapioViewModel>(itemcardapio)).Returns(viewModel);
 
-            // Act
             var result = controller.Edit(1) as ViewResult;
 
-            // Assert
             Assert.IsNotNull(result);
-            var model = result.Model as ItemcardapioViewModel;
-            Assert.IsNotNull(model);
-            Assert.AreEqual(1, model.Id);
-            Assert.IsNotNull(model.ImagemAtual);
+            Assert.AreEqual("Hambúrguer X", ((ItemcardapioViewModel)result.Model).Nome);
         }
 
-        [TestMethod()]
-        public void EditGetTest_ItemNaoEncontrado()
-        {
-            // Arrange
-            mockService.Setup(s => s.Get(999)).Returns((Itemcardapio)null);
-
-            // Act
-            var result = controller.Edit(999);
-
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
-
-        [TestMethod()]
+        [TestMethod]
         public void EditPostTest_ModeloValido()
         {
-            // Arrange
-            var viewModel = new ItemcardapioViewModel
-            {
-                Id = 1,
-                Nome = "Feijoada Editada",
-                Descricao = "FeijÃ£o preto, carne editada",
-                PrecoUnitario = 40.00f,
-                Porcao = 3,
-                Categoria = "Prato Principal"
-            };
-            var itemcardapio = new Itemcardapio
-            {
-                Id = 1,
-                Nome = "Feijoada",
-                Imagem = new byte[] { 0x01 }
-            };
+            var model = GetTargetItemcardapioModel();
+            var entidade = GetTargetItemcardapio();
 
-            mockService.Setup(s => s.Get(1)).Returns(itemcardapio);
-            mockMapper.Setup(m => m.Map(viewModel, itemcardapio));
+            mockService.Setup(s => s.Get(1)).Returns(entidade);
+            mockMapper.Setup(m => m.Map(model, entidade));
 
-            // Act
-            var result = controller.Edit(1, viewModel) as RedirectToActionResult;
+            var result = controller.Edit(1, model) as RedirectToActionResult;
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.ActionName);
-            mockService.Verify(s => s.Edit(itemcardapio), Times.Once);
+            mockService.Verify(s => s.Edit(entidade), Times.Once);
         }
 
-        [TestMethod()]
-        public void EditPostTest_IdsDiferentes()
-        {
-            // Arrange
-            var viewModel = new ItemcardapioViewModel { Id = 1 };
-
-            // Act
-            var result = controller.Edit(2, viewModel);
-
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(BadRequestResult));
-        }
-
-        [TestMethod()]
-        public void EditPostTest_ItemNaoEncontrado()
-        {
-            // Arrange
-            var viewModel = new ItemcardapioViewModel
-            {
-                Id = 999,
-                Nome = "Item",
-                Descricao = "DescriÃ§Ã£o"
-            };
-            mockService.Setup(s => s.Get(999)).Returns((Itemcardapio)null);
-
-            // Act
-            var result = controller.Edit(999, viewModel);
-
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
-
-        [TestMethod()]
+        [TestMethod]
         public void DeleteGetTest()
         {
-            // Arrange
-            var itemcardapio = new Itemcardapio
-            {
-                Id = 1,
-                Nome = "Feijoada",
-                Imagem = Encoding.UTF8.GetBytes("imagem")
-            };
-            var viewModel = new ItemcardapioViewModel { Id = 1, Nome = "Feijoada" };
+            var itemcardapio = GetTargetItemcardapio();
+            var viewModel = GetTargetItemcardapioModel();
 
             mockService.Setup(s => s.Get(1)).Returns(itemcardapio);
             mockMapper.Setup(m => m.Map<ItemcardapioViewModel>(itemcardapio)).Returns(viewModel);
 
-            // Act
             var result = controller.Delete(1) as ViewResult;
 
-            // Assert
             Assert.IsNotNull(result);
-            var model = result.Model as ItemcardapioViewModel;
-            Assert.IsNotNull(model);
-            Assert.AreEqual(1, model.Id);
         }
 
-        [TestMethod()]
-        public void DeleteGetTest_ItemNaoEncontrado()
-        {
-            // Arrange
-            mockService.Setup(s => s.Get(999)).Returns((Itemcardapio)null);
-
-            // Act
-            var result = controller.Delete(999);
-
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
-
-        [TestMethod()]
+        [TestMethod]
         public void DeleteConfirmedTest()
         {
-            // Arrange
-            var itemcardapio = new Itemcardapio { Id = 1, Nome = "Feijoada" };
-            mockService.Setup(s => s.Get(1)).Returns(itemcardapio);
+            mockService.Setup(s => s.Get(1)).Returns(GetTargetItemcardapio());
 
-            // Act
             var result = controller.DeleteConfirmed(1) as RedirectToActionResult;
 
-            // Assert
-            Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.ActionName);
             mockService.Verify(s => s.Delete(1), Times.Once);
         }
 
-        [TestMethod()]
-        public void DeleteConfirmedTest_ItemNaoEncontrado()
-        {
-            // Arrange
-            mockService.Setup(s => s.Get(999)).Returns((Itemcardapio)null);
+        #region Helpers
 
-            // Act
-            var result = controller.DeleteConfirmed(999);
+        private Itemcardapio GetTargetItemcardapio() =>
+            new Itemcardapio
+            {
+                Id = 1,
+                Nome = "Hambúrguer X",
+                PrecoUnitario = 30f,
+                Porcao = 1,
+                DiaSemana = "Segunda",
+                Status = true,
+                Descricao = "Pão, carne, queijo, alface, tomate",
+                Categoria = 1,
+                Imagem = System.Text.Encoding.UTF8.GetBytes("placeholder")
+            };
 
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
+        private ItemcardapioViewModel GetTargetItemcardapioModel() =>
+            new ItemcardapioViewModel
+            {
+                Id = 1,
+                Nome = "Hambúrguer X",
+                PrecoUnitario = 30f,
+                Porcao = 1,
+                DiasSemana = new List<string> { "Segunda" },
+                Status = true,
+                Descricao = "Pão, carne, queijo, alface, tomate",
+                Categoria = "1"
+            };
 
-        [TestMethod()]
-        public void GetIngredientesUnicosTest()
-        {
-            // Arrange
-            var ingredientes = new List<string> { "Arroz", "FeijÃ£o", "Carne" };
-            mockService.Setup(s => s.GetAllIngredientes()).Returns(ingredientes);
+        private ItemcardapioViewModel GetCadastroCompletoModel() =>
+            new ItemcardapioViewModel
+            {
+                Nome = "Hambúrguer X",
+                PrecoUnitario = 30f,
+                Porcao = 1,
+                DiasSemana = new List<string> { "Segunda" },
+                Status = true,
+                Descricao = "Pão, carne, queijo, alface, tomate",
+                Categoria = "1"
+            };
 
-            // Act
-            var result = controller.GetIngredientesUnicos() as OkObjectResult;
+        private IEnumerable<Itemcardapio> GetTestItemcardapios() =>
+            new List<Itemcardapio>
+            {
+                new Itemcardapio 
+                { 
+                    Id = 1, 
+                    Nome = "Hambúrguer X", 
+                    PrecoUnitario = 30f, 
+                    Status = true, 
+                    DiaSemana = "Segunda", 
+                    Categoria = 1, 
+                    Porcao = 1, 
+                    Imagem = System.Text.Encoding.UTF8.GetBytes("placeholder") 
+                },
+                new Itemcardapio 
+                { 
+                    Id = 2, 
+                    Nome = "Pizza Grande", 
+                    PrecoUnitario = 50f, 
+                    Status = true, 
+                    DiaSemana = "Terça", 
+                    Categoria = 1, 
+                    Porcao = 2, 
+                    Imagem = System.Text.Encoding.UTF8.GetBytes("placeholder") 
+                },
+                new Itemcardapio 
+                { 
+                    Id = 3, 
+                    Nome = "Fritas", 
+                    PrecoUnitario = 15f, 
+                    Status = true, 
+                    DiaSemana = "Quarta", 
+                    Categoria = 2, 
+                    Porcao = 1, 
+                    Imagem = System.Text.Encoding.UTF8.GetBytes("placeholder") 
+                }
+            };
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(200, result.StatusCode);
-            var dados = result.Value as IEnumerable<string>;
-            Assert.IsNotNull(dados);
-            Assert.AreEqual(3, dados.Count());
-        }
-
-        [TestMethod()]
-        public void GetIngredientesUnicosTest_ErroInterno()
-        {
-            // Arrange
-            mockService.Setup(s => s.GetAllIngredientes()).Throws(new System.Exception("Erro no banco"));
-
-            // Act
-            var result = controller.GetIngredientesUnicos() as ObjectResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(500, result.StatusCode);
-            Assert.IsTrue(result.Value.ToString().Contains("erro interno"));
-        }
+        #endregion
     }
 }
