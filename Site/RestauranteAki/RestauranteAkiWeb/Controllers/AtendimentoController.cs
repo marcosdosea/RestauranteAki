@@ -30,7 +30,10 @@ namespace RestauranteAkiWeb.Controllers
         public async Task<IActionResult> Mesa(int id)
         {
             var conta = await contaService.GetContaCompletaPorMesaAsync(id);
-            if (conta == null) return RedirectToAction("Index");
+            if (conta == null)
+            {
+                conta = await contaService.GetOrCreateContaAtiva(id);
+            }
 
             decimal subtotal = (decimal)conta.Valor;
             decimal servico = subtotal * 0.1m;

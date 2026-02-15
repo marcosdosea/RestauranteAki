@@ -93,7 +93,7 @@ namespace Service
                     IdMesa = conta.IdMesa,
                     IdPersonagem = dto.IdPersonagem,
                     Status = "S",
-                    IdPessoa = 1
+                    IdPessoa = 2  // Corrigir para pegar o id da pessoa logada (ainda não implementado)
                 };
 
                 context.Pedidos.Add(novoPedido);
