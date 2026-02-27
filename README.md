@@ -43,9 +43,19 @@ Com uma arquitetura baseada em Razor Pages (.NET) e frontend dinâmico com JavaS
 
 ## 4. Links Úteis 🔗
 
-- [Vídeo de Apresentação (em breve)](https://github.com/RestauranteAki)
-- [Manual do Usuário (em breve)](https://github.com/RestauranteAki)
-- [Repositório GitHub](https://github.com/RestauranteAki)
+<p align="center">
+  <a href="https://www.youtube.com/shorts/302Cg21CG_A" target="_blank">
+    <img src="https://img.shields.io/badge/🎥%20Vídeo%20de%20Apresentação-Assistir-red?style=for-the-badge">
+  </a>
+
+  <a href="https://docs.google.com/presentation/d/1FKyfga7mJVyifUOovO7IRHXGza3Pwrf5/edit?slide=id.p1#slide=id.p1" target="_blank">
+    <img src="https://img.shields.io/badge/📘%20Manual%20do%20Usuário-Acessar-blue?style=for-the-badge">
+  </a>
+
+  <a href="https://github.com/RestauranteAki" target="_blank">
+    <img src="https://img.shields.io/badge/💻%20Repositório%20GitHub-Acessar-black?style=for-the-badge">
+  </a>
+</p>
 
 ---
 
