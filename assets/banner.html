@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RestauranteAki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght=400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #0f0f12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .logo-container {
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .logo-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 96px;
+      line-height: 1;
+      letter-spacing: 4px;
+      display: inline-block;
+    }
+
+    .part-restaurante {
+      color: #FF5722;
+      text-shadow:
+        0 0 30px rgba(255, 87, 34, 0.6),
+        0 0 60px rgba(255, 87, 34, 0.3);
+      animation: glowOrange 2.5s ease-in-out infinite alternate;
+    }
+
+    .part-aki {
+      color: #FF9800;
+      text-shadow:
+        0 0 30px rgba(255, 152, 0, 0.6),
+        0 0 60px rgba(255, 152, 0, 0.3);
+      animation: glowAmber 2.5s ease-in-out infinite alternate;
+    }
+
+    .tagline {
+      margin-top: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #c8a87a;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: slideUp 0.8s ease 0.6s forwards;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #FF5722, #FF9800, transparent);
+      margin: 10px auto 0;
+      opacity: 0;
+      animation: slideUp 0.8s ease 0.9s forwards;
+    }
+
+    @keyframes glowOrange {
+      from { text-shadow: 0 0 20px rgba(255, 87, 34, 0.5), 0 0 40px rgba(255, 87, 34, 0.2); }
+      to   { text-shadow: 0 0 40px rgba(255, 87, 34, 0.9), 0 0 80px rgba(255, 87, 34, 0.5); }
+    }
+
+    @keyframes glowAmber {
+      from { text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2); }
+      to   { text-shadow: 0 0 40px rgba(255, 152, 0, 0.9), 0 0 80px rgba(255, 152, 0, 0.5); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container">
+    <div class="logo-title">
+      <span class="part-restaurante">RESTAURANTE</span><span class="part-aki">AKI</span>
+    </div>
+    <div class="divider"></div>
+    <p class="tagline"></p>
+  </div>
+</body>
+</html>
