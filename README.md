@@ -1,4 +1,6 @@
-# RestauranteAki
+<p align="center">
+  <img src="./assets/banner.png" alt="RestauranteAki" width="100%">
+</p>
 
 ## Sumário
 
