@@ -58,7 +58,7 @@ Com uma arquitetura baseada em Razor Pages (.NET) e frontend dinâmico com JavaS
 
   <!-- BOTÃO REPOSITÓRIO -->
   <a href="https://github.com/RestauranteAki" target="_blank">
-    <img src="https://img.shields.io/badge/💻%20Repositório%20GitHub-Acessar-black?style=for-the-badge">
+    <img src="https://img.shields.io/badge/💻%20Repositório%20GitHub-Acessar-green?style=for-the-badge">
   </a>
   <br>
   https://github.com/marcosdosea/RestauranteAki
