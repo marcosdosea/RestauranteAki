@@ -64,7 +64,7 @@ Com uma arquitetura baseada em Razor Pages (.NET) e frontend dinâmico com JavaS
   https://github.com/marcosdosea/RestauranteAki
   <br><br>
 
-  ## 5.Apresentação RestauranteAki
+  ## 5. Apresentação RestauranteAki
  <p align="left">
   <a href="https://www.youtube.com/shorts/302Cg21CG_A" target="_blank">
     <img src="https://img.youtube.com/vi/302Cg21CG_A/maxresdefault.jpg" 
