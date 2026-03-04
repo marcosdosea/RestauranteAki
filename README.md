@@ -43,15 +43,7 @@ Com uma arquitetura baseada em Razor Pages (.NET) e frontend dinâmico com JavaS
 
 ## 4. Links Úteis 🔗
 
-<p align="center">
-
-  <!-- BOTÃO VÍDEO -->
-  <a href="https://www.youtube.com/shorts/302Cg21CG_A" target="_blank">
-    <img src="https://img.shields.io/badge/🎥%20Vídeo%20de%20Apresentação-Assistir-red?style=for-the-badge">
-  </a>
-  <br>
-  https://www.youtube.com/shorts/302Cg21CG_A
-  <br><br>
+<p align="left">
 
   <!-- BOTÃO MANUAL -->
   <a href="https://docs.google.com/presentation/d/1FKyfga7mJVyifUOovO7IRHXGza3Pwrf5/edit?slide=id.p1#slide=id.p1" target="_blank">
@@ -69,11 +61,25 @@ Com uma arquitetura baseada em Razor Pages (.NET) e frontend dinâmico com JavaS
   https://github.com/marcosdosea/RestauranteAki
   <br><br>
 
+  ## 5.Apresentação RestauranteAki
+ <p align="left">
+  <a href="https://www.youtube.com/shorts/302Cg21CG_A" target="_blank">
+    <img src="https://img.youtube.com/vi/302Cg21CG_A/maxresdefault.jpg" 
+         alt="Vídeo de Apresentação" 
+         width="400" 
+         style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+  </a>
+  <br><br>
+  <a href="https://www.youtube.com/shorts/302Cg21CG_A" target="_blank">
+    <img src="https://img.shields.io/badge/▶%20Assistir%20Vídeo-FF0000?style=for-the-badge&logo=youtube&logoColor=white">
+  </a>
+</p>
+
 </p>
 
 ---
 
-## 5. Equipe 👥
+## 6. Equipe 👥
 
 <table>
   <tr>
